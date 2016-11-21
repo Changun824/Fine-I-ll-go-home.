@@ -5,12 +5,20 @@
 //====================
 
 //함수 넣는존
+//==============================================-changun
+int Calculator_Menu(); //계산기 메인 메뉴
+int Matrix_Menu(); //행렬 계산 메뉴
+int ACalulator_Menu(); //사칙연산 메뉴
+//==============================================-changun
+
 
 //====================
 int main()
 {
 	int main_switch_num = 0;  //메인문에 스위치 값을 받기 위한 변수 - 사용자 입력 값
 	int main_end=0;   //메인문을 종료시키기 위한 변수
+	int C_M,CM_M,AC_M; //C_M : 계산기 메뉴 CM_M : 행렬계산 메뉴 AC_M : 일반 계산기 메뉴
+
 	system("title Learing Support Program");  //제목 변화
 	while (1)  //프로그램 반복
 	{  //while 중괄호
@@ -38,8 +46,24 @@ int main()
 		case 2:
 			//학습 통계표
 			break;
-		case 3:
-			//계산기 함수
+		case 3: //=========================계산기 - changun
+			while(1)
+			{
+			C_M=Calculator_Menu();  //계산기 메뉴를 호출하고 사용자 입력값을 돌려받음
+			switch (C_M)
+				{
+						case 1:
+							CM_M=Matrix_Menu();
+							break;
+							case 2:
+							AC_M = ACalulator_Menu();
+							break;
+							case 3:
+							break;
+							default:
+							break;
+						}//C_M _ switch문 중괄호
+		}//main_switch_num_case 3: while 중괄호
 			break;
 		case 4:
 			//단어장
@@ -71,3 +95,48 @@ int main()
 	} //while 중괄호
 	return 0;
 }
+
+//===============================-changun
+
+int Calculator_Menu()
+{
+	int user_num;
+	printf("===========================\n");
+	printf("         Calculator\n");
+	printf("===========================\n");
+	printf(" 1.행렬 계산기\n");
+	printf(" 2.일반 계산기\n");
+	printf(" 3.되돌아가기\n");
+	scanf_s("%d",&user_num);
+	return user_num;
+}
+
+
+int Matrix_Menu()
+{
+	int user_num;
+	printf("===========================\n");
+	printf("     Matrix Calculator\n");
+	printf("===========================\n");
+	printf(" 1.행렬 덧셈\n");
+	printf(" 2.행렬 곱셈\n");
+	printf(" 3.역행렬의 유무\n");
+	printf(" 3.나가기\n");
+	scanf_s("%d", &user_num);
+	return user_num;
+}
+
+int ACalulator_Menu()
+{
+		int user_num;
+		printf("===========================\n");
+		printf("       Calculator\n");
+		printf("===========================\n");
+		printf(" 1.수 입력\n");
+		printf(" 2.수식 입력\n");
+		printf(" 3.나가기\n");
+		scanf_s("%d", &user_num);
+		return user_num;
+}
+
+//================================================-changun
