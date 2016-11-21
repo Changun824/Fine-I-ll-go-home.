@@ -17,7 +17,7 @@ int main()
 {
 	int main_switch_num = 0;  //메인문에 스위치 값을 받기 위한 변수 - 사용자 입력 값
 	int main_end=0;   //메인문을 종료시키기 위한 변수
-	int C_M,CM_M,AC_M; //C_M : 계산기 메뉴 CM_M : 행렬계산 메뉴 AC_M : 일반 계산기 메뉴
+	int End_C=0, C_M, CM_M, AC_M; //End_C:메인문에서 계산기메뉴를 종료하기 위한 변수 C_M : 계산기 메뉴 CM_M : 행렬계산 메뉴 AC_M : 일반 계산기 메뉴
 
 	system("title Learing Support Program");  //제목 변화
 	while (1)  //프로그램 반복
@@ -46,25 +46,28 @@ int main()
 		case 2:
 			//학습 통계표
 			break;
-		case 3: //=========================계산기 - changun
+		case 3: //===============================================계산기 - changun
 			while(1)
 			{
 			C_M=Calculator_Menu();  //계산기 메뉴를 호출하고 사용자 입력값을 돌려받음
 			switch (C_M)
-				{
-						case 1:
-							CM_M=Matrix_Menu();
+						{
+							case 1:
+							CM_M=Matrix_Menu(); //행렬 계산기 메뉴
 							break;
 							case 2:
-							AC_M = ACalulator_Menu();
+							AC_M = ACalulator_Menu(); //일반 계산기 메뉴
 							break;
 							case 3:
+							End_C=10 //End_c에 10을 넣어줘서 반복문 탈출
 							break;
 							default:
 							break;
 						}//C_M _ switch문 중괄호
+						if(End_C==10)
+						break;//계산기 while에 따른 브레이크
 		}//main_switch_num_case 3: while 중괄호
-			break;
+			break;//main_switch_num 3: break===============================-changun
 		case 4:
 			//단어장
 			break;
