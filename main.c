@@ -8,7 +8,8 @@
 //==============================================-changun
 int Calculator_Menu(); //계산기 메인 메뉴
 int Matrix_Menu(); //행렬 계산 메뉴
-int ACalulator_Menu(); //사칙연산 메뉴
+int ACalculator_Menu(); //사칙연산 메뉴
+int Stopwatch();//스톱워치 메뉴
 //==============================================-changun
 
 
@@ -56,10 +57,10 @@ int main()
 							CM_M=Matrix_Menu(); //행렬 계산기 메뉴
 							break;
 							case 2:
-							AC_M = ACalulator_Menu(); //일반 계산기 메뉴
+							AC_M = ACalculator_Menu(); //일반 계산기 메뉴
 							break;
 							case 3:
-							End_C=10 //End_c에 10을 넣어줘서 반복문 탈출
+							End_C=10; //End_c에 10을 넣어줘서 반복문 탈출
 							break;
 							default:
 							break;
@@ -77,9 +78,9 @@ int main()
 		case 6:
 			//알람
 			break;
-		case 7:
-			//스톱워치
-			break;
+		case 7: //===================================================-changun
+			   StopWatch();//스톱워치
+			break;//=====================================================-changun
 		case 8:
 			//달력
 		case 9:
@@ -129,7 +130,7 @@ int Matrix_Menu()
 	return user_num;
 }
 
-int ACalulator_Menu()
+int ACalculator_Menu()
 {
 		int user_num;
 		printf("===========================\n");
@@ -141,5 +142,14 @@ int ACalulator_Menu()
 		scanf_s("%d", &user_num);
 		return user_num;
 }
-
+void Stopwatch()
+{
+		printf("===========================\n");
+		printf("        StopWatch\n");
+		printf("===========================\n");
+		printf(" 1.시 작\n");
+		printf(" 2.중 지\n");
+		printf(" 3.기 록\n");
+		printf(" 4.나가기\n");
+}
 //================================================-changun
