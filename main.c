@@ -2,46 +2,21 @@
 #include<windows.h>
 #include<stdlib.h>
 #include<time.h>
-#include <conio.h>
-#include <string.h>
-#define UP 72//위쪽 방향키
-#define DOWN 80//아래쪽 방향키
-#define ENTER 13//엔터키
-#define ESC 27//ESC 키
-#define WORDCOUNT 10
-
 //====================
-typedef struct wordlist{
-	char name[100]; //단어
-	char mean[200]; //뜻
-}VOCA;
-VOCA a[WORDCOUNT];
-
+typedef struct plan{
+	char pi1[50], pi2[50], pi3[50], pi4[50], pi5[50], pi6[50], pi7[50], pi8[50], pi9[50], pi10[50], pi11[50], pi12[50], pi13[50], pi14[50], pi15[50], pi16[50];
+	//pi1~16배열은 1주차부터 16주차까지의 계획저장 변수
+}PLAN;//PLAN구조체는 계획 문자열 저장하기 위해서 사용
 //함수 넣는존
 //==============================================-changun
 int Calculator_Menu(); //계산기 메인 메뉴
 int Matrix_Menu(); //행렬 계산 메뉴
-int ACalculator_Menu(); //사칙연산 메뉴
-int Stopwatch();//스톱워치 메뉴
-//==============================================-changun
-=======
 int ACalulator_Menu(); //사칙연산 메뉴
-
 //==============================================-changun
-//================================================-SungHo
-void gotoxy(int x, int y);//좌표 함수
-void menu_scr(void);//단어장 메뉴화면을 출력하는 함수
-void Function(int y);//단어장 해당 메뉴에 접속하는 함수
-int MenuChoice(void); //단어장 메뉴를 가리키는 화살표를 이동시키는 함수
-void AddWord(void);//단어장 단어추가 기능
-void SearchWord(void);//단어장 단어검색 기능
-void WordListCheck(void);//단어장 저장내용 확인기능
-//================================================-SungHo
-
-//================================================-seokhoon
-int calender();
-//================================================-seokhoon
-
+//==============================================-sungjae
+void learningplanner();//학습계획표 메뉴 함수
+int planinsert();//계획 입력 함수
+//==============================================-sungjae
 //====================
 int main()
 {
@@ -70,7 +45,7 @@ int main()
 
 		switch (main_switch_num)
 		{
-		case 1:
+		case 1: learningplanner();
 			//학습 계획표
 			break;
 		case 2:
@@ -86,10 +61,10 @@ int main()
 							CM_M=Matrix_Menu(); //행렬 계산기 메뉴
 							break;
 							case 2:
-							AC_M = ACalculator_Menu(); //일반 계산기 메뉴
+							AC_M = ACalulator_Menu(); //일반 계산기 메뉴
 							break;
 							case 3:
-							End_C=10; //End_c에 10을 넣어줘서 반복문 탈출
+							End_C=10 //End_c에 10을 넣어줘서 반복문 탈출
 							break;
 							default:
 							break;
@@ -100,9 +75,6 @@ int main()
 			break;//main_switch_num 3: break===============================-changun
 		case 4:
 			//단어장
-			 system("cls");
-			 menu_scr();
-			 MenuChoice();
 			break;
 		case 5:
 			//타이머
@@ -110,11 +82,11 @@ int main()
 		case 6:
 			//알람
 			break;
-		case 7: //===================================================-changun
-			   StopWatch();//스톱워치
-			break;//=====================================================-changun
+		case 7:
+			//스톱워치
+			break;
 		case 8:
-			calender();//달력
+			//달력
 		case 9:
 			main_end = 100;
 			break;
@@ -162,7 +134,7 @@ int Matrix_Menu()
 	return user_num;
 }
 
-int ACalculator_Menu()
+int ACalulator_Menu()
 {
 		int user_num;
 		printf("===========================\n");
@@ -174,208 +146,139 @@ int ACalculator_Menu()
 		scanf_s("%d", &user_num);
 		return user_num;
 }
-void Stopwatch()
-{
-		printf("===========================\n");
-		printf("        StopWatch\n");
-		printf("===========================\n");
-		printf(" 1.시 작\n");
-		printf(" 2.중 지\n");
-		printf(" 3.기 록\n");
-		printf(" 4.나가기\n");
-}
+
 //================================================-changun
-
-//================================================-SungHo
-void gotoxy(int x, int y) //좌표함수 콘솔창내 커서의 좌표지정
+void learningplanner()
 {
-   COORD Pos = {x , y };
-   SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Pos);
-}
-
-int MenuChoice(void)
-{
-	int key;//입력받은 키의 int값을 저장할 변수
-	int x=47,y=11;//화살표의 시작 좌표 지정 x :x축 좌표  y:y축 좌표
-
-	while(1)
-	{
-		key=getch();
-		if(key == 0xE0 || key ==0)
-		key = getch();
-		switch(key)
+	int b;//b는 사용자가 메뉴선택하는 변수
+    while (1) {
+	printf("==================================\n");
+	printf("         Learning  Planner        \n");
+	printf("==================================\n");
+	printf("1. 계획 입력\n");
+	printf("2. 계획 달성 체크\n");
+	printf("3. 달성률 보기\n");
+	printf("4. 시간표\n");
+	printf("5. 종료...\n");
+	scanf("%d",&b);
+		if (b == 5)
+			exit(1);
+		switch (b)
 		{
-			case UP: //위쪽 방향키를 입력받으면
-			system("cls");
-			menu_scr();//메뉴창을 띄우고
-			y-=2;	   //화살표("=>")의 y좌표를 2칸 아래로 내림
-			if(y<=11)  //화살표("=>")의 y좌표가 메뉴 위쪽으로는 올라가지 않도록 단어검색과 같은 높이인 11까지만 올라가도록 고정
-				y=11;
-			gotoxy(x,y);
-			printf("=>");//바뀐 좌표에 화살표 출력
+		case 1:
+			planinsert();
 			break;
-
-			case DOWN://아래쪽 방향키를 입력받으면
-			system("cls");
-			menu_scr();//메뉴창을 띄우고
-			y+=2;	   //화살표("=>")의 y좌표를 2칸 위로 올림
-			if(y>=17)  //화살표("=>")의 y좌표가 메뉴 아래쪽으로는 내려가지 않도록 단어퀴즈와 같은 높이인 17까지만 내려가도록 고정
-				y=17;
-			gotoxy(x,y);
-			printf("=>");//바뀐 좌표에 화살표 출력
+		case 2:
 			break;
-
-			case ESC:
-				 system("cls");
-				 system("color 07");
-				 return 0;
-
-			case ENTER://엔터키를 입력받으면
-				 Function(y);
+		case 3:
+			break;
+		case 4:
+			break;
+		default:
+			break;
 		}
-
 	}
-
-}
-
-void menu_scr(void)//메뉴 화면을 출력
+}//====================================-sungjae
+int planinsert()
 {
-
-	system("title 단어장");//콘솔의 제목을 바꿔줌
-	system("color EC");//콘솔창의 배경색과 텍스트의 색을 바꿔줌  (배경:텍스트) E:노랑C:빨강
-
-
-	printf("=======================================");
-	gotoxy(50,11);
-	printf("◆단어 검색\n");
-	gotoxy(50,13);
-	printf("◆단어 추가\n");
-	gotoxy(50,15);
-	printf("◆단어장 확인\n");
-	gotoxy(50,17);
-	printf("◆단어 퀴즈\n");
-	gotoxy(46,23);
-	printf("※프로그램 종료 [ESC]\n");
-
-}
-
-void Function (int y)
-{
-	 if(y==11)//단어 검색 화살표("=>")의 y좌표를 가져와서 화살표가 가리키는 메뉴를 실행
-	    {
-			system("cls");
-			SearchWord();
-	    }
-	 if(y==13)//단어 추가 실행
-	    {
-			system("cls");
-			AddWord();
-	    }
-	 if(y==15)//단어 확인 실행
-	    {
-			system("cls");
-			 WordListCheck();
-	    }
-	 if(y==17)//단어 퀴즈 실행
-	    {
-			system("cls");
-			printf("퀴즈");
-	    }
-}
-
-void AddWord(void)//단어 추가 기능
-{
-
-	int i,key; //i for문 실행에 쓰일 변수 ,key: ENTER키나 ESC키로 받은 값을 저장받음
-	for(i=0;i<WORDCOUNT;i++)
+	FILE *fpin1;//1학기 계획을 파일에 저장하기 위해서 만든 파일포인터
+	if ((fpin1=fopen("plan1.txt", "w")) == NULL)
 	{
-		printf("추가하실 단어를 입력해주세요\n");
-		gets(a[i].name);
-		printf("단어의 뜻을 입력해주세요\n");
-		gets(a[i].mean);
-		printf("단어를 더 추가합니까? 추가[ENTER] 종료[ESC]\n");//단어를 한 개 추가하고 나서 계속 추가할 것인지 키를 입력받아 사용자의 의사를 묻는다
-		key=getch();										    //ENTER는 더 추가 ESC를 입력하면 종료 N
-		if(key == 0xE0 || key ==0)
-		key = getch();
-			if(key==27)//ESC키를 입력하면
-		   {
-			  system("cls");
-			  break;   //루프를 종료:[단어 검색]기능을 종료
-		   }
-			else if(key==13)//ENTER키를 입력하면 콘솔창을 깨끗하게 지우고 다시 처음 루프로 가서 추가할 단어를 입력받음
-		   {
-			 system("cls");
-		   }
-			else{//ENTER 와 ESC가 아닌 키를 입력했을 경우
-				      while(1)
-				      {  system("cls");
-						 printf("추가[ENTER] 또는 종료[ESC] 키를 입력하세요\n"); //ENTER나 ESC를 입력할때까지 안내 메세지를 띄우고
-						 key=getch();
-						 if(key == 0xE0 || key ==0);
-					     key=getch();
-						 if(key==13)//Enter를 입력받으면 이 루프를 빠져나가 단어를 새로 입력받고
-					    {
-						  system("cls");
-						  break;
-					    }
-					    else if(key==27)//ESC를 누르면
-					    {
-						system("cls");
-						goto label;   //이중 루프를 빠져나가서 기능이 종료되게끔 한다.
-					    }
-					  }
-
-
-			  }
-
-
+		printf("plan1.txt에 쓰기를 실패하였습니다.\n");
 	}
-	label://goto 문으로 빠져나오는 곳
-	menu_scr();
-}
-
-void SearchWord(void) //단어 검색
-{
-	int i;//for문을 돌리는데 쓰임
-	while(1){
-		int found=0;//찾은 수
-	    char target[100];
-		char esc[8]="종료.";
-	    printf("찾을 단어를 입력해주세요\n");
-	    gets(target);
-		if(!strcmp(esc,target)){
-			system("cls");
-				break;
-		}
-		for(i=0;i<WORDCOUNT;i++)
-		{
-			found++;
-			if(!strcmp(a[i].name,target)||!strcmp(a[i].mean,target))
-			{
-				system("cls");
-				printf("%s: %s\n",a[i].name,a[i].mean);
-				found--;
-			}
-			if(found==WORDCOUNT)
-				printf("찾는 단어가 없습니다\n");
-		}
-		Sleep(1000);
-		system("cls");
+	FILE *fpin2;//2학기 계획을 파일에 저장하기 위해서 만든 파일포인터
+	if ((fpin2=fopen("plan2.txt", "w")) == NULL)
+	{
+		printf("plan2.txt에 쓰기를 실패하였습니다.\n");
 	}
-	menu_scr();
-}
-
-void WordListCheck(void)//저장한 단어를 전부 출력해줌
-{
-	int i;
-	for(i=0;i<WORDCOUNT;i++)
-		printf("[ %s : %s ]\n",a[i].name,a[i].mean);
-}
-
-
-//================================================-SungHo
-//================================================-seokhoon
-int calender(){
-
-
-}
+	int a = 0;
+	PLAN insert = {0};
+	printf("1. 1학기 계획입력\n");
+	printf("2. 2학기 계획입력\n");
+	printf("3. 종료\n");
+	scanf("%d",&a);
+	if (a == 1)
+	{
+		printf("1주차 계획 :  ");
+		scanf("%s", insert.pi1, 50);
+		printf("2주차 계획 :  ");
+		scanf("%s", insert.pi2, 50);
+		printf("3주차 계획 :  ");
+		scanf("%s", insert.pi3, 50);
+		printf("4주차 계획 :  ");
+		scanf("%s", insert.pi4, 50);
+		printf("5주차 계획 :  ");
+		scanf("%s", insert.pi5, 50);
+		printf("6주차 계획 :  ");
+		scanf("%s", insert.pi6, 50);
+		printf("7주차 계획 :  ");
+		scanf("%s", insert.pi7, 50);
+		printf("8주차 계획 :  ");
+		scanf("%s", insert.pi8, 50);
+		printf("9주차 계획 :  ");
+		scanf("%s", insert.pi9, 50);
+		printf("10주차 계획 : ");
+		scanf("%s", insert.pi10, 50);
+		printf("11주차 계획 : ");
+		scanf("%s", insert.pi11,50);
+		printf("12주차 계획 : ");
+		scanf("%s", insert.pi12, 50);
+		printf("13주차 계획 : ");
+		scanf("%s", insert.pi13, 50);
+		printf("14주차 계획 : ");
+		scanf("%s", insert.pi14, 50);
+		printf("15주차 계획 : ");
+		scanf("%s", insert.pi15, 50);
+		printf("16주차 계획 : ");
+		scanf("%s", insert.pi16, 50);
+		fscanf(fpin1,"%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", insert.pi1, insert.pi2, insert.pi3, insert.pi4, insert.pi5, insert.pi6, insert.pi7, insert.pi8, insert.pi9, insert.pi10, insert.pi11, insert.pi12, insert.pi13, insert.pi14, insert.pi15, insert.pi16);
+		fclose(fpin1);
+		fclose(fpin2);
+		return 0;
+	}
+	else if (a == 2)
+	{
+		printf("1주차 계획 :  ");
+		scanf("%s", insert.pi1, 50);
+		printf("2주차 계획 :  ");
+		scanf("%s", insert.pi2, 50);
+		printf("3주차 계획 :  ");
+		scanf("%s", insert.pi3, 50);
+		printf("4주차 계획 :  ");
+		scanf("%s", insert.pi4, 50);
+		printf("5주차 계획 :  ");
+		scanf("%s", insert.pi5, 50);
+		printf("6주차 계획 :  ");
+		scanf("%s", insert.pi6, 50);
+		printf("7주차 계획 :  ");
+		scanf("%s", insert.pi7, 50);
+		printf("8주차 계획 :  ");
+		scanf("%s", insert.pi8, 50);
+		printf("9주차 계획 :  ");
+		scanf("%s", insert.pi9, 50);
+		printf("10주차 계획 : ");
+		scanf("%s", insert.pi10, 50);
+		printf("11주차 계획 : ");
+		scanf("%s", insert.pi11, 50);
+		printf("12주차 계획 : ");
+		scanf("%s", insert.pi12, 50);
+		printf("13주차 계획 : ");
+		scanf("%s", insert.pi13, 50);
+		printf("14주차 계획 : ");
+		scanf("%s", insert.pi14, 50);
+		printf("15주차 계획 : ");
+		scanf("%s", insert.pi15, 50);
+		printf("16주차 계획 : ");
+		scanf("%s", insert.pi16, 50);
+		fscanf(fpin1, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", insert.pi1, insert.pi2, insert.pi3, insert.pi4, insert.pi5, insert.pi6, insert.pi7, insert.pi8, insert.pi9, insert.pi10, insert.pi11, insert.pi12, insert.pi13, insert.pi14, insert.pi15, insert.pi16);
+		fclose(fpin1);
+		fclose(fpin2);
+		return 0;
+	}
+	else if (a == 3)
+		return 0;
+	printf("잘못 입력하셨습니다.\n");
+	fclose(fpin1);
+	fclose(fpin2);
+	return 0;
+}//====================================-sungjae
