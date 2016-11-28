@@ -11,6 +11,7 @@
 #define ENTER 13//엔터키
 #define ESC 27//ESC 키
 #define WORDCOUNT 10
+#define MAX 100
 
 //==================== - sungho
 typedef struct wordlist{
@@ -82,16 +83,16 @@ int main()
 						{
 							case 1:
 							CM_M=Matrix_Menu(); //행렬 계산기 메뉴
+							switch (CM_M)
+							{
+								case 1:
+								Matrix_add();
+								default:
+								break;
+							}// 행렬계산기에 대한 switch
 							break;
 							case 2:
 							AC_M = ACalulator_Menu(); //일반 계산기 메뉴
-							switch (CM_M)
- 							{
- 								case 1:
- 								Matrix_add();
- 								default:
- 								break;
- 							}// 행렬계산기에 대한 switch
 							break;
 							case 3:
 							End_C=10; //End_c에 10을 넣어줘서 반복문 탈출
@@ -181,76 +182,80 @@ int ACalulator_Menu()
 		return user_num;
 }
 void Matrix_add()  //행렬 덧셈
- {
- 	int exone[MAX][MAX];
- 	int extwo[MAX][MAX];
- 	int exsum[MAX][MAX];
- 	int matrix_mrow;
- 	int matrix_mcolumn;
- 	int i = 0,j=0;
+{
+	int exone[MAX][MAX];
+	int extwo[MAX][MAX];
+	int exsum[MAX][MAX];
+	int matrix_mrow;
+	int matrix_mcolumn;
+	int i = 0, j = 0;
 
- 	printf("===========================\n");
- 	printf("        Matrix Add\n");
- 	printf("===========================\n");
- 	printf("더해줄 행렬은 같은 크기여야 합니다.\n");
- 	printf("덧셈 할 행렬의 행의 크기를 입력해주세요:");
- 	scanf_s("%d", &matrix_mrow);
- 	printf("덧셈 할 행렬의 열의 크기를 입력해주세요:");
- 	scanf_s("%d", &matrix_mcolumn);
+	printf("===========================\n");
+	printf("        Matrix Add\n");
+	printf("===========================\n");
+	printf("더해줄 행렬은 같은 크기여야 합니다.\n");
+	printf("덧셈 할 행렬의 행의 크기를 입력해주세요:");
+	scanf_s("%d", &matrix_mrow);
+	printf("덧셈 할 행렬의 열의 크기를 입력해주세요:");
+	scanf_s("%d", &matrix_mcolumn);
 
- 	printf("첫번째 행렬 \n");
- 	for (i = 0; i < matrix_mcolumn; i++)
- 		for (j = 0; j < matrix_mrow; j++)
- 		{
- 			printf("exone[%d][%d]", i, j);
- 			scanf("%d", &exone[i][j]);
- 		}//첫번째 행렬 입력
+	printf("첫번째 행렬 \n");
+	for (i = 0; i < matrix_mcolumn; i++)
+		for (j = 0; j < matrix_mrow; j++)
+		{
+			printf("exone[%d][%d]", i, j);
+			scanf("%d", &exone[i][j]);
+		}//첫번째 행렬 입력
 
- 	printf("두번째 행렬 \n");
- 	for (i = 0; i < matrix_mcolumn; i++)
- 		for (j = 0; j < matrix_mrow; j++)
- 		{
- 			printf("extwo[%d][%d]", i, j);
- 			scanf("%d", &extwo[i][j]);
- 		}//두번째 행렬 입력
+	printf("두번째 행렬 \n");
+	for (i = 0; i < matrix_mcolumn; i++)
+		for (j = 0; j < matrix_mrow; j++)
+		{
+			printf("extwo[%d][%d]", i, j);
+			scanf("%d", &extwo[i][j]);
+		}//두번째 행렬 입력
+	printf("\n");
+	printf("첫번째 행렬 \n");
+	for (i = 0; i < matrix_mcolumn; i++)
+	{
+		printf("\n");
+		for (j = 0; j < matrix_mrow; j++)
+		{
+			printf("%d\t", exone[i][j]);
+		} //행을 출력
+	}//열을 출력
+	printf("\n");
+	printf("두번째 행렬 \n");
+	for (i = 0; i < matrix_mcolumn; i++)
+	{
+		printf("\n");
+		for (j = 0; j < matrix_mrow; j++)
+		{
+			printf("%d\t", extwo[i][j]);
+		} //행을 출력
+	}//열을 출력
 
- 	printf("첫번째 행렬 \n");
- 	for (i = 0; i < matrix_mcolumn; i++)
- 	{
- 		printf("\n");
- 		for (j = 0; j < matrix_mrow; j++)
- 		{
- 			printf("%d\t", exone[i][j]);
- 		} //행을 출력
- 	}//열을 출력
 
- 	printf("두번째 행렬 \n");
- 	for (i = 0; i < matrix_mcolumn; i++)
- 	{
- 		printf("\n");
- 		for (j = 0; j < matrix_mrow; j++)
- 		{
- 			printf("%d\t", extwo[i][j]);
- 		} //행을 출력
- 	}//열을 출력
+	for (i = 0; i < matrix_mcolumn; i++)
+	{
+		for (j = 0; j < matrix_mrow; j++)
+		{
+			exsum[i][j] = exone[i][j] + extwo[i][j];
+		}//두번째 행렬 입력
 
+	}
+	printf("\n");
+	printf("덧셈한 행렬 \n");
+	for (i = 0; i < matrix_mcolumn; i++)
+	{
+		for (j = 0; j < matrix_mrow; j++)
+		{
+			printf("%d\t", exsum[i][j]);
+		} //행을 출력
+		printf("\n");
+	}//열을 출력
 
- 	for (i = 0; i < matrix_mcolumn; i++)
- 		for (j = 0; j < matrix_mrow; j++)
- 		{
- 			exsum[i][j] = exone[i][j] + extwo[i][j];
- 		}//두번째 행렬 입력
- 	printf("덧셈한 행렬 \n");
- 	for (i = 0; i < matrix_mcolumn; i++)
- 	{
- 		printf("\n");
- 		for (j = 0; j < matrix_mrow; j++)
- 		{
- 			printf("%d\t", exsum[i][j]);
- 		} //행을 출력
- 	}//열을 출력
-
- }// void Matrix_add() 함수 종료 중괄호
+}// void Matrix_add() 함수 종료 중괄호
  void stop_watch()
  {
  	int hour = 0, min = 0, sec = 0, frame = 0;
