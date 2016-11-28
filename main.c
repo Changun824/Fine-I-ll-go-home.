@@ -32,7 +32,7 @@ int MenuChoice(void); //단어장 메뉴를 가리키는 화살표를 이동시�
 void AddWord(void);//단어장 단어추가 기능
 void SearchWord(void);//단어장 단어검색 기능
 void WordListCheck(void);//단어장 저장내용 확인기능
-int Read(void);
+int ProgramRead(void);
 //================================================-SungHo
 
 //====================
@@ -93,8 +93,8 @@ int main()
 			break;//main_switch_num 3: break===============================-changun
 		case 4:
 			//단어장
-			 Read();
 			 system("cls");
+			 ProgramRead();
 			 menu_scr();
 			 MenuChoice();
 			break;
@@ -251,7 +251,6 @@ void Function (int y)
 	 if(y==13)//단어 추가 실행
 	    {
 			system("cls");
-			system("cls");
 			AddWord();
 	    }
 	 if(y==15)//단어 확인 실행
@@ -270,13 +269,11 @@ void AddWord(void)//단어 추가 기능
 {
 	int i=0,key; //i for문 실행에 쓰일 변수 ,key: ENTER키나 ESC키로 받은 값을 저장받음
 	int count;
-	char j[10];
 	FILE *fp;
 	if((fp = fopen("Voca.txt","a"))==NULL)
 	{
 		fprintf(stderr,"파일 Voca.txt를 열 수 없습니다\n","Voca.txt");
 	}
-	gets(j);
 	while(1)
 	{
 		printf("추가하실 단어를 입력해주세요\n");
@@ -331,10 +328,9 @@ label://goto 문으로 빠져나오는 곳
 	menu_scr();
 }
 
-void SearchWord(void) //단어 검색 [11.27 현재 문제 있음 검색이 안됨]
+void SearchWord(void)
 {
-	int i=0;//for문을 돌리는데 쓰임
-	int count;
+	int i=0,count;
 	FILE *fp;
 	if((fp = fopen("Voca.txt","r"))==NULL)
 	{
@@ -343,7 +339,9 @@ void SearchWord(void) //단어 검색 [11.27 현재 문제 있음 검색이 안�
 	while(!feof(fp))
 	{
 		fgets(a[i].name,100,fp);
+		a[i].name[strlen(a[i].name)-1]='\0';
 		fgets(a[i].mean,100,fp);
+		a[i].mean[strlen(a[i].mean)-1]='\0';
 		i++;
 	}
 	fclose(fp);
@@ -370,11 +368,13 @@ void SearchWord(void) //단어 검색 [11.27 현재 문제 있음 검색이 안�
 			if(found==count)
 				printf("찾는 단어가 없습니다\n");
 		}
+		Sleep(1000);
+		system("cls");
 	}
 	menu_scr();
 }
 
-void WordListCheck(void)//저장한 단어를 전부 출력해줌
+void WordListCheck(void)
 {
 	int i=0;
 	int count;
@@ -388,23 +388,23 @@ void WordListCheck(void)//저장한 단어를 전부 출력해줌
 		fgets(a[i].name,100,fp);
 		a[i].name[strlen(a[i].name)-1]='\0';
 		fgets(a[i].mean,100,fp);
-		a[i].mean[strlen(a[i].name)-1]='\0';
+		a[i].mean[strlen(a[i].mean)-1]='\0';
 		i++;
 	}
 	fclose(fp);
 	count=i;
 	for(i=0;i<count;i++)
-		printf("[ %s : %s ]\n",a[i].name,a[i].mean);
+		printf("[ %s : %s ]\n",a[i].name,a[i].mean);//"wt"옆으로
 }
 
-int Read (void)
+int ProgramRead(void)
 {
-
 	int i=0;
 	FILE *fp;
 	if((fp = fopen("Voca.txt","r"))==NULL)
 	{
-		fprintf(stderr,"파일 Voca.txt를 열 수 없습니다\n","Voca.txt");
+		fprintf(stderr,"Voca.txt 파일을 열 수 없습니다.\n","Vocabulary Note.txt");
+		exit(1);
 	}
 	while(!feof(fp))
 	{
@@ -415,4 +415,5 @@ int Read (void)
 	fclose(fp);
 	return i;
 }
+//void Quiz(void)
 //================================================-SungHo
