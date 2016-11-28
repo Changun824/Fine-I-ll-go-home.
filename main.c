@@ -11,15 +11,15 @@
 #define ENTER 13//엔터키
 #define ESC 27//ESC 키
 #define WORDCOUNT 10
-#define MAX 100
+#define MAX 100 //Changun 씀 행렬 계산을 위해 사용
 
-//==================== - sungho
+//================================================================== - sungho
 typedef struct wordlist{
 	char name[100]; //단어
 	char mean[200]; //뜻
 }VOCA;
 VOCA a[WORDCOUNT];
-//==================== - sungho
+//================================================================ - sungho
 
 //함수 넣는존
 //==============================================-changun
@@ -141,7 +141,7 @@ int main()
 
 //===============================-changun
 
-int Calculator_Menu()
+int Calculator_Menu()  //계산기 메뉴
 {
 	int user_num;
 	printf("===========================\n");
@@ -155,7 +155,7 @@ int Calculator_Menu()
 }
 
 
-int Matrix_Menu()
+int Matrix_Menu()        //행렬 계산기 메뉴
 {
 	int user_num;
 	printf("===========================\n");
@@ -169,7 +169,7 @@ int Matrix_Menu()
 	return user_num;
 }
 
-int ACalulator_Menu()
+int ACalulator_Menu()    //사친연산 계산기 메뉴
 {
 		int user_num;
 		printf("===========================\n");
@@ -304,12 +304,12 @@ void Matrix_add()  //행렬 덧셈
  				break;
  			default:
  				break;
- 			}
- 		}
+ 			} //키보드로 부터 입력 받은 값에 대한 switch
+ 		} // if문 키보드로 부터 무엇인가 입력 받았다면
  		printf("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
- 	}
- }
- void stopwatch_menu()
+ 	}// 시간에 대한 반복문 중괄호
+} // 스탑워치 메인 코드 함수
+ void stopwatch_menu()  //스탑 워치 메뉴
  {
  	printf("======================================================\n");
  	printf("                   Stop Watch\n");
