@@ -1,187 +1,47 @@
-#include<stdio.h>
-#include<windows.h>
-#include<stdlib.h>
-#include<time.h>
-#include <conio.h>
-#include <string.h>
-#define UP 72//위쪽 방향키
-#define DOWN 80//아래쪽 방향키
-#define ENTER 13//엔터키
-#define ESC 27//ESC 키
-#define WORDCOUNT 10
 
-//====================
+#include <stdio.h>
+#include <windows.h>//gotoxy
+#include <conio.h>//getch
+#include <string.h>
+#define UP 72
+#define DOWN 80
+#define ENTER 13
+#define ESC 27
+#define WORDCOUNT 100
+void gotoxy(int x, int y);
+void menu_scr(void);
+void Function(int y);
+int MenuCoice(void);
+void AddWord(void);
+void SearchWord(void);
+void WordListCheck(void);
+int ProgramRead(void);
+
 typedef struct wordlist{
 	char name[100]; //단어
 	char mean[200]; //뜻
+
 }VOCA;
 VOCA a[WORDCOUNT];
 
-//함수 넣는존
-//==============================================-changun
-int Calculator_Menu(); //계산기 메인 메뉴
-int Matrix_Menu(); //행렬 계산 메뉴
-int ACalulator_Menu(); //사칙연산 메뉴
-
-//==============================================-changun
-//================================================-SungHo
-void gotoxy(int x, int y);//좌표 함수
-void menu_scr(void);//단어장 메뉴화면을 출력하는 함수
-void Function(int y);//단어장 해당 메뉴에 접속하는 함수
-int MenuChoice(void); //단어장 메뉴를 가리키는 화살표를 이동시키는 함수
-void AddWord(void);//단어장 단어추가 기능
-void SearchWord(void);//단어장 단어검색 기능
-void WordListCheck(void);//단어장 저장내용 확인기능
-int Read(void);
-//================================================-SungHo
-
-//====================
-int main()
+int main(void)
 {
-	int main_switch_num = 0;  //메인문에 스위치 값을 받기 위한 변수 - 사용자 입력 값
-	int main_end=0;   //메인문을 종료시키기 위한 변수
-	int End_C=0, C_M, CM_M, AC_M; //End_C:메인문에서 계산기메뉴를 종료하기 위한 변수 C_M : 계산기 메뉴 CM_M : 행렬계산 메뉴 AC_M : 일반 계산기 메뉴
-
-	system("title Learing Support Program");  //제목 변화
-	while (1)  //프로그램 반복
-	{  //while 중괄호
-
-		printf("=====================================================================\n");
-		printf("                    Learing Support Program \n");
-		printf("=====================================================================\n");
-		printf(" 1.학습 계획표\n");
-		printf(" 2.학습 통계표\n");
-		printf(" 3.계 산 기 \n");
-		printf(" 4.단 어 장\n");
-		printf(" 5.타 이 머\n");
-		printf(" 6.알 람\n");
-		printf(" 7.스톱워치\n");
-		printf(" 8.달 력\n");
-		printf(" 9.종 료\n");
-		printf("원하시는 메뉴에 숫자를 입력해주세요:");
-		scanf_s("%d", &main_switch_num);
-
-		switch (main_switch_num)
-		{
-		case 1:
-			//학습 계획표
-			break;
-		case 2:
-			//학습 통계표
-			break;
-		case 3: //===============================================계산기 - changun
-			while(1)
-			{
-			C_M=Calculator_Menu();  //계산기 메뉴를 호출하고 사용자 입력값을 돌려받음
-			switch (C_M)
-						{
-							case 1:
-							CM_M=Matrix_Menu(); //행렬 계산기 메뉴
-							break;
-							case 2:
-							AC_M = ACalulator_Menu(); //일반 계산기 메뉴
-							break;
-							case 3:
-							End_C=10; //End_c에 10을 넣어줘서 반복문 탈출
-							break;
-							default:
-							break;
-						}//C_M _ switch문 중괄호
-						if(End_C==10)
-						break;//계산기 while에 따른 브레이크
-		}//main_switch_num_case 3: while 중괄호
-			break;//main_switch_num 3: break===============================-changun
-		case 4:
-			//단어장
-			 Read();
-			 system("cls");
-			 menu_scr();
-			 MenuChoice();
-			break;
-		case 5:
-			//타이머
-			break;
-		case 6:
-			//알람
-			break;
-		case 7:
-			//스톱워치
-			break;
-		case 8:
-			//달력
-		case 9:
-			main_end = 100;
-			break;
-		default:
-			printf("잘못 누르셨습니다.\n");
-			break;
-		}
-
-		if (main_end == 100)    //종료를 위해 쓰인 if문과 변수
-		{
-			printf("프로그램을 종료합니다.\n");
-			exit(1);  //탈출 명령어
-		}//if문 - 종료 중괄호
-	} //while 중괄호
-	return 0;
+	 ProgramRead();
+	 menu_scr();
+	 MenuCoice();
+	 return 0;
 }
 
-//===============================-changun
-
-int Calculator_Menu()
-{
-	int user_num;
-	printf("===========================\n");
-	printf("         Calculator\n");
-	printf("===========================\n");
-	printf(" 1.행렬 계산기\n");
-	printf(" 2.일반 계산기\n");
-	printf(" 3.되돌아가기\n");
-	scanf_s("%d",&user_num);
-	return user_num;
-}
-
-
-int Matrix_Menu()
-{
-	int user_num;
-	printf("===========================\n");
-	printf("     Matrix Calculator\n");
-	printf("===========================\n");
-	printf(" 1.행렬 덧셈\n");
-	printf(" 2.행렬 곱셈\n");
-	printf(" 3.역행렬의 유무\n");
-	printf(" 3.나가기\n");
-	scanf_s("%d", &user_num);
-	return user_num;
-}
-
-int ACalulator_Menu()
-{
-		int user_num;
-		printf("===========================\n");
-		printf("       Calculator\n");
-		printf("===========================\n");
-		printf(" 1.수 입력\n");
-		printf(" 2.수식 입력\n");
-		printf(" 3.나가기\n");
-		scanf_s("%d", &user_num);
-		return user_num;
-}
-
-//================================================-changun
-
-//================================================-SungHo
-void gotoxy(int x, int y) //좌표함수 콘솔창내 커서의 좌표지정
+void gotoxy(int x, int y) //좌표함수
 {
    COORD Pos = {x , y };
    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Pos);
 }
 
-int MenuChoice(void)
+int MenuCoice(void)
 {
-	int key;//입력받은 키의 int값을 저장할 변수
-	int x=47,y=11;//화살표의 시작 좌표 지정 x :x축 좌표  y:y축 좌표
+	int key;
+	int x=47,y=11;
 
 	while(1)
 	{
@@ -190,32 +50,27 @@ int MenuChoice(void)
 		key = getch();
 		switch(key)
 		{
-			case UP: //위쪽 방향키를 입력받으면
+			case UP:
 			system("cls");
-			menu_scr();//메뉴창을 띄우고
-			y-=2;	   //화살표("=>")의 y좌표를 2칸 아래로 내림
-			if(y<=11)  //화살표("=>")의 y좌표가 메뉴 위쪽으로는 올라가지 않도록 단어검색과 같은 높이인 11까지만 올라가도록 고정
+			menu_scr();
+			y-=2;
+			if(y<=11)
 				y=11;
 			gotoxy(x,y);
-			printf("=>");//바뀐 좌표에 화살표 출력
+			printf("=>");
 			break;
 
-			case DOWN://아래쪽 방향키를 입력받으면
+			case DOWN:
 			system("cls");
-			menu_scr();//메뉴창을 띄우고
-			y+=2;	   //화살표("=>")의 y좌표를 2칸 위로 올림
-			if(y>=17)  //화살표("=>")의 y좌표가 메뉴 아래쪽으로는 내려가지 않도록 단어퀴즈와 같은 높이인 17까지만 내려가도록 고정
+			menu_scr();
+			y+=2;
+			if(y>=17)
 				y=17;
 			gotoxy(x,y);
-			printf("=>");//바뀐 좌표에 화살표 출력
+			printf("=>");
 			break;
 
-			case ESC:
-				 system("cls");
-				 system("color 07");
-				 return 0;
-
-			case ENTER://엔터키를 입력받으면
+			case ENTER:
 				 Function(y);
 		}
 
@@ -223,10 +78,13 @@ int MenuChoice(void)
 
 }
 
-void menu_scr(void)//메뉴 화면을 출력
+void menu_scr(void)
 {
-	system("title 단어장");//콘솔의 제목을 바꿔줌
-	system("color EC");//콘솔창의 배경색과 텍스트의 색을 바꿔줌  (배경:텍스트) E:노랑C:빨강
+
+	system("title 단어장");
+	system("color EC");
+
+
 	printf("=======================================");
 	gotoxy(50,11);
 	printf("◆단어 검색\n");
@@ -236,30 +94,26 @@ void menu_scr(void)//메뉴 화면을 출력
 	printf("◆단어장 확인\n");
 	gotoxy(50,17);
 	printf("◆단어 퀴즈\n");
-	gotoxy(46,23);
-	printf("※프로그램 종료 [ESC]\n");
-
 }
 
 void Function (int y)
 {
-	 if(y==11)//단어 검색 화살표("=>")의 y좌표를 가져와서 화살표가 가리키는 메뉴를 실행
+	 if(y==11)//검색11 8
 	    {
 			system("cls");
 			SearchWord();
 	    }
-	 if(y==13)//단어 추가 실행
+	 if(y==13)//추가13 11
 	    {
-			system("cls");
 			system("cls");
 			AddWord();
 	    }
-	 if(y==15)//단어 확인 실행
+	 if(y==15)//확인15 14
 	    {
 			system("cls");
 			 WordListCheck();
 	    }
-	 if(y==17)//단어 퀴즈 실행
+	 if(y==17)//퀴즈17 17
 	    {
 			system("cls");
 			printf("퀴즈");
@@ -270,13 +124,11 @@ void AddWord(void)//단어 추가 기능
 {
 	int i=0,key; //i for문 실행에 쓰일 변수 ,key: ENTER키나 ESC키로 받은 값을 저장받음
 	int count;
-	char j[10];
 	FILE *fp;
 	if((fp = fopen("Voca.txt","a"))==NULL)
 	{
 		fprintf(stderr,"파일 Voca.txt를 열 수 없습니다\n","Voca.txt");
 	}
-	gets(j);
 	while(1)
 	{
 		printf("추가하실 단어를 입력해주세요\n");
@@ -331,10 +183,9 @@ label://goto 문으로 빠져나오는 곳
 	menu_scr();
 }
 
-void SearchWord(void) //단어 검색 [11.27 현재 문제 있음 검색이 안됨]
+void SearchWord(void)
 {
-	int i=0;//for문을 돌리는데 쓰임
-	int count;
+	int i=0,count;
 	FILE *fp;
 	if((fp = fopen("Voca.txt","r"))==NULL)
 	{
@@ -343,7 +194,9 @@ void SearchWord(void) //단어 검색 [11.27 현재 문제 있음 검색이 안�
 	while(!feof(fp))
 	{
 		fgets(a[i].name,100,fp);
+		a[i].name[strlen(a[i].name)-1]='\0';
 		fgets(a[i].mean,100,fp);
+		a[i].mean[strlen(a[i].mean)-1]='\0';
 		i++;
 	}
 	fclose(fp);
@@ -370,11 +223,13 @@ void SearchWord(void) //단어 검색 [11.27 현재 문제 있음 검색이 안�
 			if(found==count)
 				printf("찾는 단어가 없습니다\n");
 		}
+		Sleep(1000);
+		system("cls");
 	}
 	menu_scr();
 }
 
-void WordListCheck(void)//저장한 단어를 전부 출력해줌
+void WordListCheck(void)
 {
 	int i=0;
 	int count;
@@ -388,23 +243,23 @@ void WordListCheck(void)//저장한 단어를 전부 출력해줌
 		fgets(a[i].name,100,fp);
 		a[i].name[strlen(a[i].name)-1]='\0';
 		fgets(a[i].mean,100,fp);
-		a[i].mean[strlen(a[i].name)-1]='\0';
+		a[i].mean[strlen(a[i].mean)-1]='\0';
 		i++;
 	}
 	fclose(fp);
 	count=i;
 	for(i=0;i<count;i++)
-		printf("[ %s : %s ]\n",a[i].name,a[i].mean);
+		printf("[ %s : %s ]\n",a[i].name,a[i].mean);//"wt"옆으로
 }
 
-int Read (void)
+int ProgramRead(void)
 {
-
 	int i=0;
 	FILE *fp;
 	if((fp = fopen("Voca.txt","r"))==NULL)
 	{
-		fprintf(stderr,"파일 Voca.txt를 열 수 없습니다\n","Voca.txt");
+		fprintf(stderr,"Voca.txt 파일을 열 수 없습니다.\n","Vocabulary Note.txt");
+		exit(1);
 	}
 	while(!feof(fp))
 	{
@@ -415,4 +270,4 @@ int Read (void)
 	fclose(fp);
 	return i;
 }
-//================================================-SungHo
+//void Quiz(void)
