@@ -1,3 +1,5 @@
+/* 푸시 풀 확인 요망
+*/
 #include<stdio.h>
 #include<windows.h>
 #include<stdlib.h>
@@ -10,19 +12,22 @@
 #define ESC 27//ESC 키
 #define WORDCOUNT 10
 
-//====================
+//==================== - sungho
 typedef struct wordlist{
 	char name[100]; //단어
 	char mean[200]; //뜻
 }VOCA;
 VOCA a[WORDCOUNT];
+//==================== - sungho
 
 //함수 넣는존
 //==============================================-changun
 int Calculator_Menu(); //계산기 메인 메뉴
 int Matrix_Menu(); //행렬 계산 메뉴
 int ACalulator_Menu(); //사칙연산 메뉴
-
+void Matrix_add(); //행렬 덧셈
+void stop_watch(); //스톱워치
+void stopwatch_menu(); //스톱 워치 메뉴
 //==============================================-changun
 //================================================-SungHo
 void gotoxy(int x, int y);//좌표 함수
@@ -80,6 +85,13 @@ int main()
 							break;
 							case 2:
 							AC_M = ACalulator_Menu(); //일반 계산기 메뉴
+							switch (CM_M)
+ 							{
+ 								case 1:
+ 								Matrix_add();
+ 								default:
+ 								break;
+ 							}// 행렬계산기에 대한 switch
 							break;
 							case 3:
 							End_C=10; //End_c에 10을 넣어줘서 반복문 탈출
@@ -105,7 +117,7 @@ int main()
 			//알람
 			break;
 		case 7:
-			//스톱워치
+		    stop_watch();
 			break;
 		case 8:
 			//달력
@@ -168,6 +180,138 @@ int ACalulator_Menu()
 		scanf_s("%d", &user_num);
 		return user_num;
 }
+void Matrix_add()  //행렬 덧셈
+ {
+ 	int exone[MAX][MAX];
+ 	int extwo[MAX][MAX];
+ 	int exsum[MAX][MAX];
+ 	int matrix_mrow;
+ 	int matrix_mcolumn;
+ 	int i = 0,j=0;
+
+ 	printf("===========================\n");
+ 	printf("        Matrix Add\n");
+ 	printf("===========================\n");
+ 	printf("더해줄 행렬은 같은 크기여야 합니다.\n");
+ 	printf("덧셈 할 행렬의 행의 크기를 입력해주세요:");
+ 	scanf_s("%d", &matrix_mrow);
+ 	printf("덧셈 할 행렬의 열의 크기를 입력해주세요:");
+ 	scanf_s("%d", &matrix_mcolumn);
+
+ 	printf("첫번째 행렬 \n");
+ 	for (i = 0; i < matrix_mcolumn; i++)
+ 		for (j = 0; j < matrix_mrow; j++)
+ 		{
+ 			printf("exone[%d][%d]", i, j);
+ 			scanf("%d", &exone[i][j]);
+ 		}//첫번째 행렬 입력
+
+ 	printf("두번째 행렬 \n");
+ 	for (i = 0; i < matrix_mcolumn; i++)
+ 		for (j = 0; j < matrix_mrow; j++)
+ 		{
+ 			printf("extwo[%d][%d]", i, j);
+ 			scanf("%d", &extwo[i][j]);
+ 		}//두번째 행렬 입력
+
+ 	printf("첫번째 행렬 \n");
+ 	for (i = 0; i < matrix_mcolumn; i++)
+ 	{
+ 		printf("\n");
+ 		for (j = 0; j < matrix_mrow; j++)
+ 		{
+ 			printf("%d\t", exone[i][j]);
+ 		} //행을 출력
+ 	}//열을 출력
+
+ 	printf("두번째 행렬 \n");
+ 	for (i = 0; i < matrix_mcolumn; i++)
+ 	{
+ 		printf("\n");
+ 		for (j = 0; j < matrix_mrow; j++)
+ 		{
+ 			printf("%d\t", extwo[i][j]);
+ 		} //행을 출력
+ 	}//열을 출력
+
+
+ 	for (i = 0; i < matrix_mcolumn; i++)
+ 		for (j = 0; j < matrix_mrow; j++)
+ 		{
+ 			exsum[i][j] = exone[i][j] + extwo[i][j];
+ 		}//두번째 행렬 입력
+ 	printf("덧셈한 행렬 \n");
+ 	for (i = 0; i < matrix_mcolumn; i++)
+ 	{
+ 		printf("\n");
+ 		for (j = 0; j < matrix_mrow; j++)
+ 		{
+ 			printf("%d\t", exsum[i][j]);
+ 		} //행을 출력
+ 	}//열을 출력
+
+ }// void Matrix_add() 함수 종료 중괄호
+ void stop_watch()
+ {
+ 	int hour = 0, min = 0, sec = 0, frame = 0;
+ 	char ch;
+ 	stopwatch_menu();
+ 	while (1)
+ 	{
+ 		printf("%2d : %2d : %2d : %2d", hour, min, sec, frame);
+ 		Sleep(10);
+ 		frame++;
+ 		if (frame == 100)
+ 		{
+ 			sec++;
+ 			frame = 0;
+ 		}
+ 		if (sec == 60)
+ 		{
+ 			min++;
+ 			sec = 0;
+ 		}
+ 		if (min == 60)
+ 		{
+ 			hour++;
+ 			min = 0;
+ 		}
+
+ 		if (kbhit())
+ 		{
+ 			ch = getch();
+ 			switch (ch)
+ 			{
+ 			case 'S': case 's':
+ 				ch = getch();
+ 				break;
+ 			case 'R': case 'r':
+ 				system("cls");
+ 				stopwatch_menu();
+ 				hour = min = sec = frame = 0;
+ 				break;
+ 			case 'Q': case 'q':
+ 				printf("\n");
+ 				return 0;
+ 			case 'W': case 'w':
+ 				printf("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
+ 				printf("%2d : %2d : %2d : %2d\n", hour, min, sec, frame);
+ 				break;
+ 			default:
+ 				break;
+ 			}
+ 		}
+ 		printf("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
+ 	}
+ }
+ void stopwatch_menu()
+ {
+ 	printf("======================================================\n");
+ 	printf("                   Stop Watch\n");
+ 	printf("======================================================\n");
+ 	printf("S:시작/멈춤 \nW: 기록\nR:리셋\nQ:나가기\n");
+ 	printf("시 : 분 : 초 :0.01초\n");
+ }
 
 //================================================-changun
 
