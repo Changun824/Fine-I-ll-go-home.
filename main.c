@@ -20,6 +20,7 @@ void Matrix_add(); //행렬 덧셈/
 void learningplanner();//학습계획표 메뉴 함수
 int planinsert();//계획 입력 함수
 int achievementcheck();//달성체크함수
+int check(char *yn);
 //==============================================-sungjae
 //====================
 int main()
@@ -503,3 +504,9 @@ int achievementcheck() {
 	}
 	return 0;
 }//=============================================-sungjae
+int check(char *yn) {//달성체크를 해서 달성됫으면 1 반환 , 아니면 0 반환
+	if (strcmp(yn,"y")==0)
+		return 1;
+	else
+		return 0;
+}//============================================-sungjae
