@@ -3,21 +3,14 @@
 #include<stdlib.h>
 #include<time.h>
 //====================
-typedef struct plan{
-	char pi1[50], pi2[50], pi3[50], pi4[50], pi5[50], pi6[50], pi7[50], pi8[50], pi9[50], pi10[50], pi11[50], pi12[50], pi13[50], pi14[50], pi15[50], pi16[50];
-	//pi1~16배열은 1주차부터 16주차까지의 계획저장 변수
-}PLAN;//PLAN구조체는 계획 문자열 저장하기 위해서 사용
-//함수 넣는존
+
 //==============================================-changun
 int Calculator_Menu(); //계산기 메인 메뉴
 int Matrix_Menu(); //행렬 계산 메뉴
 int ACalulator_Menu(); //사칙연산 메뉴
 void Matrix_add(); //행렬 덧셈/
 //==============================================-changun
-//==============================================-sungjae
-void learningplanner();//학습계획표 메뉴 함수
-int planinsert();//계획 입력 함수
-//==============================================-sungjae
+
 //====================
 int main()
 {
@@ -47,7 +40,7 @@ int main()
 		switch (main_switch_num)
 		{
 		case 1:
-		learningplanner();
+
 			//학습 계획표
 			break;
 		case 2:
@@ -265,21 +258,21 @@ void learningplanner()
 int planinsert()
 {
 	FILE *fpin1;//1학기 계획을 파일에 저장하기 위해서 만든 파일포인터
-	if ((fpin1=fopen("plan1.txt", "w")) == NULL)
+	if ((fpin1 = fopen("plan1.txt", "w")) == NULL)
 	{
 		printf("plan1.txt에 쓰기를 실패하였습니다.\n");
 	}
 	FILE *fpin2;//2학기 계획을 파일에 저장하기 위해서 만든 파일포인터
-	if ((fpin2=fopen("plan2.txt", "w")) == NULL)
+	if ((fpin2 = fopen("plan2.txt", "w")) == NULL)
 	{
 		printf("plan2.txt에 쓰기를 실패하였습니다.\n");
 	}
 	int a = 0;
-	PLAN insert = {0};
+	PLAN insert = { 0 };
 	printf("1. 1학기 계획입력\n");
 	printf("2. 2학기 계획입력\n");
 	printf("3. 종료\n");
-	scanf("%d",&a);
+	scanf("%d", &a);
 	if (a == 1)
 	{
 		printf("1주차 계획 :  ");
@@ -303,7 +296,7 @@ int planinsert()
 		printf("10주차 계획 : ");
 		scanf("%s", insert.pi10, 50);
 		printf("11주차 계획 : ");
-		scanf("%s", insert.pi11,50);
+		scanf("%s", insert.pi11, 50);
 		printf("12주차 계획 : ");
 		scanf("%s", insert.pi12, 50);
 		printf("13주차 계획 : ");
@@ -314,7 +307,7 @@ int planinsert()
 		scanf("%s", insert.pi15, 50);
 		printf("16주차 계획 : ");
 		scanf("%s", insert.pi16, 50);
-		fscanf(fpin1,"%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", insert.pi1, insert.pi2, insert.pi3, insert.pi4, insert.pi5, insert.pi6, insert.pi7, insert.pi8, insert.pi9, insert.pi10, insert.pi11, insert.pi12, insert.pi13, insert.pi14, insert.pi15, insert.pi16);
+		fprintf(fpin1, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", insert.pi1, insert.pi2, insert.pi3, insert.pi4, insert.pi5, insert.pi6, insert.pi7, insert.pi8, insert.pi9, insert.pi10, insert.pi11, insert.pi12, insert.pi13, insert.pi14, insert.pi15, insert.pi16);
 		fclose(fpin1);
 		fclose(fpin2);
 		return 0;
@@ -353,7 +346,8 @@ int planinsert()
 		scanf("%s", insert.pi15, 50);
 		printf("16주차 계획 : ");
 		scanf("%s", insert.pi16, 50);
-		fscanf(fpin1, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", insert.pi1, insert.pi2, insert.pi3, insert.pi4, insert.pi5, insert.pi6, insert.pi7, insert.pi8, insert.pi9, insert.pi10, insert.pi11, insert.pi12, insert.pi13, insert.pi14, insert.pi15, insert.pi16);
+		fprintf(fpin1, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", insert.pi1, insert.pi2, insert.pi3, insert.pi4, insert.pi5, insert.pi6, insert.pi7, insert.pi8, insert.pi9, insert.pi10, insert.pi11, insert.pi12, insert.pi13, insert.pi14, insert.pi15, insert.pi16);
+
 		fclose(fpin1);
 		fclose(fpin2);
 		return 0;
@@ -364,4 +358,4 @@ int planinsert()
 	fclose(fpin1);
 	fclose(fpin2);
 	return 0;
-}//====================================-sungjae
+}//====================================-sungjae 
