@@ -27,6 +27,7 @@ int Calculator_Menu(); //계산기 메인 메뉴
 int Matrix_Menu(); //행렬 계산 메뉴
 int ACalulator_Menu(); //사칙연산 메뉴
 void Matrix_add(); //행렬 덧셈
+void Matrix_mul(); // 행렬 곱셈
 void stop_watch(); //스톱워치
 void stopwatch_menu(); //스톱 워치 메뉴
 //==============================================-changun
@@ -91,6 +92,10 @@ int main()
 							{
 								case 1:
 								Matrix_add();
+								break;
+								case 2:
+								Matrix_mul();
+								break;
 								default:
 								break;
 							}// 행렬계산기에 대한 switch
@@ -204,45 +209,45 @@ void Matrix_add()  //행렬 덧셈
 	scanf_s("%d", &matrix_mcolumn);
 
 	printf("첫번째 행렬 \n");
-	for (i = 0; i < matrix_mcolumn; i++)
-		for (j = 0; j < matrix_mrow; j++)
+	for (i = 0; i < matrix_mrow; i++)
+		for (j = 0; j < matrix_mcolumn; j++)
 		{
 			printf("exone[%d][%d]", i, j);
 			scanf("%d", &exone[i][j]);
 		}//첫번째 행렬 입력
 
 	printf("두번째 행렬 \n");
-	for (i = 0; i < matrix_mcolumn; i++)
-		for (j = 0; j < matrix_mrow; j++)
+	for (i = 0; i < matrix_mrow; i++)
+		for (j = 0; j < matrix_mcolumn; j++)
 		{
 			printf("extwo[%d][%d]", i, j);
 			scanf("%d", &extwo[i][j]);
 		}//두번째 행렬 입력
 	printf("\n");
 	printf("첫번째 행렬 \n");
-	for (i = 0; i < matrix_mcolumn; i++)
+	for (i = 0; i < matrix_mrow; i++)
 	{
 		printf("\n");
-		for (j = 0; j < matrix_mrow; j++)
+		for (j = 0; j < matrix_mcolumn; j++)
 		{
 			printf("%d\t", exone[i][j]);
 		} //행을 출력
 	}//열을 출력
 	printf("\n");
 	printf("두번째 행렬 \n");
-	for (i = 0; i < matrix_mcolumn; i++)
+	for (i = 0; i < matrix_mrow; i++)
 	{
 		printf("\n");
-		for (j = 0; j < matrix_mrow; j++)
+		for (j = 0; j < matrix_mcolumn; j++)
 		{
 			printf("%d\t", extwo[i][j]);
 		} //행을 출력
 	}//열을 출력
 
 
-	for (i = 0; i < matrix_mcolumn; i++)
+	for (i = 0; i < matrix_mrow; i++)
 	{
-		for (j = 0; j < matrix_mrow; j++)
+		for (j = 0; j < matrix_mcoumn; j++)
 		{
 			exsum[i][j] = exone[i][j] + extwo[i][j];
 		}//두번째 행렬 입력
@@ -250,9 +255,9 @@ void Matrix_add()  //행렬 덧셈
 	}
 	printf("\n");
 	printf("덧셈한 행렬 \n");
-	for (i = 0; i < matrix_mcolumn; i++)
+	for (i = 0; i < matrix_mrow; i++)
 	{
-		for (j = 0; j < matrix_mrow; j++)
+		for (j = 0; j < matrix_mcoulmn; j++)
 		{
 			printf("%d\t", exsum[i][j]);
 		} //행을 출력
@@ -260,7 +265,88 @@ void Matrix_add()  //행렬 덧셈
 	}//열을 출력
 
 }// void Matrix_add() 함수 종료 중괄호
- void stop_watch()
+
+void Matrix_mul()  //행렬 곱셈 함수
+ {
+	 int exone[MAX][MAX];
+	 int extwo[MAX][MAX];
+	 int sum[MAX][MAX];
+	 int matrix_arow, matrix_acolumn;
+	 int matrix_bcolumn, matrix_brow;
+	 int i=0, j=0,z=0;
+	 printf("===============================================\n");
+	 printf("             MATRIX MULTIPCATION\n");
+	 printf("===============================================\n");
+	 printf("곱하기를 할 A[m][n], B[m][n]은 A[n]과 B[m]이 같아야 합니다\n ");
+	 printf("곱셈 할 행렬의 A행렬의 크기를 입력해주세요 A[m][n]:");
+	 scanf_s("%d %d",&matrix_arow,&matrix_acolumn);
+
+	 printf("곱셈 할 행렬의 B행렬의 크기를 입력해주세요:");
+	 scanf_s("%d %d", &matrix_brow, &matrix_bcolumn);
+	 if (matrix_acolumn != matrix_brow)
+	 {
+		 printf("곱하기가 불가능한 행렬 입니다.\n");
+		 return 0;
+	 }
+	 printf("\n");
+	 printf("첫번째 행렬 \n");
+	 for (i = 0; i < matrix_arow; i++)
+		 for (j = 0; j < matrix_acolumn; j++)
+		 {
+			 printf("exone[%d][%d]", i, j);
+			 scanf("%d", &exone[i][j]);
+		 }//첫번째 행렬 입력
+	 printf("\n");
+	 printf("두번째 행렬 \n");
+	 for (i = 0; i < matrix_brow; i++)
+		 for (j = 0; j < matrix_bcolumn; j++)
+		 {
+			 printf("extwo[%d][%d]", i, j);
+			 scanf("%d", &extwo[i][j]);
+		 }//두번째 행렬 입력
+	 printf("\n");
+	//곱을 위한 포문
+	 for (i = 0; i < matrix_arow; i++)
+	 {
+		 for (j = 0; j < matrix_bcolumn; j++)
+		 {
+			 sum[i][j] = 0;
+			 for (z = 0; z < matrix_brow; z++)
+			 {
+				 sum[i][j] = sum[i][j]+exone[i][z] * extwo[z][j];
+			 }
+		 }//곱해줄 행렬 계산
+	 }//곱에 필요한 for문
+
+	 printf("\n");
+	 printf("첫번째 행렬\n");
+	 for (i = 0; i < matrix_arow; i++)
+	 {
+		 printf("\n");
+		 for (j = 0; j < matrix_acolumn; j++)
+			 printf("%d \t", exone[i][j]);
+	 } //첫번째 행렬 중괄호
+
+	 printf("\n");
+	 printf("두번째 행렬\n");
+	 for (i = 0; i < matrix_brow; i++)
+	 {
+		 printf("\n");
+		 for (j = 0; j < matrix_bcolumn; j++)
+			 printf("%d \t", extwo[i][j]);
+	 } //두번째 행렬 중괄호
+
+	 printf("\n");
+	 printf("행렬을 곱한 값\n");
+	 for (i = 0; i < matrix_acolumn; i++)
+	 {
+		 printf("\n");
+		 for (j = 0; j < matrix_brow; j++)
+			 printf("%d \t", sum[i][j]);
+	 } //합을 출력하는 중괄호
+ }//행렬 곱셈 함수 종료
+
+ void stop_watch()  //스탑 워치 함수
  {
  	int hour = 0, min = 0, sec = 0, frame = 0;
  	char ch;
