@@ -20,7 +20,8 @@ void Matrix_add(); //행렬 덧셈/
 void learningplanner();//학습계획표 메뉴 함수
 int planinsert();//계획 입력 함수
 int achievementcheck();//달성체크함수
-int check(char *yn);
+int check(char *yn);//사용자 응답판별함수//y이면 1반환,아니면 0반환
+int timer();//타이머 함수
 //==============================================-sungjae
 //====================
 int main()
@@ -51,6 +52,7 @@ int main()
 		switch (main_switch_num)
 		{
 		case 1:
+		learningplanner();//학습계획표 메뉴함수
 
 			//학습 계획표
 			break;
@@ -89,7 +91,7 @@ int main()
 		case 4:
 			//단어장
 			break;
-		case 5:
+		case 5: timer();
 			//타이머
 			break;
 		case 6:
@@ -510,3 +512,66 @@ int check(char *yn) {//달성체크를 해서 달성됫으면 1 반환 , 아니�
 	else
 		return 0;
 }//============================================-sungjae
+int timer() {
+
+	int inmin = 0, insec = 0,inhour=0,key=0;
+	printf("타이머의 시간을 입력해주세요\n");
+	printf("min : ");
+	scanf("%d",&inmin);
+	printf("sec : ");
+	scanf("%d", &insec);
+
+	while (1) {
+		if (inmin >= 60)
+		{
+			inmin -= 60;
+			inhour++;
+		}
+		else
+			break;
+	}
+	while (1) {
+		if (insec >= 60) {
+			insec -= 60;
+			inmin++;
+		}
+		else
+			break;
+	}
+	if (inmin >= 60)
+	{
+		inmin -= 60;
+		inhour++;
+	}
+	while (1)
+	{
+		if (insec ==0 &&inmin == 0 && inhour != 0)
+		{
+			inhour--;
+			inmin = 60;
+		}
+		if (insec == 0)
+		{
+			inmin--;
+			insec = 59;
+		}
+		printf("■■■■■■■■■■■■■\n");
+		printf("■■■■■ Timer■■■■■\n");
+		printf("■■■■■■■■■■■■■\n");
+		printf("■      ■      ■      ■\n");
+		printf("■  %2d  ■  %2d  ■  %2d  ■\n", inhour, inmin, insec);
+		printf("■      ■      ■      ■\n");
+		printf("■■■■■■■■■■■■■\n");
+		Sleep(1000);
+		insec -= 1;
+		system("cls");
+		printf("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
+		if (insec == 0 && inmin == 0 && inhour == 0)
+			break;
+	}
+	printf("타이머 종료!!!!\n");
+
+		printf("\a");
+
+	return 0;
+}//==================================-sungjae
