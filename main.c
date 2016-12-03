@@ -4,7 +4,6 @@
 #include<windows.h>
 #include<stdlib.h>
 #include<time.h>
-<<<<<<< HEAD
 #include <conio.h>
 #include <string.h>
 #define UP 72//위쪽 방향키
@@ -27,21 +26,10 @@ VOCA a[WORDCOUNT];
 void main_menu();
 int menu_switch();
 //===============================================================-main
-=======
-#include<string.h>
-//====================
-typedef struct plan {
-	char pi1[50], pi2[50], pi3[50], pi4[50], pi5[50], pi6[50], pi7[50], pi8[50], pi9[50], pi10[50], pi11[50], pi12[50], pi13[50], pi14[50], pi15[50], pi16[50];
-	//pi1~16배열은 1주차부터 16주차까지의 계획저장 변수
-	int ac1, ac2, ac3, ac4, ac5, ac6, ac7, ac8, ac9, ac10, ac11, ac12, ac13, ac14, ac15, ac16;
-}PLAN;//PLAN구조체는 계획 문자열 저장하기 위해서 사용
-
->>>>>>> sungjaebb
 //==============================================-changun
 int Calculator_Menu(); //계산기 메인 메뉴
 int Matrix_Menu(); //행렬 계산 메뉴
 int ACalulator_Menu(); //사칙연산 메뉴
-<<<<<<< HEAD
 void Matrix_add(); //행렬 덧셈
 void Matrix_mul(); // 행렬 곱셈
 void stop_watch(); //스톱워치
@@ -64,17 +52,6 @@ void stopwatch_menu(); //스톱 워치 메뉴
 void calender();
 //================================================-seokhoon
 
-=======
-void Matrix_add(); //행렬 덧셈/
-//==============================================-changun
-//==============================================-sungjae
-void learningplanner();//학습계획표 메뉴 함수
-int planinsert();//계획 입력 함수
-int achievementcheck();//달성체크함수
-int check(char *yn);//사용자 응답판별함수//y이면 1반환,아니면 0반환
-int timer();//타이머 함수
-//==============================================-sungjae
->>>>>>> sungjaebb
 //====================
 int main()
 {
@@ -93,13 +70,7 @@ int main()
 		num=menu_switch();
 		switch (num)
 		{
-<<<<<<< HEAD
 		case 5:
-=======
-		case 1:
-		learningplanner();//학습계획표 메뉴함수
-
->>>>>>> sungjaebb
 			//학습 계획표
 			break;
 		case 6:
@@ -150,11 +121,7 @@ int main()
 			menu_scr();
 			MenuChoice();
 			break;
-<<<<<<< HEAD
 		case 9:
-=======
-		case 5: timer();
->>>>>>> sungjaebb
 			//타이머
 			break;
 		case 10:
@@ -875,24 +842,14 @@ void Quiz(void){
 }
 void del(void)
 {
-<<<<<<< HEAD
 	int i=0,count;
 	char target[100];
 	FILE *fp;
 	if((fp = fopen("Voca.txt","r"))==NULL)
-=======
-	FILE *fpin1;//1학기 계획을 파일에 저장하기 위해서 만든 파일포인터
-	if ((fpin1 = fopen("plan1.txt", "w")) == NULL)
->>>>>>> sungjaebb
 	{
 		fprintf(stderr,"파일 Voca.txt를 열 수 없습니다\n","Voca.txt");
 	}
-<<<<<<< HEAD
 	while(!feof(fp))
-=======
-	FILE *fpin2;//2학기 계획을 파일에 저장하기 위해서 만든 파일포인터
-	if ((fpin2 = fopen("plan2.txt", "w")) == NULL)
->>>>>>> sungjaebb
 	{
 		fgets(a[i].name,100,fp);
 		a[i].name[strlen(a[i].name)-1]='\0';
@@ -900,7 +857,6 @@ void del(void)
 		a[i].mean[strlen(a[i].mean)-1]='\0';
 		i++;
 	}
-<<<<<<< HEAD
 	fclose(fp);
 	count=i-1;
 	printf("삭제하실 단어를 입력하세요\n");
@@ -914,56 +870,9 @@ void del(void)
 			strcpy(a[i].mean,"\0");
 		}
 
-=======
-	int a = 0;
-	PLAN insert = { 0 };
-	printf("1. 1학기 계획입력\n");
-	printf("2. 2학기 계획입력\n");
-	printf("3. 종료\n");
-	scanf("%d", &a);
-	if (a == 1)
-	{
-		printf("1주차 계획 :  ");
-		scanf("%s", insert.pi1, 50);
-		printf("2주차 계획 :  ");
-		scanf("%s", insert.pi2, 50);
-		printf("3주차 계획 :  ");
-		scanf("%s", insert.pi3, 50);
-		printf("4주차 계획 :  ");
-		scanf("%s", insert.pi4, 50);
-		printf("5주차 계획 :  ");
-		scanf("%s", insert.pi5, 50);
-		printf("6주차 계획 :  ");
-		scanf("%s", insert.pi6, 50);
-		printf("7주차 계획 :  ");
-		scanf("%s", insert.pi7, 50);
-		printf("8주차 계획 :  ");
-		scanf("%s", insert.pi8, 50);
-		printf("9주차 계획 :  ");
-		scanf("%s", insert.pi9, 50);
-		printf("10주차 계획 : ");
-		scanf("%s", insert.pi10, 50);
-		printf("11주차 계획 : ");
-		scanf("%s", insert.pi11, 50);
-		printf("12주차 계획 : ");
-		scanf("%s", insert.pi12, 50);
-		printf("13주차 계획 : ");
-		scanf("%s", insert.pi13, 50);
-		printf("14주차 계획 : ");
-		scanf("%s", insert.pi14, 50);
-		printf("15주차 계획 : ");
-		scanf("%s", insert.pi15, 50);
-		printf("16주차 계획 : ");
-		scanf("%s", insert.pi16, 50);
-		fprintf(fpin1, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", insert.pi1, insert.pi2, insert.pi3, insert.pi4, insert.pi5, insert.pi6, insert.pi7, insert.pi8, insert.pi9, insert.pi10, insert.pi11, insert.pi12, insert.pi13, insert.pi14, insert.pi15, insert.pi16);
-		fclose(fpin1);
-		fclose(fpin2);
-		return 0;
->>>>>>> sungjaebb
 	}
 	if((fp = fopen("Voca.txt","w"))==NULL)
 	{
-<<<<<<< HEAD
 		fprintf(stderr,"파일 Voca.txt를 열 수 없습니다\n","Voca.txt");
 	}
 	for(i=0;i<count;i++)
@@ -1076,253 +985,3 @@ void calender() {
 
 }
 //==================================================-seokhoon
-=======
-		printf("1주차 계획 :  ");
-		scanf("%s", insert.pi1, 50);
-		printf("2주차 계획 :  ");
-		scanf("%s", insert.pi2, 50);
-		printf("3주차 계획 :  ");
-		scanf("%s", insert.pi3, 50);
-		printf("4주차 계획 :  ");
-		scanf("%s", insert.pi4, 50);
-		printf("5주차 계획 :  ");
-		scanf("%s", insert.pi5, 50);
-		printf("6주차 계획 :  ");
-		scanf("%s", insert.pi6, 50);
-		printf("7주차 계획 :  ");
-		scanf("%s", insert.pi7, 50);
-		printf("8주차 계획 :  ");
-		scanf("%s", insert.pi8, 50);
-		printf("9주차 계획 :  ");
-		scanf("%s", insert.pi9, 50);
-		printf("10주차 계획 : ");
-		scanf("%s", insert.pi10, 50);
-		printf("11주차 계획 : ");
-		scanf("%s", insert.pi11, 50);
-		printf("12주차 계획 : ");
-		scanf("%s", insert.pi12, 50);
-		printf("13주차 계획 : ");
-		scanf("%s", insert.pi13, 50);
-		printf("14주차 계획 : ");
-		scanf("%s", insert.pi14, 50);
-		printf("15주차 계획 : ");
-		scanf("%s", insert.pi15, 50);
-		printf("16주차 계획 : ");
-		scanf("%s", insert.pi16, 50);
-		fprintf(fpin1, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", insert.pi1, insert.pi2, insert.pi3, insert.pi4, insert.pi5, insert.pi6, insert.pi7, insert.pi8, insert.pi9, insert.pi10, insert.pi11, insert.pi12, insert.pi13, insert.pi14, insert.pi15, insert.pi16);
-
-		fclose(fpin1);
-		fclose(fpin2);
-		return 0;
-	}
-	else if (a == 3)
-		return 0;
-	printf("잘못 입력하셨습니다.\n");
-	fclose(fpin1);
-	fclose(fpin2);
-	return 0;
-}//====================================-sungjae
-int achievementcheck() {
-	FILE *fpout1 = fopen("plan1.txt", "r");//1학기 읽어오는 파일포인터
-	if ((fpout1 = fopen("plan1.txt", "r")) == NULL)
-	{
-		printf("오류!!\n");
-		return 0;
-	}
-	FILE *fpout2 = fopen("plan2.txt", "r");//2학기 읽어오는 파일포인터
-	if ((fpout2 = fopen("plan2.txt", "r")) == NULL)
-	{
-		printf("오류!!\n");
-		return 0;
-	}
-	FILE *chrate1=fopen("rate1.txt","w");//1학기 달성체크
-	FILE *chrate2 = fopen("rate2.txt", "w");//2학기 달성체크
-	int f=0;
-	char c1[2], c2[2], c3[2], c4[2], c5[2], c6[2], c7[2], c8[2], c9[2], c10[2], c11[2], c12[2], c13[2], c14[2], c15[2], c16[2];
-	PLAN out;
-	printf("1. 1학기 달성체크\n");
-	printf("2. 2학기 달성체크\n");
-	printf("3. 종료\n");
-	scanf("%d", &f);
-	if (f == 3)
-		exit(1);
-	switch (f) {
-	case 1:
-		fscanf(fpout1, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", out.pi1, out.pi2, out.pi3, out.pi4, out.pi5, out.pi6, out.pi7, out.pi8, out.pi9, out.pi10, out.pi11, out.pi12, out.pi13, out.pi14, out.pi15, out.pi16);
-		printf("1주차 : %s-->달성했으면 y / 아니면 n\n", out.pi1);
-		scanf(" %s", c1);
-		out.ac1 = check(c1);
-		printf("2주차 : %s-->달성했으면 y / 아니면 n\n", out.pi2);
-		scanf(" %s", c2);
-		out.ac2 = check(c2);
-		printf("3주차 : %s-->달성했으면 y / 아니면 n\n", out.pi3);
-		scanf(" %s", c3);
-		out.ac3 = check(c3);
-		printf("4주차 : %s-->달성했으면 y / 아니면 n\n", out.pi4);
-		scanf(" %s", c4);
-		out.ac4 = check(c4);
-		printf("5주차 : %s-->달성했으면 y / 아니면 n\n", out.pi5);
-		scanf(" %s", c5);
-		out.ac5 = check(c5);
-		printf("6주차 : %s-->달성했으면 y / 아니면 n\n", out.pi6);
-		scanf(" %s", c6);
-		out.ac6 = check(c6);
-		printf("7주차 : %s-->달성했으면 y / 아니면 n\n", out.pi7);
-		scanf(" %s", c7);
-		out.ac7 = check(c7);
-		printf("8주차 : %s-->달성했으면 y / 아니면 n\n", out.pi8);
-		scanf(" %s", c8);
-		out.ac8 = check(c8);
-		printf("9주차 : %s-->달성했으면 y / 아니면 n\n", out.pi9);
-		scanf(" %s", c9);
-		out.ac9 = check(c9);
-		printf("10주차 : %s-->달성했으면 y / 아니면 n\n", out.pi10);
-		scanf(" %s", c10);
-		out.ac10 = check(c10);
-		printf("11주차 : %s-->달성했으면 y / 아니면 n\n", out.pi11);
-		scanf(" %s", c11);
-		out.ac11 = check(c11);
-		printf("12주차 : %s-->달성했으면 y / 아니면 n\n", out.pi12);
-		scanf(" %s", c12);
-		out.ac12 = check(c12);
-		printf("13주차 : %s-->달성했으면 y / 아니면 n\n", out.pi13);
-		scanf(" %s", c13);
-		out.ac13 = check(c13);
-		printf("14주차 : %s-->달성했으면 y / 아니면 n\n", out.pi14);
-		scanf(" %s", c14);
-		out.ac14 = check(c14);
-		printf("15주차 : %s-->달성했으면 y / 아니면 n\n", out.pi15);
-		scanf(" %s", c15);
-		out.ac15 = check(c15);
-		printf("16주차 : %s-->달성했으면 y / 아니면 n\n", out.pi16);
-		scanf(" %s", c16);
-		out.ac16 = check(c16);
-		fprintf(chrate1,"%d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n",out.ac1, out.ac2, out.ac3, out.ac4, out.ac5, out.ac6, out.ac7, out.ac8, out.ac9, out.ac10, out.ac11, out.ac12, out.ac13, out.ac14, out.ac15, out.ac16);
-		break;
-	case 2:
-		fscanf(fpout1, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", out.pi1, out.pi2, out.pi3, out.pi4, out.pi5, out.pi6, out.pi7, out.pi8, out.pi9, out.pi10, out.pi11, out.pi12, out.pi13, out.pi14, out.pi15, out.pi16);
-		printf("1주차 : %s-->달성했으면 y / 아니면 n\n", out.pi1);
-		scanf(" %s", c1);
-		out.ac1 = check(c1);
-		printf("2주차 : %s-->달성했으면 y / 아니면 n\n", out.pi2);
-		scanf(" %s", c2);
-		out.ac2 = check(c2);
-		printf("3주차 : %s-->달성했으면 y / 아니면 n\n", out.pi3);
-		scanf(" %s", c3);
-		out.ac3 = check(c3);
-		printf("4주차 : %s-->달성했으면 y / 아니면 n\n", out.pi4);
-		scanf(" %s", c4);
-		out.ac4 = check(c4);
-		printf("5주차 : %s-->달성했으면 y / 아니면 n\n", out.pi5);
-		scanf(" %s", c5);
-		out.ac5 = check(c5);
-		printf("6주차 : %s-->달성했으면 y / 아니면 n\n", out.pi6);
-		scanf(" %s", c6);
-		out.ac6 = check(c6);
-		printf("7주차 : %s-->달성했으면 y / 아니면 n\n", out.pi7);
-		scanf(" %s", c7);
-		out.ac7 = check(c7);
-		printf("8주차 : %s-->달성했으면 y / 아니면 n\n", out.pi8);
-		scanf(" %s", c8);
-		out.ac8 = check(c8);
-		printf("9주차 : %s-->달성했으면 y / 아니면 n\n", out.pi9);
-		scanf(" %s", c9);
-		out.ac9 = check(c9);
-		printf("10주차 : %s-->달성했으면 y / 아니면 n\n", out.pi10);
-		scanf(" %s", c10);
-		out.ac10 = check(c10);
-		printf("11주차 : %s-->달성했으면 y / 아니면 n\n", out.pi11);
-		scanf(" %s", c11);
-		out.ac11 = check(c11);
-		printf("12주차 : %s-->달성했으면 y / 아니면 n\n", out.pi12);
-		scanf(" %s", c12);
-		out.ac12 = check(c12);
-		printf("13주차 : %s-->달성했으면 y / 아니면 n\n", out.pi13);
-		scanf(" %s", c13);
-		out.ac13 = check(c13);
-		printf("14주차 : %s-->달성했으면 y / 아니면 n\n", out.pi14);
-		scanf(" %s", c14);
-		out.ac14 = check(c14);
-		printf("15주차 : %s-->달성했으면 y / 아니면 n\n", out.pi15);
-		scanf(" %s", c15);
-		out.ac15 = check(c15);
-		printf("16주차 : %s-->달성했으면 y / 아니면 n\n", out.pi16);
-		scanf(" %s", c16);
-		out.ac16 = check(c16);
-		fprintf(chrate1, "%d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n", out.ac1, out.ac2, out.ac3, out.ac4, out.ac5, out.ac6, out.ac7, out.ac8, out.ac9, out.ac10, out.ac11, out.ac12, out.ac13, out.ac14, out.ac15, out.ac16);
-		break;
-	default:
-		break;
-	}
-	return 0;
-}//=============================================-sungjae
-int check(char *yn) {//달성체크를 해서 달성됫으면 1 반환 , 아니면 0 반환
-	if (strcmp(yn,"y")==0)
-		return 1;
-	else
-		return 0;
-}//============================================-sungjae
-int timer() {
-
-	int inmin = 0, insec = 0,inhour=0,key=0;
-	printf("타이머의 시간을 입력해주세요\n");
-	printf("min : ");
-	scanf("%d",&inmin);
-	printf("sec : ");
-	scanf("%d", &insec);
-
-	while (1) {
-		if (inmin >= 60)
-		{
-			inmin -= 60;
-			inhour++;
-		}
-		else
-			break;
-	}
-	while (1) {
-		if (insec >= 60) {
-			insec -= 60;
-			inmin++;
-		}
-		else
-			break;
-	}
-	if (inmin >= 60)
-	{
-		inmin -= 60;
-		inhour++;
-	}
-	while (1)
-	{
-		if (insec ==0 &&inmin == 0 && inhour != 0)
-		{
-			inhour--;
-			inmin = 60;
-		}
-		if (insec == 0)
-		{
-			inmin--;
-			insec = 59;
-		}
-		printf("■■■■■■■■■■■■■\n");
-		printf("■■■■■ Timer■■■■■\n");
-		printf("■■■■■■■■■■■■■\n");
-		printf("■      ■      ■      ■\n");
-		printf("■  %2d  ■  %2d  ■  %2d  ■\n", inhour, inmin, insec);
-		printf("■      ■      ■      ■\n");
-		printf("■■■■■■■■■■■■■\n");
-		Sleep(1000);
-		insec -= 1;
-		system("cls");
-		printf("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
-		if (insec == 0 && inmin == 0 && inhour == 0)
-			break;
-	}
-	printf("타이머 종료!!!!\n");
-
-		printf("\a");
-
-	return 0;
-}//==================================-sungjae
->>>>>>> sungjaebb
