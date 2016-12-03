@@ -24,9 +24,9 @@ VOCA a[WORDCOUNT];
 
 //================================================================-sungjae
 typedef struct user {//사용자 입력 시간 구조체
-   int hour;//시
-   int min;//분
-   int sec;//초
+	int hour;//시
+	int min;//분
+	int sec;//초
 }USER;
 typedef struct plan {
 	char pi1[50], pi2[50], pi3[50], pi4[50], pi5[50], pi6[50], pi7[50], pi8[50], pi9[50], pi10[50], pi11[50], pi12[50], pi13[50], pi14[50], pi15[50], pi16[50];
@@ -36,8 +36,8 @@ typedef struct plan {
 }PLAN;//PLAN구조체는 계획 문자열 저장하기 위해서 사용
 	  //================================================================-sungjae
 
-//함수 넣는존
-//===============================================================-main
+	  //함수 넣는존
+	  //===============================================================-main
 void main_menu();
 int menu_switch();
 //===============================================================-main
@@ -51,8 +51,8 @@ int Matrix_key();
 void Matrix_mul(); // 행렬 곱셈
 void stop_watch(); //스톱워치
 void stopwatch_menu(); //스톱 워치 메뉴
- //==============================================-changun
- //================================================-SungHo
+					   //==============================================-changun
+					   //================================================-SungHo
 void gotoxy(int x, int y);//좌표 함수
 void menu_scr(void);//단어장 메뉴화면을 출력하는 함수
 void Function(int y);//단어장 해당 메뉴에 접속하는 함수
@@ -73,15 +73,15 @@ int planinsert();//계획 입력 함수
 int achievementcheck();//달성체크함수
 int achievementrate();//달성률보기함수
 int timetable();//시간표 출력함수
-//===============================================-sungjae
+				//===============================================-sungjae
 
-//==================================main메뉴존
+				//==================================main메뉴존
 int main()
 {
-	int main_switch= 0;  //메인문에 스위치 값을 받기 위한 변수 - 사용자 입력 값
+	int main_switch = 0;  //메인문에 스위치 값을 받기 위한 변수 - 사용자 입력 값
 	int main_end = 0;   //메인문을 종료시키기 위한 변수
 	int End_C = 0, C_M, CM_M, AC_M; //End_C:메인문에서 계산기메뉴를 종료하기 위한 변수 C_M : 계산기 메뉴 CM_M : 행렬계산 메뉴 AC_M : 일반 계산기 메뉴
-	int num=0;
+	int num = 0;
 	system("mode con: cols=70 lines=30"); //크기
 	system("title Learing Support Program");  //제목 변화
 	system("color 3F");
@@ -90,10 +90,12 @@ int main()
 		system("cls");
 
 		main_menu();
-		num=menu_switch();
+		num = menu_switch();
 		switch (num)
 		{
-		case 5: learningplanner();
+		case 5:
+			system("cls");
+			learningplanner();
 			//학습 계획표
 			break;
 		case 6:
@@ -150,11 +152,13 @@ int main()
 			MenuChoice();
 			break;
 		case 9:
-	    	timer();
+			system("cls");
+			timer();
 			//타이머
 			break;
 		case 10:
-	    	alarm();
+			system("cls");
+			alarm();
 			//알람
 			break;
 		case 11:
@@ -174,6 +178,7 @@ int main()
 
 		if (main_end == 100)    //종료를 위해 쓰인 if문과 변수
 		{
+			system("cls");
 			printf("프로그램을 종료합니다.\n");
 			exit(1);  //탈출 명령어
 		}//if문 - 종료 중괄호
@@ -449,10 +454,10 @@ void Matrix_add()  //행렬 덧셈
 	for (i = 0; i < matrix_mrow; i++)
 	{
 		printf("\n");
-			for (j = 0; j < matrix_mcolumn; j++)
-			{
-				printf("%d\t", exone[i][j]);
-			} //행을 출력
+		for (j = 0; j < matrix_mcolumn; j++)
+		{
+			printf("%d\t", exone[i][j]);
+		} //행을 출력
 	}//열을 출력
 	printf("\n");
 	printf("\n");
@@ -640,7 +645,7 @@ void stop_watch()  //스탑 워치 함수
 				break;
 			case 'Q': case 'q':
 				printf("\n");
-				return ;
+				return;
 			case 'W': case 'w':
 				printf("\n");
 				printf("\t\t ");
@@ -1008,126 +1013,116 @@ void calender() {
 //====================================================-sungjae
 int alarm()      //시간을 알려주는 함수/메인에서 주소를 받아와 저장해주기 위해 포인터로 쓰임.
 {
-   int i = 0;
-   USER utime;//사용자 입력 시간저장구조체
-   time_t now;//현재시간을 받기위한 구조체
-   struct tm *time_;//현재시간을 받기위한 구조체
-   printf("========================\n");
-   printf("==========ALARM=========\n");
-   printf("========================\n");
-   printf("알람이 울리는 시간을 입력해주세요...\n");
-   printf("hour : "); scanf("%d",&utime.hour);//사용자가 입력하는 시
-   printf("min : "); scanf("%d",&utime.min);//사용자가 입력하는 분
-   while (1) {//무한루프로 사용자 입력시간과 비교함
-       now = time(NULL);
-       time_ = localtime(&now);//로컬시간을 불러와줌
-      printf("현재 시간 : %2d시 %2d분 %2d초\n", time_->tm_hour, time_->tm_min, time_->tm_sec);//로컬시간 보여줌
-      printf("입력 시간 : %2d시 %2d분\n", utime.hour, utime.min);//사용자 입력시간보여줌
-      Sleep(200);
-      system("cls");//화면지움
-      if (utime.hour == time_->tm_hour&&utime.min == time_->tm_min)//사용자 입력시간과 같다면 빠져나옴
-         break;
-   }
-   while (!_kbhit()) {
-      printf("알람 작동!!!!\n");
-      printf("아무키나 입력하시면 끝납니다.");
-      Beep(392, 350); /* 솔 음계 *///==알람음 출력
-      Beep(440, 350); /* 라 음계 */
-      Beep(440, 700); /* 라 음계 */
-      Beep(392, 350); /* 솔 음계 */
+	int i = 0;
+	USER utime;//사용자 입력 시간저장구조체
+	time_t now;//현재시간을 받기위한 구조체
+	struct tm *time_;//현재시간을 받기위한 구조체
+	printf("========================\n");
+	printf("==========ALARM=========\n");
+	printf("========================\n");
+	printf("알람이 울리는 시간을 입력해주세요...\n");
+	printf("hour : "); scanf("%d", &utime.hour);//사용자가 입력하는 시
+	printf("min : "); scanf("%d", &utime.min);//사용자가 입력하는 분
+	while (1) {//무한루프로 사용자 입력시간과 비교함
+		now = time(NULL);
+		time_ = localtime(&now);//로컬시간을 불러와줌
+		printf("현재 시간 : %2d시 %2d분 %2d초\n", time_->tm_hour, time_->tm_min, time_->tm_sec);//로컬시간 보여줌
+		printf("입력 시간 : %2d시 %2d분\n", utime.hour, utime.min);//사용자 입력시간보여줌
+		Sleep(200);
+		system("cls");//화면지움
+		if (utime.hour == time_->tm_hour&&utime.min == time_->tm_min)//사용자 입력시간과 같다면 빠져나옴
+			break;
+	}
+	while (!_kbhit()) {
+		printf("알람 작동!!!!\n");
+		printf("아무키나 입력하시면 끝납니다.");
+		Beep(262, 200);/* 도 음계 *///알람음 출력
+		Beep(294, 200); /* 레 음계 */
+		Beep(330, 200); /* 미 음계 */
+		Beep(349, 200); /* 파 음계 */
+		Beep(392, 200); /* 솔 음계 */
+		Beep(440, 200); /* 라 음계 */
+		Beep(494, 200); /* 시 음계 */
+		Beep(524, 200); /* 도 음계 */
+		Sleep(500);//0.5초 지연
+		system("cls");
+	}
 
-      Beep(392, 350); /* 솔 음계 */
-      Beep(440, 350); /* 라 음계 */
-      Beep(440, 700); /* 라 음계 */
-      Beep(392, 350); /* 솔 음계 */
-
-      Sleep(500);//0.5초 지연
-      system("cls");
-   }
-       Beep(262, 200);/* 도 음계 */
-      Beep(294, 200); /* 레 음계 */
-      Beep(330, 200); /* 미 음계 */
-      Beep(349, 200); /* 파 음계 */
-      Beep(392, 200); /* 솔 음계 */
-      Beep(440, 200); /* 라 음계 */
-      Beep(494, 200); /* 시 음계 */
-      Beep(524, 200); /* 도 음계 */
-   return 0;
+	return 0;
 }//====================================================-sungjae
 int timer() {
 
-   int a=0,inmin = 0, insec = 0,inhour=0,key=0;
-   printf("타이머의 시간을 입력해주세요\n");
-   printf("min : ");
-   scanf("%d",&inmin);
-   printf("sec : ");
-   scanf("%d", &insec);
+	int a = 0, inmin = 0, insec = 0, inhour = 0, key = 0;
+	printf("타이머의 시간을 입력해주세요\n");
+	printf("min : ");
+	scanf("%d", &inmin);
+	printf("sec : ");
+	scanf("%d", &insec);
 
-   while (1) {
-      if (inmin >= 60)//분이 60이 넘는다면
-      {
-         inmin -= 60;//분 -60을 해주고
-         inhour++;//시간에 1을 더한다
-      }
-      else
-         break;//아니라면 빠져나온다
-   }
-   while (1) {
-      if (insec >= 60) {//초가 60이 넘는다면
-         insec -= 60;//초에서 -60을 해주고
-         inmin++;//분에 1을 더한다
-      }
-      else
-         break;//아니라면 빠져나온다
-   }
-   if (inmin >= 60)//위에 똑같은 식이 잇지만 분이 60일경우가 잇어 다시써준다
-   {
-      inmin -= 60;
-      inhour++;
-   }
-   while (1)
-   {
-      if (insec ==0 &&inmin == 0 && inhour != 0)//시간이 흐를때 분이 0이되면 시간을 1빼고
-      {
-         inhour--;
-         inmin = 60;//분을 60으로 만들어준다
-      }
-      if (insec == 0)//초가 0이되면
-      {
-         inmin--;//분에서 1을 빼주고
-         insec = 59;//초를 59로 초기화시켜준다
-      }
-      printf("■■■■■■■■■■■■■\n");
-      printf("■■■■■ Timer■■■■■\n");
-      printf("■■■■■■■■■■■■■\n");
-      printf("■      ■      ■      ■\n");
-      printf("■  %2d  ■  %2d  ■  %2d  ■\n", inhour, inmin, insec);//타이머 시간 출력
-      printf("■      ■      ■      ■\n");
-      printf("■■■■■■■■■■■■■\n");
-      Sleep(1000);//1초지연
-      insec -= 1;//시간이 흐름을 나타냄
-      system("cls");//화면 초기화
+	while (1) {
+		if (inmin >= 60)//분이 60이 넘는다면
+		{
+			inmin -= 60;//분 -60을 해주고
+			inhour++;//시간에 1을 더한다
+		}
+		else
+			break;//아니라면 빠져나온다
+	}
+	while (1) {
+		if (insec >= 60) {//초가 60이 넘는다면
+			insec -= 60;//초에서 -60을 해주고
+			inmin++;//분에 1을 더한다
+		}
+		else
+			break;//아니라면 빠져나온다
+	}
+	if (inmin >= 60)//위에 똑같은 식이 잇지만 분이 60일경우가 잇어 다시써준다
+	{
+		inmin -= 60;
+		inhour++;
+	}
+	while (1)
+	{
+		if (insec == 0 && inmin == 0 && inhour != 0)//시간이 흐를때 분이 0이되면 시간을 1빼고
+		{
+			inhour--;
+			inmin = 60;//분을 60으로 만들어준다
+		}
+		if (insec == 0)//초가 0이되면
+		{
+			inmin--;//분에서 1을 빼주고
+			insec = 59;//초를 59로 초기화시켜준다
+		}
+		printf("■■■■■■■■■■■■■\n");
+		printf("■■■■■ Timer■■■■■\n");
+		printf("■■■■■■■■■■■■■\n");
+		printf("■      ■      ■      ■\n");
+		printf("■  %2d  ■  %2d  ■  %2d  ■\n", inhour, inmin, insec);//타이머 시간 출력
+		printf("■      ■      ■      ■\n");
+		printf("■■■■■■■■■■■■■\n");
+		Sleep(1000);//1초지연
+		insec -= 1;//시간이 흐름을 나타냄
+		system("cls");//화면 초기화
 
-      if (insec == 0 && inmin == 0 && inhour == 0)//모두 0이되면
-         break;//타이머종료/
-   }
+		if (insec == 0 && inmin == 0 && inhour == 0)//모두 0이되면
+			break;//타이머종료/
+	}
 
-   while (!_kbhit()) {//아무키나 입력한다면 while문은 끝나게됨
-      printf("타이머 종료!!!!\n");
-      printf("아무키나 입력하시면 끝납니다.");
-      Beep(392, 350); /* 솔 음계 */
-      Beep(440, 350); /* 라 음계 */
-      Beep(440, 700); /* 라 음계 */
-      Beep(392, 350); /* 솔 음계 */
-
-      Beep(392, 350); /* 솔 음계 */
-      Beep(440, 350); /* 라 음계 */
-      Beep(440, 700); /* 라 음계 */
-      Beep(392, 350); /* 솔 음계 */
-      Sleep(500);
-      system("cls");
-   }
-   return 0;
+	while (!_kbhit()) {//아무키나 입력한다면 while문은 끝나게됨
+		printf("타이머 종료!!!!\n");
+		printf("아무키나 입력하시면 끝납니다.");
+		Beep(262, 200);/* 도 음계 *///알람음 출력
+		Beep(294, 200); /* 레 음계 */
+		Beep(330, 200); /* 미 음계 */
+		Beep(349, 200); /* 파 음계 */
+		Beep(392, 200); /* 솔 음계 */
+		Beep(440, 200); /* 라 음계 */
+		Beep(494, 200); /* 시 음계 */
+		Beep(524, 200); /* 도 음계 */
+		Sleep(500);
+		system("cls");
+	}
+	return 0;
 }//====================================================-sungjae
 void learningplanner()
 {
@@ -1146,7 +1141,7 @@ void learningplanner()
 		scanf("%d", &b);//사용자가 메뉴선택
 		system("cls");
 		if (b == 5)
-			exit(1);
+			return;
 		switch (b)
 		{
 		case 1:
@@ -1448,7 +1443,7 @@ int achievementrate() {
 		printf("16주차 달성여부 : %s\n", ch.c16);
 		if (strcmp(ch.c16, "y") == 0)//대답이 y라면
 			ratesum++;
-		printf("1학기 달성률 %.2lf%%\n",((float)ratesum/16)*100);
+		printf("1학기 달성률 %.2lf%%\n", ((float)ratesum / 16) * 100);
 		fclose(rate1);
 		break;
 	case 2:
