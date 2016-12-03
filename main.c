@@ -36,16 +36,14 @@ void stop_watch(); //스톱워치
 void stopwatch_menu(); //스톱 워치 메뉴
  //==============================================-changun
  //================================================-SungHo
- void gotoxy(int x, int y);//좌표 함수
- void menu_scr(void);//단어장 메뉴화면을 출력하는 함수
- void Function(int y);//단어장 해당 메뉴에 접속하는 함수
- int MenuChoice(void); //단어장 메뉴를 가리키는 화살표를 이동시키는 함수
- void AddWord(void);//단어장 단어추가 기능
- void SearchWord(void);//단어장 단어검색 기능
- void WordListCheck(void);//단어장 저장내용 확인기능
- int ProgramRead(void);
- void Quiz(void);
- void del (void);
+void gotoxy(int x, int y);//좌표 함수
+void menu_scr(void);//단어장 메뉴화면을 출력하는 함수
+void Function(int y);//단어장 해당 메뉴에 접속하는 함수
+int MenuChoice(void); //단어장 메뉴를 가리키는 화살표를 이동시키는 함수
+void AddWord(void);//단어장 단어추가 기능
+void SearchWord(void);//단어장 단어검색 기능
+void WordListCheck(void);//단어장 저장내용 확인기능
+int ProgramRead(void);
 //================================================-SungHo
 
 //================================================-seokhoon
@@ -466,8 +464,7 @@ void stop_watch()  //스탑 워치 함수
 				printf("\n");
 				return 0;
 			case 'W': case 'w':
-				printf("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
-				printf("%2d : %2d : %2d : %2d\n", hour, min, sec, frame);
+				printf("\n");
 				break;
 			default:
 				break;
@@ -491,49 +488,49 @@ void stopwatch_menu()  //스탑 워치 메뉴
 //================================================-SungHo
 void gotoxy(int x, int y) //좌표함수 콘솔창내 커서의 좌표지정
 {
-   COORD Pos = {x , y };
-   SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Pos);
+	COORD Pos = { x , y };
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Pos);
 }
 
 int MenuChoice(void)
 {
 	int key;//입력받은 키의 int값을 저장할 변수
-	int x=47,y=11;//화살표의 시작 좌표 지정 x :x축 좌표  y:y축 좌표
+	int x = 47, y = 11;//화살표의 시작 좌표 지정 x :x축 좌표  y:y축 좌표
 
-	while(1)
+	while (1)
 	{
-		key=getch();
-		if(key == 0xE0 || key ==0)
 		key = getch();
-		switch(key)
+		if (key == 0xE0 || key == 0)
+			key = getch();
+		switch (key)
 		{
-			case UP: //위쪽 방향키를 입력받으면
+		case UP: //위쪽 방향키를 입력받으면
 			system("cls");
 			menu_scr();//메뉴창을 띄우고
-			y-=2;	   //화살표("=>")의 y좌표를 2칸 아래로 내림
-			if(y<=11)  //화살표("=>")의 y좌표가 메뉴 위쪽으로는 올라가지 않도록 단어검색과 같은 높이인 11까지만 올라가도록 고정
-				y=11;
-			gotoxy(x,y);
+			y -= 2;	   //화살표("=>")의 y좌표를 2칸 아래로 내림
+			if (y <= 11)  //화살표("=>")의 y좌표가 메뉴 위쪽으로는 올라가지 않도록 단어검색과 같은 높이인 11까지만 올라가도록 고정
+				y = 11;
+			gotoxy(x, y);
 			printf("=>");//바뀐 좌표에 화살표 출력
 			break;
 
-			case DOWN://아래쪽 방향키를 입력받으면
+		case DOWN://아래쪽 방향키를 입력받으면
 			system("cls");
 			menu_scr();//메뉴창을 띄우고
-			y+=2;	   //화살표("=>")의 y좌표를 2칸 위로 올림
-			if(y>=19)  //화살표("=>")의 y좌표가 메뉴 아래쪽으로는 내려가지 않도록 단어퀴즈와 같은 높이인 17까지만 내려가도록 고정
-				y=19;
-			gotoxy(x,y);
+			y += 2;	   //화살표("=>")의 y좌표를 2칸 위로 올림
+			if (y >= 17)  //화살표("=>")의 y좌표가 메뉴 아래쪽으로는 내려가지 않도록 단어퀴즈와 같은 높이인 17까지만 내려가도록 고정
+				y = 17;
+			gotoxy(x, y);
 			printf("=>");//바뀐 좌표에 화살표 출력
 			break;
 
-			case ESC:
-				 system("cls");
-				 system("color 07");
-				 return 0;
+		case ESC:
+			system("cls");
+			system("color 07");
+			return 0;
 
-			case ENTER://엔터키를 입력받으면
-				 Function(y);
+		case ENTER://엔터키를 입력받으면
+			Function(y);
 		}
 
 	}
@@ -542,64 +539,57 @@ int MenuChoice(void)
 
 void menu_scr(void)//메뉴 화면을 출력
 {
+	system("mode con: cols=70 lines=30");
 	system("title 단어장");//콘솔의 제목을 바꿔줌
 	system("color EC");//콘솔창의 배경색과 텍스트의 색을 바꿔줌  (배경:텍스트) E:노랑C:빨강
 	printf("=======================================");
-	gotoxy(50,11);
+	gotoxy(50, 11);
 	printf("◆단어 검색\n");
-	gotoxy(50,13);
+	gotoxy(50, 13);
 	printf("◆단어 추가\n");
-	gotoxy(50,15);
+	gotoxy(50, 15);
 	printf("◆단어장 확인\n");
-	gotoxy(50,17);
+	gotoxy(50, 17);
 	printf("◆단어 퀴즈\n");
-	gotoxy(50,19);
-	printf("◆단어 삭제\n");
-	gotoxy(46,23);
+	gotoxy(46, 23);
 	printf("※프로그램 종료 [ESC]\n");
 
 }
 
-void Function (int y)
+void Function(int y)
 {
-	 if(y==11)//단어 검색 화살표("=>")의 y좌표를 가져와서 화살표가 가리키는 메뉴를 실행
-	    {
-			system("cls");
-			SearchWord();
-	    }
-	 if(y==13)//단어 추가 실행
-	    {
-			system("cls");
-			AddWord();
-	    }
-	 if(y==15)//단어 확인 실행
-	    {
-			system("cls");
-			 WordListCheck();
-	    }
-	 if(y==17)//단어 퀴즈 실행
-	    {
-			system("cls");
-			Quiz();
-	    }
-	if(y==19)//단어 퀴즈 실행
-	    {
-			system("cls");
-			del();
-	    }
-
+	if (y == 5)//단어 검색 화살표("=>")의 y좌표를 가져와서 화살표가 가리키는 메뉴를 실행
+	{
+		system("cls");
+		//;
+	}
+	if (y == 6)//단어 추가 실행
+	{
+		system("cls");
+		AddWord();
+	}
+	if (y == 7)//단어 확인 실행
+	{
+		system("cls");
+		;
+	}
+	if (y == 17)//단어 퀴즈 실행
+	{
+		system("cls");
+		printf("퀴즈");
+	}
 }
 
 void AddWord(void)//단어 추가 기능
 {
-	int i=0,key; //i for문 실행에 쓰일 변수 ,key: ENTER키나 ESC키로 받은 값을 저장받음
+	int i = 0, key; //i for문 실행에 쓰일 변수 ,key: ENTER키나 ESC키로 받은 값을 저장받음
 	int count;
 	FILE *fp;
-	if((fp = fopen("Voca.txt","a"))==NULL)
+	if ((fp = fopen("Voca.txt", "a")) == NULL)
 	{
-		fprintf(stderr,"파일 Voca.txt를 열 수 없습니다\n","Voca.txt");
+		fprintf(stderr, "파일 Voca.txt를 열 수 없습니다\n", "Voca.txt");
 	}
-	while(1)
+	while (1)
 	{
 		printf("추가하실 단어를 입력해주세요\n");
 		gets(a[i].name);
@@ -607,47 +597,48 @@ void AddWord(void)//단어 추가 기능
 		gets(a[i].mean);
 		i++;
 		printf("단어를 더 추가합니까? 추가[ENTER] 종료[ESC]\n");//단어를 한 개 추가하고 나서 계속 추가할 것인지 키를 입력받아 사용자의 의사를 묻는다
-		key=getch();										    //ENTER는 더 추가 ESC를 입력하면 종료 N
-		if(key == 0xE0 || key ==0)
-		key = getch();
-			if(key==27)//ESC키를 입력하면
-		   {
-			  system("cls");
-			  break;   //루프를 종료:[단어 검색]기능을 종료
-		   }
-			else if(key==13)//ENTER키를 입력하면 콘솔창을 깨끗하게 지우고 다시 처음 루프로 가서 추가할 단어를 입력받음
-		   {
-			 system("cls");
-		   }
-			else{//ENTER 와 ESC가 아닌 키를 입력했을 경우
-				      while(1)
-				      {  system("cls");
-						 printf("추가[ENTER] 또는 종료[ESC] 키를 입력하세요\n"); //ENTER나 ESC를 입력할때까지 안내 메세지를 띄우고
-						 key=getch();
-						 if(key == 0xE0 || key ==0);
-					     key=getch();
-						 if(key==13)//Enter를 입력받으면 이 루프를 빠져나가 단어를 새로 입력받고
-					    {
-						  system("cls");
-						  break;
-					    }
-					    else if(key==27)//ESC를 누르면
-					    {
-						system("cls");
-						goto label;   //이중 루프를 빠져나가서 기능이 종료되게끔 한다.
-					    }
-					  }
+		key = getch();										    //ENTER는 더 추가 ESC를 입력하면 종료 N
+		if (key == 0xE0 || key == 0)
+			key = getch();
+		if (key == 27)//ESC키를 입력하면
+		{
+			system("cls");
+			break;   //루프를 종료:[단어 검색]기능을 종료
+		}
+		else if (key == 13)//ENTER키를 입력하면 콘솔창을 깨끗하게 지우고 다시 처음 루프로 가서 추가할 단어를 입력받음
+		{
+			system("cls");
+		}
+		else {//ENTER 와 ESC가 아닌 키를 입력했을 경우
+			while (1)
+			{
+				system("cls");
+				printf("추가[ENTER] 또는 종료[ESC] 키를 입력하세요\n"); //ENTER나 ESC를 입력할때까지 안내 메세지를 띄우고
+				key = getch();
+				if (key == 0xE0 || key == 0);
+				key = getch();
+				if (key == 13)//Enter를 입력받으면 이 루프를 빠져나가 단어를 새로 입력받고
+				{
+					system("cls");
+					break;
+				}
+				else if (key == 27)//ESC를 누르면
+				{
+					system("cls");
+					goto label;   //이중 루프를 빠져나가서 기능이 종료되게끔 한다.
+				}
+			}
 
-			  }
+		}
 
 	}
-	count=i;
+	count = i;
 label://goto 문으로 빠져나오는 곳
-	for(i=0;i<count;i++){
-	fputs(a[i].name,fp);
-	fputc('\n',fp);//fputs 는 텍스트로 저장할때 엔터값을 안받기에 개행을 위해 붙여줌
-	fputs(a[i].mean,fp);
-	fputc('\n',fp);
+	for (i = 0; i<count; i++) {
+		fputs(a[i].name, fp);
+		fputc('\n', fp);//fputs 는 텍스트로 저장할때 엔터값을 안받기에 개행을 위해 붙여줌
+		fputs(a[i].mean, fp);
+		fputc('\n', fp);
 	}
 	fclose(fp);
 	menu_scr();
@@ -655,242 +646,92 @@ label://goto 문으로 빠져나오는 곳
 
 void SearchWord(void)
 {
-	int i=0,count;
-	int key;
+	int i = 0, count;
 	FILE *fp;
-	if((fp = fopen("Voca.txt","r"))==NULL)
+	if ((fp = fopen("Voca.txt", "r")) == NULL)
 	{
-		fprintf(stderr,"파일 Voca.txt를 열 수 없습니다\n","Voca.txt");
+		fprintf(stderr, "파일 Voca.txt를 열 수 없습니다\n", "Voca.txt");
 	}
-	while(!feof(fp))
+	while (!feof(fp))
 	{
-		fgets(a[i].name,100,fp);
-		a[i].name[strlen(a[i].name)-1]='\0';
-		fgets(a[i].mean,100,fp);
-		a[i].mean[strlen(a[i].mean)-1]='\0';
+		fgets(a[i].name, 100, fp);
+		a[i].name[strlen(a[i].name) - 1] = '\0';
+		fgets(a[i].mean, 100, fp);
+		a[i].mean[strlen(a[i].mean) - 1] = '\0';
 		i++;
 	}
 	fclose(fp);
-	count=i-1;
-	while(1){
-		int found=0;//찾은 수
-	    char target[100];
-		char esc[8]="종료.";
-	    printf("찾을 단어를 입력해주세요.종료하려면 [종료.]입력\n");
-	    gets(target);
-		if(!strcmp(esc,target)){
+	count = i;
+	while (1) {
+		int found = 0;//찾은 수
+		char target[100];
+		char esc[8] = "종료.";
+		printf("찾을 단어를 입력해주세요\n");
+		gets(target);
+		if (!strcmp(esc, target)) {
 			system("cls");
-				break;
+			break;
 		}
-		for(i=0;i<count;i++)
+		for (i = 0; i<count; i++)
 		{
 			found++;
-			if(!strcmp(a[i].name,target)||!strcmp(a[i].mean,target))
+			if (!strcmp(a[i].name, target) || !strcmp(a[i].mean, target))
 			{
 				system("cls");
-				printf("%s: %s\n",a[i].name,a[i].mean);
+				printf("%s: %s\n", a[i].name, a[i].mean);
 				found--;
 			}
-			if(found==count)
+			if (found == count)
 				printf("찾는 단어가 없습니다\n");
 		}
-		while(1){
-			printf("더 찾으시겠습니까? [ENTER]찾기,[ESC]종료\n");
-			key=getch();
-			if(key==27)
-			{
-				system("cls");
-				goto label;
-			}
-			else if(key==13)
-			{
-				system("cls");
-				break;
-			}
-			else
-			{
-				printf("[ENTER]찾기,[ESC]종료\n");
-			}
-		}
+		Sleep(1000);
+		system("cls");
 	}
-	label:
 	menu_scr();
 }
 
 void WordListCheck(void)
 {
-	int i=0;
-	int key;
+	int i = 0;
 	int count;
 	FILE *fp;
-	if((fp = fopen("Voca.txt","r"))==NULL)
+	if ((fp = fopen("Voca.txt", "r")) == NULL)
 	{
-		fprintf(stderr,"파일 Voca.txt를 열 수 없습니다\n","Voca.txt");
+		fprintf(stderr, "파일 Voca.txt를 열 수 없습니다\n", "Voca.txt");
 	}
-	while(!feof(fp))
+	while (!feof(fp))
 	{
-		fgets(a[i].name,100,fp);
-		a[i].name[strlen(a[i].name)-1]='\0';
-		fgets(a[i].mean,100,fp);
-		a[i].mean[strlen(a[i].mean)-1]='\0';
+		fgets(a[i].name, 100, fp);
+		a[i].name[strlen(a[i].name) - 1] = '\0';
+		fgets(a[i].mean, 100, fp);
+		a[i].mean[strlen(a[i].mean) - 1] = '\0';
 		i++;
 	}
 	fclose(fp);
-	count=i-1;
-	for(i=0;i<count;i++)
-		printf("[ %s : %s ]\n",a[i].name,a[i].mean);//"wt"옆으로
-	printf("\n종료하시겠습니까?ESC입력\n");
-	while(1){
-		key=getch();
-		if(key==27)
-		{
-			system("cls");
-			break;
-		}
-	}
-	menu_scr();
+	count = i;
+	for (i = 0; i<count; i++)
+		printf("[ %s : %s ]\n", a[i].name, a[i].mean);//"wt"옆으로
 }
 
 int ProgramRead(void)
 {
-	int i=0;
+	int i = 0;
 	FILE *fp;
-	if((fp = fopen("Voca.txt","r"))==NULL)
+	if ((fp = fopen("Voca.txt", "r")) == NULL)
 	{
-		fprintf(stderr,"Voca.txt 파일을 열 수 없습니다.\n","Vocabulary Note.txt");
+		fprintf(stderr, "Voca.txt 파일을 열 수 없습니다.\n", "Vocabulary Note.txt");
 		exit(1);
 	}
-	while(!feof(fp))
+	while (!feof(fp))
 	{
-		fgets(a[i].name,100,fp);
-		fgets(a[i].mean,100,fp);
+		fgets(a[i].name, 100, fp);
+		fgets(a[i].mean, 100, fp);
 		i++;
 	}
 	fclose(fp);
 	return i;
 }
-void Quiz(void){
-	int i=0,count,j=0,k,good=0;
-	int key;
-	char input[100];
-	FILE *fp;
-	if((fp = fopen("Voca.txt","r"))==NULL)
-	{
-		fprintf(stderr,"파일 Voca.txt를 열 수 없습니다\n","Voca.txt");
-	}
-	while(!feof(fp))
-	{
-		fgets(a[i].name,100,fp);
-		a[i].name[strlen(a[i].name)-1]='\0';
-		fgets(a[i].mean,100,fp);
-		a[i].mean[strlen(a[i].mean)-1]='\0';
-		i++;
-	}
-	fclose(fp);
-	count=i-1;
-	printf("단어 퀴즈는 단어장 안에 있는 단어중 5개의 단어의 설명이 랜덤으로 나옵니다\n");
-	Sleep(2000);
-	printf("단어의 설명을 보고 어떤 단어를 설명하고 있는지 해당하는 단어를 키보드로 입력해주세요\n");
-	Sleep(2000);
-	printf("그럼 시작합니다.\n");
-	Sleep(1500);
-	for(j=0;j<5;j++){
-		srand((unsigned)time(NULL));
-		i=rand()%count;
-		system("cls");
-		printf("[%s]는 무엇일까요?:\n",a[i].mean);
-		gets(input);
-		if(!strcmp(a[i].name,input))
-		{
-			printf("정답입니다\n");
-			good++;
-		}
-		else
-		{
-			for(k=2;k>0;k--)
-			{
-
-				printf("틀리셨습니다. 잘 생각해 보세요\n");
-				printf("남은 기회 [%d]번",k-1);
-				gets(input);
-				if(!strcmp(a[i].name,input))
-				{
-						system("cls");
-						printf("정답입니다\n");
-						break;
-				}
-			}
-		}
-	}
-	printf("5문제중 맞은 개수는 %d개 입니다\n",good);
-	while(1)
-	{
-		printf("다시 하시겠습니까? 예ENTER 아니오ESC\n");
-		key=getch();
-		if(key==13)
-		{
-			system("cls");
-			Quiz();
-		}
-		if(key==27)
-		{
-			system("cls");
-			break;
-		}
-	}
-	menu_scr();
-}
-void del(void)
-{
-	int i=0,count;
-	char target[100];
-	FILE *fp;
-	if((fp = fopen("Voca.txt","r"))==NULL)
-	{
-		fprintf(stderr,"파일 Voca.txt를 열 수 없습니다\n","Voca.txt");
-	}
-	while(!feof(fp))
-	{
-		fgets(a[i].name,100,fp);
-		a[i].name[strlen(a[i].name)-1]='\0';
-		fgets(a[i].mean,100,fp);
-		a[i].mean[strlen(a[i].mean)-1]='\0';
-		i++;
-	}
-	fclose(fp);
-	count=i-1;
-	printf("삭제하실 단어를 입력하세요\n");
-	gets(target);
-	for(i=0;i<count;i++)
-	{
-		if(!strcmp(a[i].name,target))
-		{
-			printf("[%s]를 단어장에서 제거합니다.\n",a[i].name);
-			strcpy(a[i].name,"\0");
-			strcpy(a[i].mean,"\0");
-		}
-
-	}
-	if((fp = fopen("Voca.txt","w"))==NULL)
-	{
-		fprintf(stderr,"파일 Voca.txt를 열 수 없습니다\n","Voca.txt");
-	}
-	for(i=0;i<count;i++)
-	{
-		if((strcmp(a[i].name,"\0"))!=0)
-		{
-			fputs(a[i].name,fp);
-			fputc('\n',fp);//fputs 는 텍스트로 저장할때 엔터값을 안받기에 개행을 위해 붙여줌
-			fputs(a[i].mean,fp);
-			fputc('\n',fp);
-		}
-	}
-	fclose(fp);
-	printf("메뉴로 돌아갑니다\n");
-	Sleep(1000);
-	system("cls");
-	menu_scr();
-}
+//void Quiz(void)
 //================================================-SungHo
 
 //================================================-seokhoon
