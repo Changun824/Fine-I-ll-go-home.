@@ -30,7 +30,9 @@ int menu_switch();
 int Calculator_Menu(); //계산기 메인 메뉴
 int Matrix_Menu(); //행렬 계산 메뉴
 int ACalulator_Menu(); //사칙연산 메뉴
+int calculator_key();// 계산기 메뉴에서 =>를 위한 함수
 void Matrix_add(); //행렬 덧셈
+int Matrix_key();
 void Matrix_mul(); // 행렬 곱셈
 void stop_watch(); //스톱워치
 void stopwatch_menu(); //스톱 워치 메뉴
@@ -78,31 +80,36 @@ int main()
 			system("cls");
 			while (1)
 			{
-				C_M = Calculator_Menu();  //계산기 메뉴를 호출하고 사용자 입력값을 돌려받음
+				Calculator_Menu();  //계산기 메뉴를 호출하고 사용자 입력값을 돌려받음
+				C_M = calculator_key();
 				switch (C_M)
 				{
-				case 1:
-					system("cls");
-					CM_M = Matrix_Menu(); //행렬 계산기 메뉴
+				case 4:
+					Matrix_Menu();
+					CM_M = Matrix_key(); //행렬 계산기 메뉴
 					switch (CM_M)
 					{
-					case 1:
-						system("cls");
+					case 4:
 						Matrix_add();
 						break;
-					case 2:
+					case 6:
 						system("cls");
 						Matrix_mul();
+						break;
+					case 8:
+						break;
+					case 10:
+						main();
 						break;
 					default:
 						break;
 					}// 행렬계산기에 대한 switch
 					break;
-				case 2:
+				case 6:
 					system("cls");
 					AC_M = ACalulator_Menu(); //일반 계산기 메뉴
 					break;
-				case 3:
+				case 8:
 					End_C = 10; //End_c에 10을 넣어줘서 반복문 탈출
 					break;
 				default:
@@ -151,7 +158,8 @@ int main()
 //=============================================================-main
 void main_menu()
 {
-
+	system("title Learing Support Program");  //제목 변화
+	system("color 3F");
 	printf("=====================================================================\n");
 	printf("                    Learing Support Program \n");
 	printf("=====================================================================\n");
@@ -223,41 +231,131 @@ int menu_switch()
 
 int Calculator_Menu()  //계산기 메뉴
 {
+	system("title Calculator");  //제목 변화
+	system("color 1F");
 	system("cls");
-	int user_num;
 	printf("=====================================================================\n");
-	printf("         Calculator\n");
+	printf("                      C a l c u l a t o r \n");
 	printf("=====================================================================\n");
-	printf(" 1.행렬 계산기\n");
-	printf(" 2.일반 계산기\n");
-	printf(" 3.되돌아가기\n");
-	scanf_s("%d", &user_num);
-	return user_num;
+	gotoxy(4, 4);
+	printf(" 1.행렬 계산기\n\n");
+	gotoxy(4, 6);
+	printf(" 2.일반 계산기\n\n");
+	gotoxy(4, 8);
+	printf(" 3.되돌아가기\n\n");
 }
+int calculator_key()
+{
+	int key;//입력받은 키의 int값을 저장할 변수
+	int x = 2, y = 4;//화살표의 시작 좌표 지정 x :x축 좌표  y:y축 좌표
 
+	while (1)
+	{
+		key = getch();//키를 입력 받으면
+		if (key == 0xE0 || key == 0)
+			key = getch();
+		switch (key)
+		{
+		case UP: //위쪽 방향키를 입력받으면
+			system("cls");
+			Calculator_Menu(); //메뉴창을 띄우고
+			y -= 2;	   //화살표("=>")의 y좌표를 1칸 아래로 내림
+			if (y <= 4)  //화살표("=>")의 y좌표가 메뉴 위쪽으로는 올라가지 않도록 고정
+				y = 4;
+			gotoxy(x, y);
+			printf("=>");//바뀐 좌표에 화살표 출력
+			break;
+
+		case DOWN://아래쪽 방향키를 입력받으면
+			system("cls");
+			Calculator_Menu();//메뉴창을 띄우고
+			y += 2;	   //화살표("=>")의 y좌표를 1칸 위로 올림
+			if (y >= 8)  //화살표("=>")의 y좌표가 메뉴 아래쪽으로는 내려가지 않도록 함
+				y = 8;
+			gotoxy(x, y);
+			printf("=>");//바뀐 좌표에 화살표 출력
+			break;
+
+		case ESC:
+			system("cls");
+			system("color 07");
+			return 0;
+
+		case ENTER://엔터키를 입력받으면
+			return y;
+		}
+
+	}
+}
 
 int Matrix_Menu()        //행렬 계산기 메뉴
 {
+	system("title Matrix Calculator");  //제목 변화
 	system("cls");
-	int user_num;
 	printf("=====================================================================\n");
-	printf("     Matrix Calculator\n");
+	printf("              M a t r i x  C a l c u l a t o r\n");
 	printf("=====================================================================\n");
-	printf(" 1.행렬 덧셈\n");
-	printf(" 2.행렬 곱셈\n");
-	printf(" 3.역행렬의 유무\n");
-	printf(" 3.나가기\n");
-	scanf_s("%d", &user_num);
-	return user_num;
+	gotoxy(4, 4);
+	printf(" 1.행렬 덧셈\n\n");
+	gotoxy(4, 6);
+	printf(" 2.행렬 곱셈\n\n");
+	gotoxy(4, 8);
+	printf(" 3.역행렬의 유무\n\n");
+	gotoxy(4, 10);
+	printf(" 4.나가기\n");
+}
+
+int Matrix_key()
+{
+	int key;//입력받은 키의 int값을 저장할 변수
+	int x = 2, y = 4;//화살표의 시작 좌표 지정 x :x축 좌표  y:y축 좌표
+
+	while (1)
+	{
+		key = getch();//키를 입력 받으면
+		if (key == 0xE0 || key == 0)
+			key = getch();
+		switch (key)
+		{
+		case UP: //위쪽 방향키를 입력받으면
+			system("cls");
+			Matrix_Menu(); //메뉴창을 띄우고
+			y -= 2;	   //화살표("=>")의 y좌표를 1칸 아래로 내림
+			if (y <= 4)  //화살표("=>")의 y좌표가 메뉴 위쪽으로는 올라가지 않도록 고정
+				y = 4;
+			gotoxy(x, y);
+			printf("=>");//바뀐 좌표에 화살표 출력
+			break;
+
+		case DOWN://아래쪽 방향키를 입력받으면
+			system("cls");
+			Matrix_Menu();//메뉴창을 띄우고
+			y += 2;	   //화살표("=>")의 y좌표를 1칸 위로 올림
+			if (y >= 10)  //화살표("=>")의 y좌표가 메뉴 아래쪽으로는 내려가지 않도록 함
+				y = 10;
+			gotoxy(x, y);
+			printf("=>");//바뀐 좌표에 화살표 출력
+			break;
+
+		case ESC:
+			system("cls");
+			system("color 07");
+			return 0;
+
+		case ENTER://엔터키를 입력받으면
+			return y;
+		}
+
+	}
 }
 
 int ACalulator_Menu()    //사친연산 계산기 메뉴
 {
 	system("cls");
 	int user_num;
-	printf("===========================\n");
-	printf("       Calculator\n");
-	printf("===========================\n");
+	printf("=====================================================================\n");
+	printf("                     C a l c u l a t o r \n");
+	printf("=====================================================================\n");
 	printf(" 1.수 입력\n");
 	printf(" 2.수식 입력\n");
 	printf(" 3.나가기\n");
@@ -273,40 +371,65 @@ void Matrix_add()  //행렬 덧셈
 	int matrix_mcolumn;
 	int i = 0, j = 0;
 	system("cls");
-	printf("===========================\n");
-	printf("        Matrix Add\n");
-	printf("===========================\n");
+	system("title 행렬 덧셈");  //제목 변화
+	printf("=====================================================================\n");
+	printf("                     M a t r i x   A d d \n");
+	printf("=====================================================================\n");
 	printf("더해줄 행렬은 같은 크기여야 합니다.\n");
+	printf("\n");
 	printf("덧셈 할 행렬의 행의 크기를 입력해주세요:");
+	printf("\n");
 	scanf_s("%d", &matrix_mrow);
 	printf("덧셈 할 행렬의 열의 크기를 입력해주세요:");
+	printf("\n");
 	scanf_s("%d", &matrix_mcolumn);
+	system("pause");
 
-	printf("첫번째 행렬 \n");
-	for (i = 0; i < matrix_mrow; i++)
-		for (j = 0; j < matrix_mcolumn; j++)
-		{
-			printf("exone[%d][%d]", i, j);
-			scanf("%d", &exone[i][j]);
-		}//첫번째 행렬 입력
-
-	printf("두번째 행렬 \n");
-	for (i = 0; i < matrix_mrow; i++)
-		for (j = 0; j < matrix_mcolumn; j++)
-		{
-			printf("extwo[%d][%d]", i, j);
-			scanf("%d", &extwo[i][j]);
-		}//두번째 행렬 입력
+	system("cls");
+	system("title 첫번째 행렬 입력");  //제목 변화
+	printf("=====================================================================\n");
+	printf("                     F i r s t   M a t r i x\n");
+	printf("=====================================================================\n");
 	printf("\n");
 	printf("첫번째 행렬 \n");
+	printf("\n");
+	for (i = 0; i < matrix_mrow; i++)
+		for (j = 0; j < matrix_mcolumn; j++)
+		{
+			printf("행렬 A[%d][%d]", i, j);
+			scanf("%d", &exone[i][j]);
+		}//첫번째 행렬 입력
+	system("cls");
+	system("title 두번째 행렬 입력");  //제목 변화
+	printf("=====================================================================\n");
+	printf("                    S e c o n d   M a t r i x \n");
+	printf("=====================================================================\n");
+	printf("\n");
+	printf("두번째 행렬 \n");
+	printf("\n");
+	for (i = 0; i < matrix_mrow; i++)
+		for (j = 0; j < matrix_mcolumn; j++)
+		{
+			printf("행렬 B[%d][%d]", i, j);
+			scanf("%d", &extwo[i][j]);
+		}//두번째 행렬 입력
+	system("cls");
+	system("title 두행렬의 합");  //제목 변화
+	printf("=====================================================================\n");
+	printf("                    M a t r i x  Add\n");
+	printf("=====================================================================\n");
+	printf("\n");
+	printf("\n");
+	printf("첫번째 행렬\n");
 	for (i = 0; i < matrix_mrow; i++)
 	{
 		printf("\n");
-		for (j = 0; j < matrix_mcolumn; j++)
-		{
-			printf("%d\t", exone[i][j]);
-		} //행을 출력
+			for (j = 0; j < matrix_mcolumn; j++)
+			{
+				printf("%d\t", exone[i][j]);
+			} //행을 출력
 	}//열을 출력
+	printf("\n");
 	printf("\n");
 	printf("두번째 행렬 \n");
 	for (i = 0; i < matrix_mrow; i++)
@@ -328,7 +451,9 @@ void Matrix_add()  //행렬 덧셈
 
 	}
 	printf("\n");
+	printf("\n");
 	printf("덧셈한 행렬 \n");
+	printf("\n");
 	for (i = 0; i < matrix_mrow; i++)
 	{
 		for (j = 0; j < matrix_mcolumn; j++)
@@ -337,6 +462,7 @@ void Matrix_add()  //행렬 덧셈
 		} //행을 출력
 		printf("\n");
 	}//열을 출력
+	system("PAUSE");
 
 }// void Matrix_add() 함수 종료 중괄호
 
@@ -349,20 +475,35 @@ void Matrix_mul()  //행렬 곱셈 함수
 	int matrix_bcolumn, matrix_brow;
 	int i = 0, j = 0, z = 0;
 	system("cls");
-	printf("===============================================\n");
-	printf("             MATRIX MULTIPCATION\n");
-	printf("===============================================\n");
+	system("title 행렬 곱셈");
+	printf("=====================================================================\n");
+	printf("                      MATRIX MULTIPCATION\n");
+	printf("=====================================================================\n");
+	printf("\n");
 	printf("곱하기를 할 A[m][n], B[m][n]은 A[n]과 B[m]이 같아야 합니다\n ");
+	printf("\n");
 	printf("곱셈 할 행렬의 A행렬의 크기를 입력해주세요 A[m][n]:");
+	printf("\n");
 	scanf_s("%d %d", &matrix_arow, &matrix_acolumn);
 
 	printf("곱셈 할 행렬의 B행렬의 크기를 입력해주세요:");
+	printf("\n");
 	scanf_s("%d %d", &matrix_brow, &matrix_bcolumn);
 	if (matrix_acolumn != matrix_brow)
 	{
+		system("cls");
+		system("title Error");
+		printf("=====================================================================\n");
+		printf("                      MATRIX MULTIPCATION\n");
+		printf("=====================================================================\n");
 		printf("곱하기가 불가능한 행렬 입니다.\n");
-		return 0;
+		return;
 	}
+	system("cls");
+	system("title Amatrix");
+	printf("=====================================================================\n");
+	printf("                         A MATRIX\n");
+	printf("=====================================================================\n");
 	printf("\n");
 	printf("첫번째 행렬 \n");
 	for (i = 0; i < matrix_arow; i++)
@@ -371,6 +512,11 @@ void Matrix_mul()  //행렬 곱셈 함수
 			printf("exone[%d][%d]", i, j);
 			scanf("%d", &exone[i][j]);
 		}//첫번째 행렬 입력
+	system("cls");
+	system("title Bmatrix");
+	printf("=====================================================================\n");
+	printf("                         B MATRIX\n");
+	printf("=====================================================================\n");
 	printf("\n");
 	printf("두번째 행렬 \n");
 	for (i = 0; i < matrix_brow; i++)
@@ -393,6 +539,11 @@ void Matrix_mul()  //행렬 곱셈 함수
 		}//곱해줄 행렬 계산
 	}//곱에 필요한 for문
 
+	system("cls");
+	system("title MATRIX MULTIPCATION");
+	printf("=====================================================================\n");
+	printf("                         MATRIX MULTIPCATION\n");
+	printf("=====================================================================\n");
 	printf("\n");
 	printf("첫번째 행렬\n");
 	for (i = 0; i < matrix_arow; i++)
@@ -419,6 +570,8 @@ void Matrix_mul()  //행렬 곱셈 함수
 		for (j = 0; j < matrix_brow; j++)
 			printf("%d \t", sum[i][j]);
 	} //합을 출력하는 중괄호
+	printf("\n");
+	system("PAUSE");
 }//행렬 곱셈 함수 종료
 
 void stop_watch()  //스탑 워치 함수
@@ -462,7 +615,7 @@ void stop_watch()  //스탑 워치 함수
 				break;
 			case 'Q': case 'q':
 				printf("\n");
-				return 0;
+				return ;
 			case 'W': case 'w':
 				printf("\n");
 				printf("\t\t ");
