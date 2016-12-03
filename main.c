@@ -465,6 +465,7 @@ void stop_watch()  //스탑 워치 함수
 				return 0;
 			case 'W': case 'w':
 				printf("\n");
+				printf("\t\t ");
 				break;
 			default:
 				break;
