@@ -34,6 +34,10 @@ typedef struct plan {
 	char c1[10], c2[10], c3[10], c4[10], c5[10], c6[10], c7[10], c8[10], c9[10], c10[10], c11[10], c12[10], c13[10], c14[10], c15[10], c16[10];
 	//달성 체크시 사용
 }PLAN;//PLAN구조체는 계획 문자열 저장하기 위해서 사용
+typedef struct tt {
+	char st1[10], st2[10], st3[10], st4[10], st5[10], st6[10], st7[10], st8[10];
+	//1~10교시까지의 과목이름을 입력받기 위한 배열
+}TT;
 	  //================================================================-sungjae
 
 	  //함수 넣는존
@@ -74,7 +78,9 @@ void learningplanner();//학습계획표 메뉴 함수
 int planinsert();//계획 입력 함수
 int achievementcheck();//달성체크함수
 int achievementrate();//달성률보기함수
-int timetable();//시간표 출력함수
+int timetable();//시간표 메뉴출력함수
+int timetablein();//시간표 입력 함수
+int timetablelook();//시간표 보기 함수
 				//===============================================-sungjae
 
 				//==================================main메뉴존
@@ -1257,7 +1263,7 @@ int timer() {
 		if (insec == 0)//초가 0이되면
 		{
 			inmin--;//분에서 1을 빼주고
-			insec = 59;//초를 59로 초기화시켜준다
+			insec = 60;//초를 60로 초기화시켜준다
 		}
 		printf("■■■■■■■■■■■■■\n");
 		printf("■■■■■ Timer■■■■■\n");
@@ -1317,7 +1323,7 @@ void learningplanner()
 			break;
 		case 3: achievementrate();//달성보기
 			break;
-		case 4: //timetable();
+		case 4: timetable();
 			break;
 		default:
 			break;
@@ -1561,52 +1567,36 @@ int achievementrate() {
 	switch (ac) {
 	case 1:
 		fscanf(rate1, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", ch.c1, ch.c2, ch.c3, ch.c4, ch.c5, ch.c6, ch.c7, ch.c8, ch.c9, ch.c10, ch.c11, ch.c12, ch.c13, ch.c14, ch.c15, ch.c16);
-		printf("1주차 달성여부 : %s\n", ch.c1);
 		if (strcmp(ch.c1, "y") == 0)//대답이 y라면
 			ratesum++;
-		printf("2주차 달성여부 : %s\n", ch.c2);
 		if (strcmp(ch.c2, "y") == 0)//대답이 y라면
 			ratesum++;
-		printf("3주차 달성여부 : %s\n", ch.c3);
 		if (strcmp(ch.c3, "y") == 0)//대답이 y라면
 			ratesum++;
-		printf("4주차 달성여부 : %s\n", ch.c4);
 		if (strcmp(ch.c4, "y") == 0)//대답이 y라면
 			ratesum++;
-		printf("5주차 달성여부 : %s\n", ch.c5);
 		if (strcmp(ch.c5, "y") == 0)//대답이 y라면
 			ratesum++;
-		printf("6주차 달성여부 : %s\n", ch.c6);
 		if (strcmp(ch.c6, "y") == 0)//대답이 y라면
 			ratesum++;
-		printf("7주차 달성여부 : %s\n", ch.c7);
 		if (strcmp(ch.c7, "y") == 0)//대답이 y라면
 			ratesum++;
-		printf("8주차 달성여부 : %s\n", ch.c8);
 		if (strcmp(ch.c8, "y") == 0)//대답이 y라면
 			ratesum++;
-		printf("9주차 달성여부 : %s\n", ch.c9);
 		if (strcmp(ch.c9, "y") == 0)//대답이 y라면
 			ratesum++;
-		printf("10주차 달성여부 : %s\n", ch.c10);
 		if (strcmp(ch.c10, "y") == 0)//대답이 y라면
 			ratesum++;
-		printf("11주차 달성여부 : %s\n", ch.c11);
 		if (strcmp(ch.c11, "y") == 0)//대답이 y라면
 			ratesum++;
-		printf("12주차 달성여부 : %s\n", ch.c12);
 		if (strcmp(ch.c12, "y") == 0)//대답이 y라면
 			ratesum++;
-		printf("13주차 달성여부 : %s\n", ch.c13);
 		if (strcmp(ch.c13, "y") == 0)//대답이 y라면
 			ratesum++;
-		printf("14주차 달성여부 : %s\n", ch.c14);
 		if (strcmp(ch.c14, "y") == 0)//대답이 y라면
 			ratesum++;
-		printf("15주차 달성여부 : %s\n", ch.c15);
 		if (strcmp(ch.c15, "y") == 0)//대답이 y라면
 			ratesum++;
-		printf("16주차 달성여부 : %s\n", ch.c16);
 		if (strcmp(ch.c16, "y") == 0)//대답이 y라면
 			ratesum++;
 		printf("1학기 달성률 %.2lf%%\n", ((float)ratesum / 16) * 100);
@@ -1614,52 +1604,36 @@ int achievementrate() {
 		break;
 	case 2:
 		fscanf(rate2, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", ch.c1, ch.c2, ch.c3, ch.c4, ch.c5, ch.c6, ch.c7, ch.c8, ch.c9, ch.c10, ch.c11, ch.c12, ch.c13, ch.c14, ch.c15, ch.c16);
-		printf("1주차 달성여부 : %s\n", ch.c1);
 		if (strcmp(ch.c1, "y") == 0)//대답이 y라면
 			ratesum++;
-		printf("2주차 달성여부 : %s\n", ch.c2);
 		if (strcmp(ch.c2, "y") == 0)//대답이 y라면
 			ratesum++;
-		printf("3주차 달성여부 : %s\n", ch.c3);
 		if (strcmp(ch.c3, "y") == 0)//대답이 y라면
 			ratesum++;
-		printf("4주차 달성여부 : %s\n", ch.c4);
 		if (strcmp(ch.c4, "y") == 0)//대답이 y라면
 			ratesum++;
-		printf("5주차 달성여부 : %s\n", ch.c5);
 		if (strcmp(ch.c5, "y") == 0)//대답이 y라면
 			ratesum++;
-		printf("6주차 달성여부 : %s\n", ch.c6);
 		if (strcmp(ch.c6, "y") == 0)//대답이 y라면
 			ratesum++;
-		printf("7주차 달성여부 : %s\n", ch.c7);
 		if (strcmp(ch.c7, "y") == 0)//대답이 y라면
 			ratesum++;
-		printf("8주차 달성여부 : %s\n", ch.c8);
 		if (strcmp(ch.c8, "y") == 0)//대답이 y라면
 			ratesum++;
-		printf("9주차 달성여부 : %s\n", ch.c9);
 		if (strcmp(ch.c9, "y") == 0)//대답이 y라면
 			ratesum++;
-		printf("10주차 달성여부 : %s\n", ch.c10);
 		if (strcmp(ch.c10, "y") == 0)//대답이 y라면
 			ratesum++;
-		printf("11주차 달성여부 : %s\n", ch.c11);
 		if (strcmp(ch.c11, "y") == 0)//대답이 y라면
 			ratesum++;
-		printf("12주차 달성여부 : %s\n", ch.c12);
 		if (strcmp(ch.c12, "y") == 0)//대답이 y라면
 			ratesum++;
-		printf("13주차 달성여부 : %s\n", ch.c13);
 		if (strcmp(ch.c13, "y") == 0)//대답이 y라면
 			ratesum++;
-		printf("14주차 달성여부 : %s\n", ch.c14);
 		if (strcmp(ch.c14, "y") == 0)//대답이 y라면
 			ratesum++;
-		printf("15주차 달성여부 : %s\n", ch.c15);
 		if (strcmp(ch.c15, "y") == 0)//대답이 y라면
 			ratesum++;
-		printf("16주차 달성여부 : %s\n", ch.c16);
 		if (strcmp(ch.c16, "y") == 0)//대답이 y라면
 			ratesum++;
 		printf("2학기 달성률 %.2lf%% \n", ((float)ratesum / 16) * 100);
@@ -1682,12 +1656,79 @@ int timetable() {
 	scanf("%d", &x);
 	switch (x)
 	{
-	case 1:
+	case 1: timetablein();//시간표 입력
 		break;
-	case 2:
+	case 2: timetablelook();//시간표 출력
 		break;
 	default:
 		return 0;
 	}
+	return 0;
+}//====================================-sungjae
+int timetablein() {//시간표 입력함수
+	TT mon, thu, wes, thr, fri;
+	FILE *timetable=fopen("timetable.txt","w");//시간표를 파일에 저장하기 위한 파일포인터
+	printf("월요일부터 금요일까지의 시간표를 입력하셔야 합니다.\n");
+	printf("월요일1교시 : "); scanf("%s",mon.st1);
+	printf("월요일2교시 : "); scanf("%s", mon.st2);
+	printf("월요일3교시 : "); scanf("%s", mon.st3);
+	printf("월요일4교시 : "); scanf("%s", mon.st4);
+	printf("월요일5교시 : "); scanf("%s", mon.st5);
+	printf("월요일6교시 : "); scanf("%s", mon.st6);
+	printf("월요일7교시 : "); scanf("%s", mon.st7);
+	printf("월요일8교시 : "); scanf("%s", mon.st8);
+	system("cls");
+	printf("화요일1교시 : "); scanf("%s", thu.st1);
+	printf("화요일2교시 : "); scanf("%s", thu.st2);
+	printf("화요일3교시 : "); scanf("%s", thu.st3);
+	printf("화요일4교시 : "); scanf("%s", thu.st4);
+	printf("화요일5교시 : "); scanf("%s", thu.st5);
+	printf("화요일6교시 : "); scanf("%s", thu.st6);
+	printf("화요일7교시 : "); scanf("%s", thu.st7);
+	printf("화요일8교시 : "); scanf("%s", thu.st8);
+	system("cls");
+	printf("수요일1교시 : "); scanf("%s", wes.st1);
+	printf("수요일2교시 : "); scanf("%s", wes.st2);
+	printf("수요일3교시 : "); scanf("%s", wes.st3);
+	printf("수요일4교시 : "); scanf("%s", wes.st4);
+	printf("수요일5교시 : "); scanf("%s", wes.st5);
+	printf("수요일6교시 : "); scanf("%s", wes.st6);
+	printf("수요일7교시 : "); scanf("%s", wes.st7);
+	printf("수요일8교시 : "); scanf("%s", wes.st8);
+	system("cls");
+	printf("목요일1교시 : "); scanf("%s", thr.st1);
+	printf("목요일2교시 : "); scanf("%s", thr.st2);
+	printf("목요일3교시 : "); scanf("%s", thr.st3);
+	printf("목요일4교시 : "); scanf("%s", thr.st4);
+	printf("목요일5교시 : "); scanf("%s", thr.st5);
+	printf("목요일6교시 : "); scanf("%s", thr.st6);
+	printf("목요일7교시 : "); scanf("%s", thr.st7);
+	printf("목요일8교시 : "); scanf("%s", thr.st8);
+	system("cls");
+	printf("금요일1교시 : "); scanf("%s", fri.st1);
+	printf("금요일2교시 : "); scanf("%s", fri.st2);
+	printf("금요일3교시 : "); scanf("%s", fri.st3);
+	printf("금요일4교시 : "); scanf("%s", fri.st4);
+	printf("금요일5교시 : "); scanf("%s", fri.st5);
+	printf("금요일6교시 : "); scanf("%s", fri.st6);
+	printf("금요일7교시 : "); scanf("%s", fri.st7);
+	printf("금요일8교시 : "); scanf("%s", fri.st8);
+	system("cls");
+	fprintf(timetable,"%s %s %s %s %s %s %s %s\n%s %s %s %s %s %s %s %s\n%s %s %s %s %s %s %s %s\n%s %s %s %s %s %s %s %s\n%s %s %s %s %s %s %s %s\n"
+		, mon.st1, mon.st2, mon.st3, mon.st4, mon.st5, mon.st6, mon.st7, mon.st8, thu.st1, thu.st2, thu.st3, thu.st4, thu.st5, thu.st6, thu.st7, thu.st8
+		,wes.st1, wes.st2, wes.st3, wes.st4, wes.st5, wes.st6, wes.st7, wes.st8,thr.st1, thr.st2, thr.st3, thr.st4, thr.st5, thr.st6, thr.st7, thr.st8
+		,fri.st1, fri.st2, fri.st3, fri.st4, fri.st5, fri.st6, fri.st7, fri.st8);
+	printf("시간표 입력 완료!!\n");
+	return 0;
+}//================================-sungjae
+int timetablelook() {
+	TT mon, thu, wes, thr, fri;
+	FILE *timetablelook = fopen("timetable.txt", "r");
+	fscanf(timetablelook, "%s %s %s %s %s %s %s %s\n%s %s %s %s %s %s %s %s\n%s %s %s %s %s %s %s %s\n%s %s %s %s %s %s %s %s\n%s %s %s %s %s %s %s %s\n"
+		, mon.st1, mon.st2, mon.st3, mon.st4, mon.st5, mon.st6, mon.st7, mon.st8, thu.st1, thu.st2, thu.st3, thu.st4, thu.st5, thu.st6, thu.st7, thu.st8
+		, wes.st1, wes.st2, wes.st3, wes.st4, wes.st5, wes.st6, wes.st7, wes.st8, thr.st1, thr.st2, thr.st3, thr.st4, thr.st5, thr.st6, thr.st7, thr.st8
+		, fri.st1, fri.st2, fri.st3, fri.st4, fri.st5, fri.st6, fri.st7, fri.st8);
+	printf("%s",mon.st1);
+
 	return 0;
 }//====================================-sungjae
