@@ -9,6 +9,10 @@
 #include <string.h>
 #define UP 72//위쪽 방향키
 #define DOWN 80//아래쪽 방향키
+//================================================================-changun
+#define LEFT 75// 왼쪽 방향키
+#define RIGHT 77//오른쪽 방향키
+//================================================================-changun
 #define ENTER 13//엔터키
 #define ESC 27//ESC 키
 //=====sung ho===========
@@ -50,6 +54,7 @@ typedef struct tt {
 }TT;
 //================================================================-sungjae
 
+
 //함수 넣는존
 //===============================================================-main
 void main_menu();
@@ -65,8 +70,18 @@ int Matrix_key();
 void Matrix_mul(); // 행렬 곱셈
 void stop_watch(); //스톱워치
 void stopwatch_menu(); //스톱 워치 메뉴
-					   //==============================================-changun
-					   //================================================-SungHo
+void main_Calculator();
+int calculator_switch();
+int main_calculator();
+int calculator();
+int stack_push2();
+
+void stack_pop(int num);
+int stack_push();
+void postfix_calculator_Menu();
+int post_fix[MAX], top = 0;
+//==============================================-changun
+//================================================-SungHo
 void gotoxy(int x, int y);//좌표 함수
 void menu_scr(void);//단어장 메뉴화면을 출력하는 함수
 void Function(int y);//단어장 해당 메뉴에 접속하는 함수
@@ -107,7 +122,6 @@ int main()
 {
 	int main_switch = 0;  //메인문에 스위치 값을 받기 위한 변수 - 사용자 입력 값
 	int main_end = 0;   //메인문을 종료시키기 위한 변수
-	int End_C = 0, C_M, CM_M, AC_M; //End_C:메인문에서 계산기메뉴를 종료하기 위한 변수 C_M : 계산기 메뉴 CM_M : 행렬계산 메뉴 AC_M : 일반 계산기 메뉴
 	int num = 0;
 	system("mode con: cols=70 lines=30"); //크기
 	system("title Learing Support Program");  //제목 변화
@@ -135,46 +149,7 @@ int main()
 			break;
 		case 7: //===============================================계산기 - changun
 			system("cls");
-			while (1)
-			{
-				Calculator_Menu();  //계산기 메뉴를 호출하고 사용자 입력값을 돌려받음
-				C_M = calculator_key();
-				switch (C_M)
-				{
-				case 4:
-					Matrix_Menu();
-					CM_M = Matrix_key(); //행렬 계산기 메뉴
-					switch (CM_M)
-					{
-					case 4:
-						Matrix_add();
-						break;
-					case 6:
-						system("cls");
-						Matrix_mul();
-						break;
-					case 8:
-						break;
-					case 10:
-						main();
-						break;
-					default:
-						break;
-					}// 행렬계산기에 대한 switch
-					break;
-				case 6:
-					system("cls");
-					AC_M = ACalulator_Menu(); //일반 계산기 메뉴
-					break;
-				case 8:
-					End_C = 10; //End_c에 10을 넣어줘서 반복문 탈출
-					break;
-				default:
-					break;
-				}//C_M _ switch문 중괄호
-				if (End_C == 10)
-					break;//계산기 while에 따른 브레이크
-			}//main_switch_num_case 3: while 중괄호
+			main_Calculator();
 			break;//main_switch_num 3: break===============================-changun
 		case 8:
 			//단어장
@@ -290,6 +265,50 @@ int menu_switch()
 }
 //=============================================================-main
 //===============================-changun
+void main_Calculator()
+{
+	int C_M = 0, CM_M = 0, End_C = 0; //End_C:메인문에서 계산기메뉴를 종료하기 위한 변수 C_M : 계산기 메뉴 CM_M : 행렬계산 메뉴 AC_M : 일반 계산기 메뉴
+	while (1)
+	{
+		Calculator_Menu();  //계산기 메뉴를 호출하고 사용자 입력값을 돌려받음
+		C_M = calculator_key();
+		switch (C_M)
+		{
+		case 4:
+			Matrix_Menu();
+			CM_M = Matrix_key(); //행렬 계산기 메뉴
+			switch (CM_M)
+			{
+			case 4:
+				Matrix_add();
+				break;
+			case 6:
+				system("cls");
+				Matrix_mul();
+				break;
+			case 8:
+				break;
+			case 10:
+				main();
+				break;
+			default:
+				break;
+			}// 행렬계산기에 대한 switch
+			break;
+		case 6:
+			system("cls");
+			main_calculator(); //일반 계산기 메뉴
+			break;
+		case 8:
+			End_C = 10; //End_c에 10을 넣어줘서 반복문 탈출
+			break;
+		default:
+			break;
+		}//C_M _ switch문 중괄호
+		if (End_C == 10)
+			break;//계산기 while에 따른 브레이크
+	}//main_switch_num_case 3: while 중괄호
+}
 
 int Calculator_Menu()  //계산기 메뉴
 {
@@ -411,19 +430,6 @@ int Matrix_key()
 	}
 }
 
-int ACalulator_Menu()    //사친연산 계산기 메뉴
-{
-	system("cls");
-	int user_num;
-	printf("=====================================================================\n");
-	printf("                     C a l c u l a t o r \n");
-	printf("=====================================================================\n");
-	printf(" 1.수 입력\n");
-	printf(" 2.수식 입력\n");
-	printf(" 3.나가기\n");
-	scanf_s("%d", &user_num);
-	return user_num;
-}
 void Matrix_add()  //행렬 덧셈
 {
 	int exone[MAX][MAX];
@@ -635,6 +641,210 @@ void Matrix_mul()  //행렬 곱셈 함수
 	printf("\n");
 	system("PAUSE");
 }//행렬 곱셈 함수 종료
+int main_calculator()
+{
+	int a = 0, num = 0, count = 0, sum = 0;
+	char oper;
+	system("cls");
+	while (1)
+	{
+		postfix_calculator_Menu();
+		a = calculator_switch();
+		/*
+		sum=stack_push(operator);
+		printf("\n");
+		printf("%d",sum);
+		*/
+		switch (a)
+		{
+		case 2:
+			calculator();
+			break;
+		case 17:
+			printf("\n");
+			for (; top != 0;)
+			{
+				sum = stack_push();
+
+			}
+			printf("%d \n", sum);
+			sum = 0;
+			printf("\n");
+			system("pause");
+			break;
+		case 32:
+			printf("\n");
+			for (; top != -1;)
+			{
+				sum = stack_push2();
+				stack_pop(sum);
+			}
+			printf("%d", sum);
+			sum = 0;
+			printf("\n");
+			system("pause");
+			break;
+		case 47:
+			sum = 0, post_fix[MAX] = 0, top = 0;
+			printf("클리어 되었습니다.\n");
+			break;
+		case 62:
+			printf("\n");
+			return 0;
+		default:
+			break;
+		}
+	}
+	return 0;
+}
+void postfix_calculator_Menu()
+{
+	char operator = NULL;
+	system("cls");
+	printf("=====================================================================\n");
+	printf("                      C a l c u l a t o r \n");
+	printf("=====================================================================\n");
+	gotoxy(4, 3);
+	printf("사칙 연산      모두더하기      모두 빼기      클 리 어      나가기\n");
+	printf("\n");
+}
+
+void stack_pop(int num)
+{
+	post_fix[top] = num;
+	top++;
+}
+int stack_push()
+{
+	int x = 0, y = 0, sum = 0;
+	top--;
+	x = post_fix[top];
+	post_fix[top] = 0;
+	top--;
+	y = post_fix[top];
+	post_fix[top] = 0;
+	sum = x + y;
+
+	stack_pop(sum);
+	return sum;
+}
+int stack_push2()
+{
+	int x = 0, y = 0, sum = 0;
+	top--;
+	x = post_fix[top];
+	post_fix[top] = 0;
+	top--;
+	y = post_fix[top];
+	sum = y - x;
+	return sum;
+}
+
+
+
+int calculator_switch()
+{
+	int key;//입력받은 키의 int값을 저장할 변수
+	int x = 2, y = 3;//화살표의 시작 좌표 지정 x :x축 좌표  y:y축 좌표
+
+	while (1)
+	{
+		key = getch();//키를 입력 받으면
+		if (key == 0xE0 || key == 0)
+			key = getch();
+		switch (key)
+		{
+		case LEFT: //위쪽 방향키를 입력받으면
+			system("cls");
+			postfix_calculator_Menu(); //메뉴창을 띄우고
+			x -= 15;	   //화살표("=>")의 y좌표를 1칸 아래로 내림
+			if (x <= 2)  //화살표("=>")의 y좌표가 메뉴 위쪽으로는 올라가지 않도록 고정
+				x = 2;
+			gotoxy(x, y);
+			printf("=>");//바뀐 좌표에 화살표 출력
+			break;
+
+		case RIGHT://아래쪽 방향키를 입력받으면
+			system("cls");
+			postfix_calculator_Menu();//메뉴창을 띄우고
+			x += 15;	   //화살표("=>")의 y좌표를 1칸 위로 올림
+			if (x >= 62)  //화살표("=>")의 y좌표가 메뉴 아래쪽으로는 내려가지 않도록 함
+				x = 62;
+			gotoxy(x, y);
+			printf("=>");//바뀐 좌표에 화살표 출력
+			break;
+
+		case ESC:
+			system("cls");
+			system("color 07");
+			return 0;
+
+		case ENTER://엔터키를 입력받으면
+			return x;
+		}
+
+	}
+
+}
+
+
+
+int calculator()
+{
+	int a, b, sum = 0;
+	char letter;
+	while (1)
+	{
+		printf("\n");
+		printf("\n");
+		printf("＃나가려면 e를 입력하세요.\n");
+		printf("연산자입력 : ");
+		scanf("\n%c", &letter);
+		if (letter == 'e')
+			break;
+		printf("첫번째 수 입력:");
+		scanf_s("%d", &a);
+		printf("두번째 수 입력:");
+		scanf_s("%d", &b);
+
+		switch (letter)
+		{
+		case '+':
+			sum = a + b;
+			printf("%d + %d = %d \n", a, b, sum);
+			stack_pop(sum);
+			break;
+
+		case '-':
+			sum = a - b;
+			printf("%d - %d = %d \n", a, b, sum);
+			stack_pop(sum);
+			break;
+
+		case '*':
+			sum = a*b;
+			printf("%d * %d = %d \n", a, b, sum);
+			stack_pop(sum);
+			break;
+
+		case '/':
+			sum = a / b;
+			printf("%d / %d = %d \n", a, b, sum);
+			stack_pop(sum);
+			break;
+		case '%':
+			sum = a%b;
+			printf("%d %% %d = %d \n", a, b, sum);
+			stack_pop(sum);
+			break;
+
+		default:
+			printf("연산자 입력 오류! \n");
+			break;
+		}
+	}
+	return 0;
+}
 
 void stop_watch()  //스탑 워치 함수
 {
@@ -698,6 +908,7 @@ void stopwatch_menu()  //스탑 워치 메뉴
 	printf("S:시작/멈춤 \nW: 기록\nR:리셋\nQ:나가기\n");
 	printf("시 : 분 : 초 :0.01초\n");
 }
+
 
 //================================================-changun
 
@@ -1086,26 +1297,26 @@ void del(void)//단어를 삭제하는 기능
 			strcpy(a[i].mean, "\0");//뜻도 마찬가지로 덮어씌움
 		}
 
-    }
-if ((fp = fopen("Voca.txt", "w")) == NULL)//읽기 모드로 파일을 연다.
-{
-	fprintf(stderr, "파일 Voca.txt를 열 수 없습니다\n", "Voca.txt");
-}
-for (i = 0; i<count; i++)
-{
-	if ((strcmp(a[i].name, "\0")) != 0)//단어를 저장하는 변수가 NULL값이 아니라면
-	{
-		fputs(a[i].name, fp);//텍스트 파일에 저장함
-		fputc('\n', fp);//fputs 는 텍스트로 저장할때 엔터값을 안받기에 개행을 위해 붙여줌
-		fputs(a[i].mean, fp);//뜻도 마찬가지로 저장
-		fputc('\n', fp);
 	}
-}
-fclose(fp);
-printf("메뉴로 돌아갑니다\n");
-Sleep(1000);
-system("cls");
-menu_scr();//메뉴출력
+	if ((fp = fopen("Voca.txt", "w")) == NULL)//읽기 모드로 파일을 연다.
+	{
+		fprintf(stderr, "파일 Voca.txt를 열 수 없습니다\n", "Voca.txt");
+	}
+	for (i = 0; i<count; i++)
+	{
+		if ((strcmp(a[i].name, "\0")) != 0)//단어를 저장하는 변수가 NULL값이 아니라면
+		{
+			fputs(a[i].name, fp);//텍스트 파일에 저장함
+			fputc('\n', fp);//fputs 는 텍스트로 저장할때 엔터값을 안받기에 개행을 위해 붙여줌
+			fputs(a[i].mean, fp);//뜻도 마찬가지로 저장
+			fputc('\n', fp);
+		}
+	}
+	fclose(fp);
+	printf("메뉴로 돌아갑니다\n");
+	Sleep(1000);
+	system("cls");
+	menu_scr();//메뉴출력
 }
 
 
@@ -1782,7 +1993,7 @@ int planinsert()//계획입력함수
 	int a = 0;
 	PLAN insert;
 	FILE *fpin1 = fopen("plan1.txt", "w");//1학기 계획을 파일에 저장하기 위해서 만든 파일포인터
-	FILE *fpin2= fopen("plan2.txt", "w");//2학기 계획을 파일에 저장하기 위해서 만든 파일포인터
+	FILE *fpin2 = fopen("plan2.txt", "w");//2학기 계획을 파일에 저장하기 위해서 만든 파일포인터
 
 	printf("1. 1학기 계획입력\n");
 	printf("2. 2학기 계획입력\n");
@@ -1880,10 +2091,10 @@ int achievementcheck() {
 	int f = 0;
 	char c1[10], c2[10], c3[10], c4[10], c5[10], c6[10], c7[10], c8[10], c9[10], c10[10], c11[10], c12[10], c13[10], c14[10], c15[10], c16[10];
 	PLAN out;
-	FILE *fpout1= fopen("plan1.txt", "r"); //1학기 읽어오는 파일포인터
-	FILE *fpout2= fopen("plan2.txt", "r");//2학기 읽어오는 파일포인터
-	FILE *chrate1= fopen("rate1.txt", "w");//1학기 달성체크
-	FILE *chrate2= fopen("rate2.txt", "w");//2학기 달성체크
+	FILE *fpout1 = fopen("plan1.txt", "r"); //1학기 읽어오는 파일포인터
+	FILE *fpout2 = fopen("plan2.txt", "r");//2학기 읽어오는 파일포인터
+	FILE *chrate1 = fopen("rate1.txt", "w");//1학기 달성체크
+	FILE *chrate2 = fopen("rate2.txt", "w");//2학기 달성체크
 	printf("1. 1학기 달성체크\n");
 	printf("2. 2학기 달성체크\n");
 	printf("3. 종료\n");
@@ -1979,8 +2190,8 @@ int achievementrate() {
 	int ratesum = 0;//달성 여부 확인용 정수형 변수
 	int ac;//사용자 메뉴선택변수
 	PLAN ch;//달성체크파일에서 받아오기위해 사용한 구조체
-	FILE *rate1=fopen("rate1.txt", "r");
-	FILE *rate2=fopen("rate2.txt", "r");
+	FILE *rate1 = fopen("rate1.txt", "r");
+	FILE *rate2 = fopen("rate2.txt", "r");
 	printf("1. 1학기 달성률\n");
 	printf("2. 2학기 달성률\n");
 	printf("3. 종료\n");
