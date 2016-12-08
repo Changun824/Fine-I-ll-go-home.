@@ -99,23 +99,32 @@ void DelSubject(void);//학습량 통계 과목 삭제기능
 int WhatDay(void);//오늘 요일 계산 함수
 void Measure(void);//학습량 측정 기능
 void StudyCheck(void);//학습량 확인 기능
-					  //================================================-SungHo
-					  //================================================-seokhoon
+//================================================-SungHo
+//================================================-seokhoon
 void calender();
 //================================================-seokhoon
 //===============================================-sungjae
+int learnchoice();//학습계획표 키보드 값으로 메뉴선택
+int threemenu1();//계획입력메뉴 키보드 값으로 선택
+int threemenu2();//달성체크메뉴 키보드 값으로 선택
+int threemenu3();//달성률메뉴 키보드 값으로 선택
+int threemenu4();//시간표메뉴 키보드 값으로 선택
 int alarm();//알람함수
 int timer();//타이머함수
-void learningplanner();//학습계획표 메뉴 함수
+int learn_menu();//학습계획표 메뉴함수
+void learningplanner();//학습계획표 기능선택함수
 int planinsert();//계획 입력 함수
+int achievementcheckmenu();//달성체크메뉴
 int achievementcheck();//달성체크함수
+int achievementlookmenu();//달성률메뉴
 int achievementrate();//달성률보기함수
-int timetable();//시간표 메뉴출력함수
+int timetablemenu();//시간표 메뉴 출력
+int timetable();//시간표 메뉴선택함수
 int timetablein();//시간표 입력 함수
 int timetablelook();//시간표 보기 함수
-					//===============================================-sungjae
+//===============================================-sungjae
 
-					//==================================main메뉴존
+//==================================main메뉴존
 int main()
 {
 	int main_switch = 0;  //메인문에 스위치 값을 받기 위한 변수 - 사용자 입력 값
@@ -1836,8 +1845,222 @@ void calender() {
 }
 //==================================================-seokhoon
 //====================================================-sungjae
+int learnchoice(void)
+{
+	int key;//입력받은 키의 int값을 저장할 변수
+	int x = 18, y = 8;//화살표의 시작 좌표 지정 x :x축 좌표  y:y축 좌표
+
+	while (1)
+	{
+		key = getch();
+		if (key == 0xE0 || key == 0)
+			key = getch();
+		switch (key)
+		{
+		case UP: //위쪽 방향키를 입력받으면
+			system("cls");
+			learn_menu();//메뉴창을 띄우고
+			y -= 2;	   //화살표("=>")의 y좌표를 2칸 아래로 내림
+			if (y <= 8)  //화살표("=>")의 y좌표가 메뉴 위쪽으로는 올라가지 않도록 단어검색과 같은 높이인 11까지만 올라가도록 고정
+				y = 8;
+			gotoxy(x, y);
+			printf("=>");//바뀐 좌표에 화살표 출력
+			break;
+
+		case DOWN://아래쪽 방향키를 입력받으면
+			system("cls");
+			learn_menu();//메뉴창을 띄우고
+			y += 2;	   //화살표("=>")의 y좌표를 2칸 위로 올림
+			if (y >= 18)  //화살표("=>")의 y좌표가 메뉴 아래쪽으로는 내려가지 않도록 단어퀴즈와 같은 높이인 17까지만 내려가도록 고정
+				y = 18;
+			gotoxy(x, y);
+			printf("=>");//바뀐 좌표에 화살표 출력
+			break;
+
+		case ESC:
+			system("cls");
+			system("color 07");
+			return 0;
+
+		case ENTER://엔터키를 입력받으면
+			return y;
+		}
+
+	}
+
+}
+int threemenu1() {//학습계획입력 선택시 뭐로 할지 메뉴를 키보드로 입력받는 함수
+	int key;//입력받은 키의 int값을 저장할 변수
+	int x = 18, y = 8;//화살표의 시작 좌표 지정 x :x축 좌표  y:y축 좌표
+
+	while (1)
+	{
+		key = getch();
+		if (key == 0xE0 || key == 0)
+			key = getch();
+		switch (key)
+		{
+		case UP: //위쪽 방향키를 입력받으면
+			system("cls");
+			planinsertmenu();//메뉴창을 띄우고
+			y -= 2;	   //화살표("=>")의 y좌표를 2칸 아래로 내림
+			if (y <= 8)  //화살표("=>")의 y좌표가 메뉴 위쪽으로는 올라가지 않도록 단어검색과 같은 높이인 11까지만 올라가도록 고정
+				y = 8;
+			gotoxy(x, y);
+			printf("=>");//바뀐 좌표에 화살표 출력
+			break;
+
+		case DOWN://아래쪽 방향키를 입력받으면
+			system("cls");
+			planinsertmenu();//메뉴창을 띄우고
+			y += 2;	   //화살표("=>")의 y좌표를 2칸 위로 올림
+			if (y >= 12)  //화살표("=>")의 y좌표가 메뉴 아래쪽으로는 내려가지 않도록 단어퀴즈와 같은 높이인 17까지만 내려가도록 고정
+				y = 12;
+			gotoxy(x, y);
+			printf("=>");//바뀐 좌표에 화살표 출력
+			break;
+
+		case ESC:
+			system("cls");
+			system("color 07");
+			return 0;
+
+		case ENTER://엔터키를 입력받으면
+			return y;
+		}
+
+	}
+}
+int threemenu2() {
+	int key;//입력받은 키의 int값을 저장할 변수
+	int x = 18, y = 8;//화살표의 시작 좌표 지정 x :x축 좌표  y:y축 좌표
+
+	while (1)
+	{
+		key = getch();
+		if (key == 0xE0 || key == 0)
+			key = getch();
+		switch (key)
+		{
+		case UP: //위쪽 방향키를 입력받으면
+			system("cls");
+			achievementcheckmenu();//메뉴창을 띄우고
+			y -= 2;	   //화살표("=>")의 y좌표를 2칸 아래로 내림
+			if (y <= 8)  //화살표("=>")의 y좌표가 메뉴 위쪽으로는 올라가지 않도록 단어검색과 같은 높이인 11까지만 올라가도록 고정
+				y = 8;
+			gotoxy(x, y);
+			printf("=>");//바뀐 좌표에 화살표 출력
+			break;
+
+		case DOWN://아래쪽 방향키를 입력받으면
+			system("cls");
+			achievementcheckmenu();//메뉴창을 띄우고
+			y += 2;	   //화살표("=>")의 y좌표를 2칸 위로 올림
+			if (y >= 12)  //화살표("=>")의 y좌표가 메뉴 아래쪽으로는 내려가지 않도록 단어퀴즈와 같은 높이인 17까지만 내려가도록 고정
+				y = 12;
+			gotoxy(x, y);
+			printf("=>");//바뀐 좌표에 화살표 출력
+			break;
+
+		case ESC:
+			system("cls");
+			system("color 07");
+			return 0;
+
+		case ENTER://엔터키를 입력받으면
+			return y;
+		}
+
+	}
+}
+int threemenu3() {
+	int key;//입력받은 키의 int값을 저장할 변수
+	int x = 18, y = 8;//화살표의 시작 좌표 지정 x :x축 좌표  y:y축 좌표
+
+	while (1)
+	{
+		key = getch();
+		if (key == 0xE0 || key == 0)
+			key = getch();
+		switch (key)
+		{
+		case UP: //위쪽 방향키를 입력받으면
+			system("cls");
+			achievementlookmenu();//메뉴창을 띄우고
+			y -= 2;	   //화살표("=>")의 y좌표를 2칸 아래로 내림
+			if (y <= 8)  //화살표("=>")의 y좌표가 메뉴 위쪽으로는 올라가지 않도록 단어검색과 같은 높이인 11까지만 올라가도록 고정
+				y = 8;
+			gotoxy(x, y);
+			printf("=>");//바뀐 좌표에 화살표 출력
+			break;
+
+		case DOWN://아래쪽 방향키를 입력받으면
+			system("cls");
+			achievementlookmenu();//메뉴창을 띄우고
+			y += 2;	   //화살표("=>")의 y좌표를 2칸 위로 올림
+			if (y >= 12)  //화살표("=>")의 y좌표가 메뉴 아래쪽으로는 내려가지 않도록 단어퀴즈와 같은 높이인 17까지만 내려가도록 고정
+				y = 12;
+			gotoxy(x, y);
+			printf("=>");//바뀐 좌표에 화살표 출력
+			break;
+
+		case ESC:
+			system("cls");
+			system("color 07");
+			return 0;
+
+		case ENTER://엔터키를 입력받으면
+			return y;
+		}
+
+	}
+}
+int threemenu4() {
+	int key;//입력받은 키의 int값을 저장할 변수
+	int x = 18, y = 8;//화살표의 시작 좌표 지정 x :x축 좌표  y:y축 좌표
+
+	while (1)
+	{
+		key = getch();
+		if (key == 0xE0 || key == 0)
+			key = getch();
+		switch (key)
+		{
+		case UP: //위쪽 방향키를 입력받으면
+			system("cls");
+			timetablemenu();//메뉴창을 띄우고
+			y -= 2;	   //화살표("=>")의 y좌표를 2칸 아래로 내림
+			if (y <= 8)  //화살표("=>")의 y좌표가 메뉴 위쪽으로는 올라가지 않도록 단어검색과 같은 높이인 11까지만 올라가도록 고정
+				y = 8;
+			gotoxy(x, y);
+			printf("=>");//바뀐 좌표에 화살표 출력
+			break;
+
+		case DOWN://아래쪽 방향키를 입력받으면
+			system("cls");
+			timetablemenu();//메뉴창을 띄우고
+			y += 2;	   //화살표("=>")의 y좌표를 2칸 위로 올림
+			if (y >= 12)  //화살표("=>")의 y좌표가 메뉴 아래쪽으로는 내려가지 않도록 단어퀴즈와 같은 높이인 17까지만 내려가도록 고정
+				y = 12;
+			gotoxy(x, y);
+			printf("=>");//바뀐 좌표에 화살표 출력
+			break;
+
+		case ESC:
+			system("cls");
+			system("color 07");
+			return 0;
+
+		case ENTER://엔터키를 입력받으면
+			return y;
+		}
+
+	}
+}
 int alarm()      //시간을 알려주는 함수/메인에서 주소를 받아와 저장해주기 위해 포인터로 쓰임.
 {
+	system("color 3F");
+	int key=0;
 	USER utime;//사용자 입력 시간저장구조체
 	time_t now;//현재시간을 받기위한 구조체
 	struct tm *time_;//현재시간을 받기위한 구조체
@@ -1850,16 +2073,27 @@ int alarm()      //시간을 알려주는 함수/메인에서 주소를 받아�
 	while (1) {//무한루프로 사용자 입력시간과 비교함
 		now = time(NULL);
 		time_ = localtime(&now);//로컬시간을 불러와줌
+		if (_kbhit()) {//키보드 값을 입력하면?
+			key = _getch();//입력값을 int형변수 key에 저장
+			if (key == ESC)//입력값이 ESC라면?
+				return 0;//종료
+		}
 		printf("현재 시간 : %2d시 %2d분 %2d초\n", time_->tm_hour, time_->tm_min, time_->tm_sec);//로컬시간 보여줌
 		printf("입력 시간 : %2d시 %2d분\n", utime.hour, utime.min);//사용자 입력시간보여줌
+		printf("ESC를 입력하시면 종료됩니다.....\n");
 		Sleep(200);
 		system("cls");//화면지움
 		if (utime.hour == time_->tm_hour&&utime.min == time_->tm_min)//사용자 입력시간과 같다면 빠져나옴
 			break;
 	}
-	while (!_kbhit()) {
-		printf("알람 작동!!!!\n");
-		printf("아무키나 입력하시면 끝납니다.");
+	while (1) {
+		printf("알람 종료!!");
+		printf("ESC를 누르면 종료됩니다.");
+		if (_kbhit()) {//키보드 값을 입력하면?
+			key = _getch();//입력값을 int형변수 key에 저장
+			if (key == ESC)//입력값이 ESC라면?
+				break;//while문 종료
+		}
 		Beep(262, 200);/* 도 음계 *///알람음 출력
 		Beep(294, 200); /* 레 음계 */
 		Beep(330, 200); /* 미 음계 */
@@ -1872,9 +2106,9 @@ int alarm()      //시간을 알려주는 함수/메인에서 주소를 받아�
 		system("cls");
 	}
 	return 0;
-}//====================================================-sungjae
+}
 int timer() {
-
+	system("color 3F");
 	int a = 0, inmin = 0, insec = 0, inhour = 0, key = 0;
 	printf("타이머의 시간을 입력해주세요\n");
 	printf("min : ");
@@ -1906,6 +2140,11 @@ int timer() {
 	}
 	while (1)
 	{
+		if (_kbhit()) {//키보드 값을 입력하면?
+			key = _getch();//입력값을 int형변수 key에 저장
+			if (key == ESC)//입력값이 ESC라면?
+				return 0;//종료
+		}
 		if (insec == 0 && inmin == 0 && inhour != 0)//시간이 흐를때 분이 0이되면 시간을 1빼고
 		{
 			inhour--;
@@ -1916,6 +2155,7 @@ int timer() {
 			inmin--;//분에서 1을 빼주고
 			insec = 60;//초를 60로 초기화시켜준다
 		}
+
 		printf("■■■■■■■■■■■■■\n");
 		printf("■■■■■ Timer■■■■■\n");
 		printf("■■■■■■■■■■■■■\n");
@@ -1923,6 +2163,7 @@ int timer() {
 		printf("■  %2d  ■  %2d  ■  %2d  ■\n", inhour, inmin, insec);//타이머 시간 출력
 		printf("■      ■      ■      ■\n");
 		printf("■■■■■■■■■■■■■\n");
+		printf("ESC를 누르면 종료됩니다.\n");
 		Sleep(1000);//1초지연
 		insec -= 1;//시간이 흐름을 나타냄
 		system("cls");//화면 초기화
@@ -1931,9 +2172,14 @@ int timer() {
 			break;//타이머종료/
 	}
 
-	while (!_kbhit()) {//아무키나 입력한다면 while문은 끝나게됨
+	while (1) {
+		if (_kbhit()) {//키보드 값을 입력하면?
+			key = _getch();//입력값을 int형변수 key에 저장
+			if (key == ESC)//입력값이 ESC라면?
+				break;//while문 종료
+		}
 		printf("타이머 종료!!!!\n");
-		printf("아무키나 입력하시면 끝납니다.");
+		printf("ESC를 누르면 종료됩니다.");
 		Beep(262, 200);/* 도 음계 *///알람음 출력
 		Beep(294, 200); /* 레 음계 */
 		Beep(330, 200); /* 미 음계 */
@@ -1946,54 +2192,112 @@ int timer() {
 		system("cls");
 	}
 	return 0;
-}//====================================================-sungjae
+}
+int learn_menu() {
+	gotoxy(11, 5);
+	printf("==================================\n");
+	gotoxy(11, 6);
+	printf("         Learning  Planner        \n");
+	gotoxy(11, 7);
+	printf("==================================\n");
+	gotoxy(20, 8);
+	printf("1. 계획 입력\n");
+	gotoxy(20, 10);
+	printf("2. 계획 달성 체크\n");
+	gotoxy(20, 12);
+	printf("3. 달성률 보기\n");
+	gotoxy(20, 14);
+	printf("4. 시간표\n");
+	gotoxy(20, 16);
+	printf("5. 종료...\n");
+
+	return 0;
+}
 void learningplanner()
 {
 	int b;//b는 사용자가 메뉴선택하는 변수
-
-	while (1) {
+	system("color 3F");
+	learn_menu();
+	b=learnchoice();
 		system("cls");
-		printf("==================================\n");
-		printf("         Learning  Planner        \n");
-		printf("==================================\n");
-		printf("1. 계획 입력\n");
-		printf("2. 계획 달성 체크\n");
-		printf("3. 달성률 보기\n");
-		printf("4. 시간표(현재 이 기능은 잠겨있습니다.)\n");
-		printf("5. 종료...\n");
-		scanf("%d", &b);//사용자가 메뉴선택
-		system("cls");
-		if (b == 5)
+		if (b == 16)
 			return;
 		switch (b)
 		{
-		case 1:
+		case 8:
 			planinsert();//계획입력
 			break;
-		case 2: achievementcheck();//달성 체크
+		case 10: achievementcheck();//달성 체크
 			break;
-		case 3: achievementrate();//달성보기
+		case 12: achievementrate();//달성보기
 			break;
-		case 4: timetable();
+		case 14: timetable();
 			break;
 		default:
 			break;
 		}
-	}
+
+}
+int planinsertmenu() {
+    gotoxy(20, 8);
+	printf("1. 1학기 계획입력\n");
+	gotoxy(20, 10);
+	printf("2. 2학기 계획입력\n");
+	gotoxy(20, 12);
+	printf("3. 종료\n");
+	return 0;
 }
 int planinsert()//계획입력함수
 {
 	int a = 0;
 	PLAN insert;
 	FILE *fpin1 = fopen("plan1.txt", "w");//1학기 계획을 파일에 저장하기 위해서 만든 파일포인터
-	FILE *fpin2 = fopen("plan2.txt", "w");//2학기 계획을 파일에 저장하기 위해서 만든 파일포인터
-
-	printf("1. 1학기 계획입력\n");
-	printf("2. 2학기 계획입력\n");
-	printf("3. 종료\n");
-	scanf("%d", &a);
+	FILE *fpin2= fopen("plan2.txt", "w");//2학기 계획을 파일에 저장하기 위해서 만든 파일포인터
+	planinsertmenu();
+	a = threemenu1();
 	system("cls");
-	if (a == 1)
+	if (a == 8)
+	{
+
+		printf("1주차 계획 :  ");
+		scanf("%s", insert.pi1, 50);
+		printf("2주차 계획 :  ");
+		scanf("%s", insert.pi2, 50);
+		printf("3주차 계획 :  ");
+		scanf("%s", insert.pi3, 50);
+		printf("4주차 계획 :  ");
+		scanf("%s", insert.pi4, 50);
+		printf("5주차 계획 :  ");
+		scanf("%s", insert.pi5, 50);
+		printf("6주차 계획 :  ");
+		scanf("%s", insert.pi6, 50);
+		printf("7주차 계획 :  ");
+		scanf("%s", insert.pi7, 50);
+		printf("8주차 계획 :  ");
+		scanf("%s", insert.pi8, 50);
+		printf("9주차 계획 :  ");
+		scanf("%s", insert.pi9, 50);
+		printf("10주차 계획 : ");
+		scanf("%s", insert.pi10, 50);
+		printf("11주차 계획 : ");
+		scanf("%s", insert.pi11, 50);
+		printf("12주차 계획 : ");
+		scanf("%s", insert.pi12, 50);
+		printf("13주차 계획 : ");
+		scanf("%s", insert.pi13, 50);
+		printf("14주차 계획 : ");
+		scanf("%s", insert.pi14, 50);
+		printf("15주차 계획 : ");
+		scanf("%s", insert.pi15, 50);
+		printf("16주차 계획 : ");
+		scanf("%s", insert.pi16, 50);
+		fprintf(fpin1, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", insert.pi1, insert.pi2, insert.pi3, insert.pi4, insert.pi5, insert.pi6, insert.pi7, insert.pi8, insert.pi9, insert.pi10, insert.pi11, insert.pi12, insert.pi13, insert.pi14, insert.pi15, insert.pi16);
+		//입력받은 문자열 파일에 저장
+		fclose(fpin1);
+		fclose(fpin2);
+		return 0;
+	}
+	else if (a == 10)
 	{
 		printf("1주차 계획 :  ");
 		scanf("%s", insert.pi1, 50);
@@ -2033,138 +2337,137 @@ int planinsert()//계획입력함수
 		fclose(fpin2);
 		return 0;
 	}
-	else if (a == 2)
-	{
-		printf("1주차 계획 :  ");
-		scanf("%s", insert.pi1, 50);
-		printf("2주차 계획 :  ");
-		scanf("%s", insert.pi2, 50);
-		printf("3주차 계획 :  ");
-		scanf("%s", insert.pi3, 50);
-		printf("4주차 계획 :  ");
-		scanf("%s", insert.pi4, 50);
-		printf("5주차 계획 :  ");
-		scanf("%s", insert.pi5, 50);
-		printf("6주차 계획 :  ");
-		scanf("%s", insert.pi6, 50);
-		printf("7주차 계획 :  ");
-		scanf("%s", insert.pi7, 50);
-		printf("8주차 계획 :  ");
-		scanf("%s", insert.pi8, 50);
-		printf("9주차 계획 :  ");
-		scanf("%s", insert.pi9, 50);
-		printf("10주차 계획 : ");
-		scanf("%s", insert.pi10, 50);
-		printf("11주차 계획 : ");
-		scanf("%s", insert.pi11, 50);
-		printf("12주차 계획 : ");
-		scanf("%s", insert.pi12, 50);
-		printf("13주차 계획 : ");
-		scanf("%s", insert.pi13, 50);
-		printf("14주차 계획 : ");
-		scanf("%s", insert.pi14, 50);
-		printf("15주차 계획 : ");
-		scanf("%s", insert.pi15, 50);
-		printf("16주차 계획 : ");
-		scanf("%s", insert.pi16, 50);
-		fprintf(fpin1, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", insert.pi1, insert.pi2, insert.pi3, insert.pi4, insert.pi5, insert.pi6, insert.pi7, insert.pi8, insert.pi9, insert.pi10, insert.pi11, insert.pi12, insert.pi13, insert.pi14, insert.pi15, insert.pi16);
-		//입력받은 문자열 파일에 저장
-		fclose(fpin1);
-		fclose(fpin2);
-		return 0;
-	}
-	else if (a == 3)//3누르면 종료
+	else if (a == 12)//3누르면 종료
 		return 0;
 	printf("잘못 입력하셨습니다.\n");
 	fclose(fpin1);
 	fclose(fpin2);
 	return 0;
-}//===================================================-sungjae
+}
+int achievementcheckmenu() {
+	gotoxy(20, 8);
+	printf("1. 1학기 달성체크\n");
+	gotoxy(20, 10);
+	printf("2. 2학기 달성체크\n");
+	gotoxy(20, 12);
+	printf("3. 종료\n");
+	return 0;
+}
 int achievementcheck() {
 	int f = 0;
 	char c1[10], c2[10], c3[10], c4[10], c5[10], c6[10], c7[10], c8[10], c9[10], c10[10], c11[10], c12[10], c13[10], c14[10], c15[10], c16[10];
 	PLAN out;
-	FILE *fpout1 = fopen("plan1.txt", "r"); //1학기 읽어오는 파일포인터
-	FILE *fpout2 = fopen("plan2.txt", "r");//2학기 읽어오는 파일포인터
-	FILE *chrate1 = fopen("rate1.txt", "w");//1학기 달성체크
-	FILE *chrate2 = fopen("rate2.txt", "w");//2학기 달성체크
-	printf("1. 1학기 달성체크\n");
-	printf("2. 2학기 달성체크\n");
-	printf("3. 종료\n");
-	scanf("%d", &f);
-	system("cls");
-	if (f == 3)
-		exit(1);
+	FILE *fpout1= fopen("plan1.txt", "r"); //1학기 읽어오는 파일포인터
+	FILE *fpout2= fopen("plan2.txt", "r");//2학기 읽어오는 파일포인터
+	FILE *chrate1= fopen("rate1.txt", "w");//1학기 달성체크
+	FILE *chrate2= fopen("rate2.txt", "w");//2학기 달성체크
+	achievementcheckmenu();
+	f = threemenu2();
+	if (f == 12)
+		return 0;
 	switch (f) {
-	case 1:
+	case 8:
 		fscanf(fpout1, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", out.pi1, out.pi2, out.pi3, out.pi4, out.pi5, out.pi6, out.pi7, out.pi8, out.pi9, out.pi10, out.pi11, out.pi12, out.pi13, out.pi14, out.pi15, out.pi16);
+		system("cls");
 		printf("1주차 : %s-->달성했으면 y / 아니면 n\n", out.pi1);
 		scanf(" %s", c1);
+		system("cls");
 		printf("2주차 : %s-->달성했으면 y / 아니면 n\n", out.pi2);
 		scanf(" %s", c2);
+		system("cls");
 		printf("3주차 : %s-->달성했으면 y / 아니면 n\n", out.pi3);
 		scanf(" %s", c3);
+		system("cls");
 		printf("4주차 : %s-->달성했으면 y / 아니면 n\n", out.pi4);
 		scanf(" %s", c4);
+		system("cls");
 		printf("5주차 : %s-->달성했으면 y / 아니면 n\n", out.pi5);
 		scanf(" %s", c5);
+		system("cls");
 		printf("6주차 : %s-->달성했으면 y / 아니면 n\n", out.pi6);
 		scanf(" %s", c6);
+		system("cls");
 		printf("7주차 : %s-->달성했으면 y / 아니면 n\n", out.pi7);
 		scanf(" %s", c7);
+		system("cls");
 		printf("8주차 : %s-->달성했으면 y / 아니면 n\n", out.pi8);
 		scanf(" %s", c8);
+		system("cls");
 		printf("9주차 : %s-->달성했으면 y / 아니면 n\n", out.pi9);
 		scanf(" %s", c9);
+		system("cls");
 		printf("10주차 : %s-->달성했으면 y / 아니면 n\n", out.pi10);
 		scanf(" %s", c10);
+		system("cls");
 		printf("11주차 : %s-->달성했으면 y / 아니면 n\n", out.pi11);
 		scanf(" %s", c11);
+		system("cls");
 		printf("12주차 : %s-->달성했으면 y / 아니면 n\n", out.pi12);
 		scanf(" %s", c12);
+		system("cls");
 		printf("13주차 : %s-->달성했으면 y / 아니면 n\n", out.pi13);
 		scanf(" %s", c13);
+		system("cls");
 		printf("14주차 : %s-->달성했으면 y / 아니면 n\n", out.pi14);
 		scanf(" %s", c14);
+		system("cls");
 		printf("15주차 : %s-->달성했으면 y / 아니면 n\n", out.pi15);
 		scanf(" %s", c15);
+		system("cls");
 		printf("16주차 : %s-->달성했으면 y / 아니면 n\n", out.pi16);
 		scanf(" %s", c16);
 		fprintf(chrate1, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16);
 		//사용자가 입력한 달성체크 저장
 		break;
-	case 2:
+	case 10:
+
 		fscanf(fpout2, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", out.pi1, out.pi2, out.pi3, out.pi4, out.pi5, out.pi6, out.pi7, out.pi8, out.pi9, out.pi10, out.pi11, out.pi12, out.pi13, out.pi14, out.pi15, out.pi16);
+		system("cls");
 		printf("1주차 : %s-->달성했으면 y / 아니면 n\n", out.pi1);
 		scanf(" %s", c1);
+		system("cls");
 		printf("2주차 : %s-->달성했으면 y / 아니면 n\n", out.pi2);
 		scanf(" %s", c2);
+		system("cls");
 		printf("3주차 : %s-->달성했으면 y / 아니면 n\n", out.pi3);
 		scanf(" %s", c3);
+		system("cls");
 		printf("4주차 : %s-->달성했으면 y / 아니면 n\n", out.pi4);
 		scanf(" %s", c4);
+		system("cls");
 		printf("5주차 : %s-->달성했으면 y / 아니면 n\n", out.pi5);
 		scanf(" %s", c5);
+		system("cls");
 		printf("6주차 : %s-->달성했으면 y / 아니면 n\n", out.pi6);
 		scanf(" %s", c6);
+		system("cls");
 		printf("7주차 : %s-->달성했으면 y / 아니면 n\n", out.pi7);
 		scanf(" %s", c7);
+		system("cls");
 		printf("8주차 : %s-->달성했으면 y / 아니면 n\n", out.pi8);
 		scanf(" %s", c8);
+		system("cls");
 		printf("9주차 : %s-->달성했으면 y / 아니면 n\n", out.pi9);
 		scanf(" %s", c9);
+		system("cls");
 		printf("10주차 : %s-->달성했으면 y / 아니면 n\n", out.pi10);
 		scanf(" %s", c10);
+		system("cls");
 		printf("11주차 : %s-->달성했으면 y / 아니면 n\n", out.pi11);
 		scanf(" %s", c11);
+		system("cls");
 		printf("12주차 : %s-->달성했으면 y / 아니면 n\n", out.pi12);
 		scanf(" %s", c12);
+		system("cls");
 		printf("13주차 : %s-->달성했으면 y / 아니면 n\n", out.pi13);
 		scanf(" %s", c13);
+		system("cls");
 		printf("14주차 : %s-->달성했으면 y / 아니면 n\n", out.pi14);
 		scanf(" %s", c14);
+		system("cls");
 		printf("15주차 : %s-->달성했으면 y / 아니면 n\n", out.pi15);
 		scanf(" %s", c15);
+		system("cls");
 		printf("16주차 : %s-->달성했으면 y / 아니면 n\n", out.pi16);
 		scanf(" %s", c16);
 		fprintf(chrate2, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16);
@@ -2178,22 +2481,30 @@ int achievementcheck() {
 	fclose(chrate1);
 	fclose(chrate2);
 	return 0;
-}//====================================================-sungjae
+}
+int achievementlookmenu() {
+	gotoxy(20, 8);
+	printf("1. 1학기 달성률\n");
+	gotoxy(20,10);
+	printf("2. 2학기 달성률\n");
+	gotoxy(20, 12);
+	printf("3. 종료\n");
+	return 0;
+}
 int achievementrate() {
 	int ratesum = 0;//달성 여부 확인용 정수형 변수
 	int ac;//사용자 메뉴선택변수
+	int key;//키값을 받아 종료시에 사용
 	PLAN ch;//달성체크파일에서 받아오기위해 사용한 구조체
-	FILE *rate1 = fopen("rate1.txt", "r");
-	FILE *rate2 = fopen("rate2.txt", "r");
-	printf("1. 1학기 달성률\n");
-	printf("2. 2학기 달성률\n");
-	printf("3. 종료\n");
-	scanf("%d", &ac);
+	FILE *rate1=fopen("rate1.txt", "r");
+	FILE *rate2=fopen("rate2.txt", "r");
+	achievementlookmenu();
+	ac = threemenu3();
 	system("cls");
-	if (ac == 3)
+	if (ac == 12)
 		return 0;
 	switch (ac) {
-	case 1:
+	case 8:
 		fscanf(rate1, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", ch.c1, ch.c2, ch.c3, ch.c4, ch.c5, ch.c6, ch.c7, ch.c8, ch.c9, ch.c10, ch.c11, ch.c12, ch.c13, ch.c14, ch.c15, ch.c16);
 		if (strcmp(ch.c1, "y") == 0)//대답이 y라면
 			ratesum++;
@@ -2227,11 +2538,12 @@ int achievementrate() {
 			ratesum++;
 		if (strcmp(ch.c16, "y") == 0)//대답이 y라면
 			ratesum++;
+		gotoxy(20, 10);
 		printf("1학기 달성률 %.2lf%%\n", ((float)ratesum / 16) * 100);
 		fclose(rate1);
 		fclose(rate2);
 		break;
-	case 2:
+	case 10:
 		fscanf(rate2, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", ch.c1, ch.c2, ch.c3, ch.c4, ch.c5, ch.c6, ch.c7, ch.c8, ch.c9, ch.c10, ch.c11, ch.c12, ch.c13, ch.c14, ch.c15, ch.c16);
 		if (strcmp(ch.c1, "y") == 0)//대답이 y라면
 			ratesum++;
@@ -2265,6 +2577,7 @@ int achievementrate() {
 			ratesum++;
 		if (strcmp(ch.c16, "y") == 0)//대답이 y라면
 			ratesum++;
+		gotoxy(20, 10);
 		printf("2학기 달성률 %.2lf%% \n", ((float)ratesum / 16) * 100);
 		fclose(rate1);
 		fclose(rate2);
@@ -2272,77 +2585,104 @@ int achievementrate() {
 	default:
 		break;
 	}
-	printf("10초 뒤에 메뉴화면으로 넘어갑니다\n");
-	Sleep(10000);
-	return 0;
-}//====================================-sungjae
-int timetable() {
-	int x = 0;
-	printf("==========================================\n");
-	printf("===============time table=================\n");
-	printf("==========================================\n");
-	printf("1.시간표 입력\n");
-	printf("2.시간표 보기\n");
-	scanf("%d", &x);
-	switch (x)
-	{
-	case 1: timetablein();//시간표 입력
-		break;
-	case 2: timetablelook();//시간표 출력
-		break;
-	default:
-		return 0;
+	gotoxy(20, 11);
+	printf("ESC를 입력하시면 종료됩니다.");
+	while (1) {
+		if (_kbhit()) {//키보드 값을 입력하면?
+			key = _getch();//입력값을 int형변수 key에 저장
+			if (key == ESC)//입력값이 ESC라면?
+				return 0;//종료
+		}
 	}
 	return 0;
-}//====================================-sungjae
+}
+int timetablemenu() {
+	gotoxy(11, 5);
+    printf("==========================================\n");
+	gotoxy(11, 6);
+	printf("===============time table=================\n");
+	gotoxy(11, 7);
+	printf("==========================================\n");
+	gotoxy(20,8);
+	printf("1.시간표 입력\n");
+	gotoxy(20,10);
+	printf("2.시간표 보기\n");
+	gotoxy(20,12);
+	printf("종료........");
+	return 0;
+}
+int timetable() {
+	int x = 0;
+	timetablemenu();
+	x = threemenu4();
+	switch (x)
+	{
+	case 8: timetablein();//시간표 입력
+		break;
+	case 10: timetablelook();//시간표 출력
+		break;
+	case 12:
+		return 0;
+	default:
+		break;
+	}
+	return 0;
+}
 int timetablein() {//시간표 입력함수
+
 	TT mon, thu, wes, thr, fri;
 	FILE *timetable = fopen("timetable.txt", "w");//시간표를 파일에 저장하기 위한 파일포인터
-	printf("월요일부터 금요일까지의 시간표를 입력하셔야 합니다.\n");
-	printf("월요일1교시 : "); scanf("%s", mon.st1);
-	printf("월요일2교시 : "); scanf("%s", mon.st2);
-	printf("월요일3교시 : "); scanf("%s", mon.st3);
-	printf("월요일4교시 : "); scanf("%s", mon.st4);
-	printf("월요일5교시 : "); scanf("%s", mon.st5);
-	printf("월요일6교시 : "); scanf("%s", mon.st6);
-	printf("월요일7교시 : "); scanf("%s", mon.st7);
-	printf("월요일8교시 : "); scanf("%s", mon.st8);
 	system("cls");
-	printf("화요일1교시 : "); scanf("%s", thu.st1);
-	printf("화요일2교시 : "); scanf("%s", thu.st2);
-	printf("화요일3교시 : "); scanf("%s", thu.st3);
-	printf("화요일4교시 : "); scanf("%s", thu.st4);
-	printf("화요일5교시 : "); scanf("%s", thu.st5);
-	printf("화요일6교시 : "); scanf("%s", thu.st6);
-	printf("화요일7교시 : "); scanf("%s", thu.st7);
-	printf("화요일8교시 : "); scanf("%s", thu.st8);
+	gotoxy(4,4);
+	printf("월요일부터 금요일까지의 시간표를 입력하셔야 합니다.\n\n");
+	printf("\t\t월요일1교시 : "); scanf("%s", mon.st1);
+	printf("\t\t월요일2교시 : "); scanf("%s", mon.st2);
+	printf("\t\t월요일3교시 : "); scanf("%s", mon.st3);
+	printf("\t\t월요일4교시 : "); scanf("%s", mon.st4);
+	printf("\t\t월요일5교시 : "); scanf("%s", mon.st5);
+	printf("\t\t월요일6교시 : "); scanf("%s", mon.st6);
+	printf("\t\t월요일7교시 : "); scanf("%s", mon.st7);
+	printf("\t\t월요일8교시 : "); scanf("%s", mon.st8);
 	system("cls");
-	printf("수요일1교시 : "); scanf("%s", wes.st1);
-	printf("수요일2교시 : "); scanf("%s", wes.st2);
-	printf("수요일3교시 : "); scanf("%s", wes.st3);
-	printf("수요일4교시 : "); scanf("%s", wes.st4);
-	printf("수요일5교시 : "); scanf("%s", wes.st5);
-	printf("수요일6교시 : "); scanf("%s", wes.st6);
-	printf("수요일7교시 : "); scanf("%s", wes.st7);
+	gotoxy(0,6);
+	printf("\t\t화요일1교시 : "); scanf("%s", thu.st1);
+	printf("\t\t화요일2교시 : "); scanf("%s", thu.st2);
+	printf("\t\t화요일3교시 : "); scanf("%s", thu.st3);
+	printf("\t\t화요일4교시 : "); scanf("%s", thu.st4);
+	printf("\t\t화요일5교시 : "); scanf("%s", thu.st5);
+	printf("\t\t화요일6교시 : "); scanf("%s", thu.st6);
+	printf("\t\t화요일7교시 : "); scanf("%s", thu.st7);
+	printf("\t\t화요일8교시 : "); scanf("%s", thu.st8);
+	system("cls");
+	gotoxy(0, 6);
+	printf("\t\t수요일1교시 : "); scanf("%s", wes.st1);
+	printf("\t\t수요일2교시 : "); scanf("%s", wes.st2);
+	printf("\t\t수요일3교시 : "); scanf("%s", wes.st3);
+	printf("\t\t수요일4교시 : "); scanf("%s", wes.st4);
+	printf("\t\t수요일5교시 : "); scanf("%s", wes.st5);
+	printf("\t\t수요일6교시 : "); scanf("%s", wes.st6);
+	printf("\t\t수요일7교시 : "); scanf("%s", wes.st7);
 	printf("수요일8교시 : "); scanf("%s", wes.st8);
 	system("cls");
-	printf("목요일1교시 : "); scanf("%s", thr.st1);
-	printf("목요일2교시 : "); scanf("%s", thr.st2);
-	printf("목요일3교시 : "); scanf("%s", thr.st3);
-	printf("목요일4교시 : "); scanf("%s", thr.st4);
-	printf("목요일5교시 : "); scanf("%s", thr.st5);
-	printf("목요일6교시 : "); scanf("%s", thr.st6);
-	printf("목요일7교시 : "); scanf("%s", thr.st7);
-	printf("목요일8교시 : "); scanf("%s", thr.st8);
+	gotoxy(0, 6);
+	printf("\t\t목요일1교시 : "); scanf("%s", thr.st1);
+	printf("\t\t목요일2교시 : "); scanf("%s", thr.st2);
+	printf("\t\t목요일3교시 : "); scanf("%s", thr.st3);
+	printf("\t\t목요일4교시 : "); scanf("%s", thr.st4);
+	printf("\t\t목요일5교시 : "); scanf("%s", thr.st5);
+	printf("\t\t목요일6교시 : "); scanf("%s", thr.st6);
+	printf("\t\t목요일7교시 : "); scanf("%s", thr.st7);
+	printf("\t\t목요일8교시 : "); scanf("%s", thr.st8);
 	system("cls");
-	printf("금요일1교시 : "); scanf("%s", fri.st1);
-	printf("금요일2교시 : "); scanf("%s", fri.st2);
-	printf("금요일3교시 : "); scanf("%s", fri.st3);
-	printf("금요일4교시 : "); scanf("%s", fri.st4);
-	printf("금요일5교시 : "); scanf("%s", fri.st5);
-	printf("금요일6교시 : "); scanf("%s", fri.st6);
-	printf("금요일7교시 : "); scanf("%s", fri.st7);
-	printf("금요일8교시 : "); scanf("%s", fri.st8);
+	gotoxy(0, 6);
+	printf("\t\t금요일1교시 : "); scanf("%s", fri.st1);
+	printf("\t\t금요일2교시 : "); scanf("%s", fri.st2);
+	printf("\t\t금요일3교시 : "); scanf("%s", fri.st3);
+	printf("\t\t금요일4교시 : "); scanf("%s", fri.st4);
+	printf("\t\t금요일5교시 : "); scanf("%s", fri.st5);
+	printf("\t\t금요일6교시 : "); scanf("%s", fri.st6);
+	printf("\t\t금요일7교시 : "); scanf("%s", fri.st7);
+	printf("\t\t금요일8교시 : "); scanf("%s", fri.st8);
 	system("cls");
 	fprintf(timetable, "%s %s %s %s %s %s %s %s\n%s %s %s %s %s %s %s %s\n%s %s %s %s %s %s %s %s\n%s %s %s %s %s %s %s %s\n%s %s %s %s %s %s %s %s\n"
 		, mon.st1, mon.st2, mon.st3, mon.st4, mon.st5, mon.st6, mon.st7, mon.st8, thu.st1, thu.st2, thu.st3, thu.st4, thu.st5, thu.st6, thu.st7, thu.st8
@@ -2350,16 +2690,63 @@ int timetablein() {//시간표 입력함수
 		, fri.st1, fri.st2, fri.st3, fri.st4, fri.st5, fri.st6, fri.st7, fri.st8);
 	printf("시간표 입력 완료!!\n");
 	return 0;
-}//================================-sungjae
+}
 int timetablelook() {
+	int inkey = 0;
 	TT mon, thu, wes, thr, fri;
 	FILE *timetablelook = fopen("timetable.txt", "r");
 	fscanf(timetablelook, "%s %s %s %s %s %s %s %s\n%s %s %s %s %s %s %s %s\n%s %s %s %s %s %s %s %s\n%s %s %s %s %s %s %s %s\n%s %s %s %s %s %s %s %s\n"
 		, mon.st1, mon.st2, mon.st3, mon.st4, mon.st5, mon.st6, mon.st7, mon.st8, thu.st1, thu.st2, thu.st3, thu.st4, thu.st5, thu.st6, thu.st7, thu.st8
 		, wes.st1, wes.st2, wes.st3, wes.st4, wes.st5, wes.st6, wes.st7, wes.st8, thr.st1, thr.st2, thr.st3, thr.st4, thr.st5, thr.st6, thr.st7, thr.st8
 		, fri.st1, fri.st2, fri.st3, fri.st4, fri.st5, fri.st6, fri.st7, fri.st8);
-	printf("%s", mon.st1);
+	system("cls");
+	gotoxy(8, 5);
+	printf("┌───┬───┬───┬───┬───┬───┐");//┬┌┐┴￢ㄷ
+	gotoxy(8, 6);
+	printf("│───│  월  │  화  │  수  │  목  │  금  │");
+	gotoxy(8, 7);
+	printf("├───┼───┼───┼───┼───┼───┤");
+	gotoxy(8, 8);
+	printf("│ 1교시│%5s │%5s │%5s │%5s │%5s │", mon.st1,thu.st1, wes.st1, thr.st1, fri.st1);
+	gotoxy(8, 9);
+	printf("├───┼───┼───┼───┼───┼───┤");
+	gotoxy(8, 10);
+	printf("│ 2교시│%5s │%5s │%5s │%5s │%5s │", mon.st2, thu.st2, wes.st2, thr.st2, fri.st2);
+	gotoxy(8, 11);
+	printf("├───┼───┼───┼───┼───┼───┤");
+	gotoxy(8, 12);
+	printf("│ 3교시│%5s │%5s │%5s │%5s │%5s │", mon.st3, thu.st3, wes.st3, thr.st3, fri.st3);
+	gotoxy(8, 13);
+	printf("├───┼───┼───┼───┼───┼───┤");
+	gotoxy(8, 14);
+	printf("│ 4교시│%5s │%5s │%5s │%5s │%5s │", mon.st4, thu.st4, wes.st4, thr.st4, fri.st4);
+	gotoxy(8, 15);
+	printf("├───┼───┼───┼───┼───┼───┤");
+	gotoxy(8, 16);
+	printf("│ 5교시│%5s │%5s │%5s │%5s │%5s │", mon.st5, thu.st5, wes.st5, thr.st5, fri.st5);
+	gotoxy(8, 17);
+	printf("├───┼───┼───┼───┼───┼───┤");
+	gotoxy(8, 18);
+	printf("│ 6교시│%5s │%5s │%5s │%5s │%5s │", mon.st6, thu.st6, wes.st6, thr.st6, fri.st6);
+	gotoxy(8, 19);
+	printf("├───┼───┼───┼───┼───┼───┤");
+	gotoxy(8, 20);
+	printf("│ 7교시│%5s │%5s │%5s │%5s │%5s │", mon.st7, thu.st7, wes.st7, thr.st7, fri.st7);
+	gotoxy(8, 21);
+	printf("├───┼───┼───┼───┼───┼───┤");
+	gotoxy(8, 22);
+	printf("│ 8교시│%5s │%5s │%5s │%5s │%5s │", mon.st8, thu.st8, wes.st8, thr.st8, fri.st8);
+	gotoxy(8, 23);
+	printf("└───┴───┴───┴───┴───┴───┘");
+	gotoxy(8, 24);
+	printf("ESC를 누르시면 종료됩니다.");
+	while (1) {
+		if (_kbhit()) {//키보드 값을 입력하면?
+			 inkey = _getch();//입력값을 int형변수 key에 저장
+			if (inkey == ESC)//입력값이 ESC라면?
+				break;//while문 종료
+		}
 
+	}
 	return 0;
-}
-//====================================-sungjae
+}//====================================================-sungjae
