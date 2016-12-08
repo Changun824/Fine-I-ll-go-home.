@@ -1879,7 +1879,6 @@ int learnchoice(void)
 
 		case ESC:
 			system("cls");
-			system("color 07");
 			return 0;
 
 		case ENTER://엔터키를 입력받으면
@@ -1922,7 +1921,6 @@ int threemenu1() {//학습계획입력 선택시 뭐로 할지 메뉴를 키보�
 
 		case ESC:
 			system("cls");
-			system("color 07");
 			return 0;
 
 		case ENTER://엔터키를 입력받으면
@@ -1964,7 +1962,6 @@ int threemenu2() {
 
 		case ESC:
 			system("cls");
-			system("color 07");
 			return 0;
 
 		case ENTER://엔터키를 입력받으면
@@ -2006,7 +2003,6 @@ int threemenu3() {
 
 		case ESC:
 			system("cls");
-			system("color 07");
 			return 0;
 
 		case ENTER://엔터키를 입력받으면
@@ -2048,7 +2044,6 @@ int threemenu4() {
 
 		case ESC:
 			system("cls");
-			system("color 07");
 			return 0;
 
 		case ENTER://엔터키를 입력받으면
@@ -2109,7 +2104,8 @@ int alarm()      //시간을 알려주는 함수/메인에서 주소를 받아�
 }
 int timer() {
 	system("color 3F");
-	int a = 0, inmin = 0, insec = 0, inhour = 0, key = 0;
+	int inmin = 0, insec = 0, inhour = 0, key = 0;
+	//inmin은 분,insec은 초,inhour는 시 를 저장하는변수 //key는 종료시 키값을 받는 변수
 	printf("타이머의 시간을 입력해주세요\n");
 	printf("min : ");
 	scanf("%d", &inmin);
@@ -2217,8 +2213,8 @@ void learningplanner()
 {
 	int b;//b는 사용자가 메뉴선택하는 변수
 	system("color 3F");
-	learn_menu();
-	b=learnchoice();
+	learn_menu();//학습계획표메뉴출력
+	b=learnchoice();//키값을 받아서 메뉴선택한 y좌표를 b에 저장
 		system("cls");
 		if (b == 16)
 			return;
@@ -2231,7 +2227,7 @@ void learningplanner()
 			break;
 		case 12: achievementrate();//달성보기
 			break;
-		case 14: timetable();
+		case 14: timetable();//시간표
 			break;
 		default:
 			break;
@@ -2249,12 +2245,12 @@ int planinsertmenu() {
 }
 int planinsert()//계획입력함수
 {
-	int a = 0;
-	PLAN insert;
+	int a = 0;//메뉴선택 변수
+	PLAN insert;//계획 저장 구조체
 	FILE *fpin1 = fopen("plan1.txt", "w");//1학기 계획을 파일에 저장하기 위해서 만든 파일포인터
 	FILE *fpin2= fopen("plan2.txt", "w");//2학기 계획을 파일에 저장하기 위해서 만든 파일포인터
-	planinsertmenu();
-	a = threemenu1();
+	planinsertmenu();//계획입력메뉴 출력
+	a = threemenu1();//키값을 받아서 메뉴선택한 y좌표를 a에 저장
 	system("cls");
 	if (a == 8)
 	{
@@ -2361,8 +2357,8 @@ int achievementcheck() {
 	FILE *fpout2= fopen("plan2.txt", "r");//2학기 읽어오는 파일포인터
 	FILE *chrate1= fopen("rate1.txt", "w");//1학기 달성체크
 	FILE *chrate2= fopen("rate2.txt", "w");//2학기 달성체크
-	achievementcheckmenu();
-	f = threemenu2();
+	achievementcheckmenu();//달성체크메뉴 출력
+	f = threemenu2();//키값을 받아서 메뉴선택한 y좌표를 f에 저장
 	if (f == 12)
 		return 0;
 	switch (f) {
@@ -2496,10 +2492,10 @@ int achievementrate() {
 	int ac;//사용자 메뉴선택변수
 	int key;//키값을 받아 종료시에 사용
 	PLAN ch;//달성체크파일에서 받아오기위해 사용한 구조체
-	FILE *rate1=fopen("rate1.txt", "r");
-	FILE *rate2=fopen("rate2.txt", "r");
-	achievementlookmenu();
-	ac = threemenu3();
+	FILE *rate1=fopen("rate1.txt", "r");//1학기 달성체크파일 읽기
+	FILE *rate2=fopen("rate2.txt", "r");//2학기 달성체크파일 읽기
+	achievementlookmenu();//메뉴출력
+	ac = threemenu3();//키값을 받아서 메뉴선택한 y좌표를 ac에 저장
 	system("cls");
 	if (ac == 12)
 		return 0;
@@ -2539,7 +2535,7 @@ int achievementrate() {
 		if (strcmp(ch.c16, "y") == 0)//대답이 y라면
 			ratesum++;
 		gotoxy(20, 10);
-		printf("1학기 달성률 %.2lf%%\n", ((float)ratesum / 16) * 100);
+		printf("1학기 달성률 %.2lf%%\n", ((float)ratesum / 16) * 100);//달성률 보여주기
 		fclose(rate1);
 		fclose(rate2);
 		break;
@@ -2578,7 +2574,7 @@ int achievementrate() {
 		if (strcmp(ch.c16, "y") == 0)//대답이 y라면
 			ratesum++;
 		gotoxy(20, 10);
-		printf("2학기 달성률 %.2lf%% \n", ((float)ratesum / 16) * 100);
+		printf("2학기 달성률 %.2lf%% \n", ((float)ratesum / 16) * 100);//달성률 보여주기
 		fclose(rate1);
 		fclose(rate2);
 		break;
@@ -2613,8 +2609,8 @@ int timetablemenu() {
 }
 int timetable() {
 	int x = 0;
-	timetablemenu();
-	x = threemenu4();
+	timetablemenu();//시간표메뉴출력
+	x = threemenu4();//키값을 받아서 메뉴선택한 y좌표를 x에 저장
 	switch (x)
 	{
 	case 8: timetablein();//시간표 입력
@@ -2630,7 +2626,7 @@ int timetable() {
 }
 int timetablein() {//시간표 입력함수
 
-	TT mon, thu, wes, thr, fri;
+	TT mon, thu, wes, thr, fri;//요일별로 쓸 구조체
 	FILE *timetable = fopen("timetable.txt", "w");//시간표를 파일에 저장하기 위한 파일포인터
 	system("cls");
 	gotoxy(4,4);
@@ -2692,9 +2688,9 @@ int timetablein() {//시간표 입력함수
 	return 0;
 }
 int timetablelook() {
-	int inkey = 0;
-	TT mon, thu, wes, thr, fri;
-	FILE *timetablelook = fopen("timetable.txt", "r");
+	int inkey = 0;//키보드값을 받아서 정수형의 저장하는 변수
+	TT mon, thu, wes, thr, fri;//요일별로 쓸 구조체
+	FILE *timetablelook = fopen("timetable.txt", "r");//시간표 파일 읽어오는데 사용하는 파일포인터
 	fscanf(timetablelook, "%s %s %s %s %s %s %s %s\n%s %s %s %s %s %s %s %s\n%s %s %s %s %s %s %s %s\n%s %s %s %s %s %s %s %s\n%s %s %s %s %s %s %s %s\n"
 		, mon.st1, mon.st2, mon.st3, mon.st4, mon.st5, mon.st6, mon.st7, mon.st8, thu.st1, thu.st2, thu.st3, thu.st4, thu.st5, thu.st6, thu.st7, thu.st8
 		, wes.st1, wes.st2, wes.st3, wes.st4, wes.st5, wes.st6, wes.st7, wes.st8, thr.st1, thr.st2, thr.st3, thr.st4, thr.st5, thr.st6, thr.st7, thr.st8
