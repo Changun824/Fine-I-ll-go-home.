@@ -12,6 +12,7 @@
 //================================================================-changun
 #define LEFT 75// 왼쪽 방향키
 #define RIGHT 77//오른쪽 방향키
+#define MAX 100 //Changun 씀 행렬 계산을 위해 사용
 //================================================================-changun
 #define ENTER 13//엔터키
 #define ESC 27//ESC 키
@@ -19,7 +20,6 @@
 #define WORDCOUNT 1000
 #define SUBJECT 8 //과목 수
 //=====sung ho===========
-#define MAX 100 //Changun 씀 행렬 계산을 위해 사용
 
 //================================================================== - sungho
 typedef struct wordlist {
@@ -60,27 +60,25 @@ typedef struct tt {
 void main_menu();
 int menu_switch();
 //===============================================================-main
-//==============================================-changun
-int Calculator_Menu(); //계산기 메인 메뉴
-int Matrix_Menu(); //행렬 계산 메뉴
-int ACalulator_Menu(); //사칙연산 메뉴
+//===================================================-changun
+void Calculator_Menu(); //계산기 메인 메뉴
+void Matrix_Menu(); //행렬 계산 메뉴
 int calculator_key();// 계산기 메뉴에서 =>를 위한 함수
 void Matrix_add(); //행렬 덧셈
-int Matrix_key();
+int Matrix_key();  // 행렬 좌표 값
 void Matrix_mul(); // 행렬 곱셈
 void stop_watch(); //스톱워치
 void stopwatch_menu(); //스톱 워치 메뉴
-void main_Calculator();
-int calculator_switch();
-int main_calculator();
-int calculator();
-int stack_push2();
-
-void stack_pop(int num);
-int stack_push();
-void postfix_calculator_Menu();
-int post_fix[MAX], top = 0;
-//==============================================-changun
+void main_Calculator(); //계산기 메인 메뉴
+int calculator_switch();// 일반 계산기에서 좌우로 움직일 함수
+int arithmetic_menu();  //일반 계산기 몸통
+int calculator(); //사칙연산 계산 함수
+int stack_push2(); //뺄셈을 위한 스택 함수
+void stack_pop(int num); //스택 함수
+int stack_push(); //덧셈을 위한 스택 함수
+void stack_calculator_Menu(); // 일반 계산기 메뉴
+int stack_fix[MAX], top = 0; //stack을 활용하기 위한 전역변수
+//==================================================-changun
 //================================================-SungHo
 void gotoxy(int x, int y);//좌표 함수
 void menu_scr(void);//단어장 메뉴화면을 출력하는 함수
@@ -122,7 +120,7 @@ int main()
 {
 	int main_switch = 0;  //메인문에 스위치 값을 받기 위한 변수 - 사용자 입력 값
 	int main_end = 0;   //메인문을 종료시키기 위한 변수
-	int num = 0;
+	int num = 0; //메인메뉴
 	system("mode con: cols=70 lines=30"); //크기
 	system("title Learing Support Program");  //제목 변화
 	system("color 3F");
@@ -130,8 +128,8 @@ int main()
 	{  //while 중괄호
 		system("cls");
 
-		main_menu();
-		num = menu_switch();
+		main_menu();        //프로그램 메인 메뉴
+		num = menu_switch(); //메뉴에서 나오는 좌표를 입력 받아 키보드로 움직이는 것 처럼 나타냄
 		switch (num)
 		{
 		case 5:
@@ -147,7 +145,7 @@ int main()
 			Stat_Menuchoice();
 			break;
 			break;
-		case 7: //===============================================계산기 - changun
+		case 7: // y좌표 7 -------------계산기 -changun
 			system("cls");
 			main_Calculator();
 			break;//main_switch_num 3: break===============================-changun
@@ -297,7 +295,7 @@ void main_Calculator()
 			break;
 		case 6:
 			system("cls");
-			main_calculator(); //일반 계산기 메뉴
+			arithmetic_menu(); //일반 계산기 메뉴
 			break;
 		case 8:
 			End_C = 10; //End_c에 10을 넣어줘서 반복문 탈출
@@ -310,7 +308,7 @@ void main_Calculator()
 	}//main_switch_num_case 3: while 중괄호
 }
 
-int Calculator_Menu()  //계산기 메뉴
+void Calculator_Menu()  //계산기 메뉴
 {
 	system("title Calculator");  //제목 변화
 	system("color 1F");
@@ -369,7 +367,7 @@ int calculator_key()
 	}
 }
 
-int Matrix_Menu()        //행렬 계산기 메뉴
+void Matrix_Menu()        //행렬 계산기 메뉴
 {
 	system("title Matrix Calculator");  //제목 변화
 	system("cls");
@@ -641,20 +639,15 @@ void Matrix_mul()  //행렬 곱셈 함수
 	printf("\n");
 	system("PAUSE");
 }//행렬 곱셈 함수 종료
-int main_calculator()
+int arithmetic_menu()
 {
 	int a = 0, num = 0, count = 0, sum = 0;
 	char oper;
 	system("cls");
 	while (1)
 	{
-		postfix_calculator_Menu();
+		stack_calculator_Menu();
 		a = calculator_switch();
-		/*
-		sum=stack_push(operator);
-		printf("\n");
-		printf("%d",sum);
-		*/
 		switch (a)
 		{
 		case 2:
@@ -685,7 +678,7 @@ int main_calculator()
 			system("pause");
 			break;
 		case 47:
-			sum = 0, post_fix[MAX] = 0, top = 0;
+			sum = 0, stack_fix[MAX] = 0, top = 0;
 			printf("클리어 되었습니다.\n");
 			break;
 		case 62:
@@ -697,7 +690,7 @@ int main_calculator()
 	}
 	return 0;
 }
-void postfix_calculator_Menu()
+void stack_calculator_Menu()
 {
 	char operator = NULL;
 	system("cls");
@@ -711,18 +704,18 @@ void postfix_calculator_Menu()
 
 void stack_pop(int num)
 {
-	post_fix[top] = num;
+	stack_fix[top] = num;
 	top++;
 }
 int stack_push()
 {
 	int x = 0, y = 0, sum = 0;
 	top--;
-	x = post_fix[top];
-	post_fix[top] = 0;
+	x = stack_fix[top];
+	stack_fix[top] = 0;
 	top--;
-	y = post_fix[top];
-	post_fix[top] = 0;
+	y = stack_fix[top];
+	stack_fix[top] = 0;
 	sum = x + y;
 
 	stack_pop(sum);
@@ -732,10 +725,10 @@ int stack_push2()
 {
 	int x = 0, y = 0, sum = 0;
 	top--;
-	x = post_fix[top];
-	post_fix[top] = 0;
+	x = stack_fix[top];
+	stack_fix[top] = 0;
 	top--;
-	y = post_fix[top];
+	y = stack_fix[top];
 	sum = y - x;
 	return sum;
 }
@@ -756,7 +749,7 @@ int calculator_switch()
 		{
 		case LEFT: //위쪽 방향키를 입력받으면
 			system("cls");
-			postfix_calculator_Menu(); //메뉴창을 띄우고
+			stack_calculator_Menu(); //메뉴창을 띄우고
 			x -= 15;	   //화살표("=>")의 y좌표를 1칸 아래로 내림
 			if (x <= 2)  //화살표("=>")의 y좌표가 메뉴 위쪽으로는 올라가지 않도록 고정
 				x = 2;
@@ -766,7 +759,7 @@ int calculator_switch()
 
 		case RIGHT://아래쪽 방향키를 입력받으면
 			system("cls");
-			postfix_calculator_Menu();//메뉴창을 띄우고
+			stack_calculator_Menu();//메뉴창을 띄우고
 			x += 15;	   //화살표("=>")의 y좌표를 1칸 위로 올림
 			if (x >= 62)  //화살표("=>")의 y좌표가 메뉴 아래쪽으로는 내려가지 않도록 함
 				x = 62;
