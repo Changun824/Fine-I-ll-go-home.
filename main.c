@@ -48,10 +48,10 @@ typedef struct tt {
 	char st1[10], st2[10], st3[10], st4[10], st5[10], st6[10], st7[10], st8[10];
 	//1~10교시까지의 과목이름을 입력받기 위한 배열
 }TT;
-	  //================================================================-sungjae
+//================================================================-sungjae
 
-	  //함수 넣는존
-	  //===============================================================-main
+//함수 넣는존
+//===============================================================-main
 void main_menu();
 int menu_switch();
 //===============================================================-main
@@ -65,8 +65,8 @@ int Matrix_key();
 void Matrix_mul(); // 행렬 곱셈
 void stop_watch(); //스톱워치
 void stopwatch_menu(); //스톱 워치 메뉴
-//==============================================-changun
-//================================================-SungHo
+					   //==============================================-changun
+					   //================================================-SungHo
 void gotoxy(int x, int y);//좌표 함수
 void menu_scr(void);//단어장 메뉴화면을 출력하는 함수
 void Function(int y);//단어장 해당 메뉴에 접속하는 함수
@@ -86,8 +86,8 @@ void DelSubject(void);//학습량 통계 과목 삭제기능
 int WhatDay(void);//오늘 요일 계산 함수
 void Measure(void);//학습량 측정 기능
 void StudyCheck(void);//학습량 확인 기능
-//================================================-SungHo
-//================================================-seokhoon
+					  //================================================-SungHo
+					  //================================================-seokhoon
 void calender();
 //================================================-seokhoon
 //===============================================-sungjae
@@ -100,9 +100,9 @@ int achievementrate();//달성률보기함수
 int timetable();//시간표 메뉴출력함수
 int timetablein();//시간표 입력 함수
 int timetablelook();//시간표 보기 함수
-				//===============================================-sungjae
+					//===============================================-sungjae
 
-				//==================================main메뉴존
+					//==================================main메뉴존
 int main()
 {
 	int main_switch = 0;  //메인문에 스위치 값을 받기 위한 변수 - 사용자 입력 값
@@ -126,12 +126,12 @@ int main()
 			//학습 계획표
 			break;
 		case 6:
-		//학습 통계표
-		system("cls");
-		Stat_ProgramRead();
-		Statistics_Menuscr();
-		Stat_Menuchoice();
-		break;
+			//학습 통계표
+			system("cls");
+			Stat_ProgramRead();
+			Statistics_Menuscr();
+			Stat_Menuchoice();
+			break;
 			break;
 		case 7: //===============================================계산기 - changun
 			system("cls");
@@ -1077,7 +1077,7 @@ void del(void)//단어를 삭제하는 기능
 	count = i - 1;//단어 개수 저장
 	printf("삭제하실 단어를 입력하세요\n");
 	gets(target);//삭제할 단어를 입력
-	for (i = 0; i<count; i++)//단어의 개수 만큼 배열을 검색을 해서\
+	for (i = 0; i<count; i++)//단어의 개수 만큼 배열을 검색을 해서
 	{
 		if (!strcmp(a[i].name, target))// 구조체 배열 내에 삭제하려는 단어가 있다면
 		{
@@ -1086,26 +1086,26 @@ void del(void)//단어를 삭제하는 기능
 			strcpy(a[i].mean, "\0");//뜻도 마찬가지로 덮어씌움
 		}
 
-	}
-	if ((fp = fopen("Voca.txt", "w")) == NULL)//읽기 모드로 파일을 연다.
+    }
+if ((fp = fopen("Voca.txt", "w")) == NULL)//읽기 모드로 파일을 연다.
+{
+	fprintf(stderr, "파일 Voca.txt를 열 수 없습니다\n", "Voca.txt");
+}
+for (i = 0; i<count; i++)
+{
+	if ((strcmp(a[i].name, "\0")) != 0)//단어를 저장하는 변수가 NULL값이 아니라면
 	{
-		fprintf(stderr, "파일 Voca.txt를 열 수 없습니다\n", "Voca.txt");
+		fputs(a[i].name, fp);//텍스트 파일에 저장함
+		fputc('\n', fp);//fputs 는 텍스트로 저장할때 엔터값을 안받기에 개행을 위해 붙여줌
+		fputs(a[i].mean, fp);//뜻도 마찬가지로 저장
+		fputc('\n', fp);
 	}
-	for (i = 0; i<count; i++)
-	{
-		if ((strcmp(a[i].name, "\0")) != 0)//단어를 저장하는 변수가 NULL값이 아니라면
-		{
-			fputs(a[i].name, fp);//텍스트 파일에 저장함
-			fputc('\n', fp);//fputs 는 텍스트로 저장할때 엔터값을 안받기에 개행을 위해 붙여줌
-			fputs(a[i].mean, fp);//뜻도 마찬가지로 저장
-			fputc('\n', fp);
-		}
-	}
-	fclose(fp);
-	printf("메뉴로 돌아갑니다\n");
-	Sleep(1000);
-	system("cls");
-	menu_scr();//메뉴출력
+}
+fclose(fp);
+printf("메뉴로 돌아갑니다\n");
+Sleep(1000);
+system("cls");
+menu_scr();//메뉴출력
 }
 
 
@@ -1201,7 +1201,7 @@ void Stat_Function(int y) // 메뉴 인터페이스 =>의 y값에 따라 ENTER�
 }
 void Stat_ProgramRead(void) // 처음에 이어쓰기 모드로 열어서 파일이 없으면 생성해줌
 {
-	int i = 0,j;
+	int i = 0, j;
 	FILE *fp;
 	if ((fp = fopen("Stat.txt", "a")) == NULL)
 	{
@@ -1214,10 +1214,10 @@ void Stat_ProgramRead(void) // 처음에 이어쓰기 모드로 열어서 파일
 void AddSubject(void) //과목 추가
 {
 
-	int i=0,j,key; //i for문 실행에 쓰일 변수 ,key: ENTER키나 ESC키로 받은 값을 저장받음
+	int i = 0, j, key; //i for문 실행에 쓰일 변수 ,key: ENTER키나 ESC키로 받은 값을 저장받음
 	int count;//읽어들인 과목의 개수 저장
 	int esc;//이중 반복문 탈출용
-	int fullcount=0;//과목은 8개 까지만 저장 가능하도록 만듬 꽉차면 fullcount가8
+	int fullcount = 0;//과목은 8개 까지만 저장 가능하도록 만듬 꽉차면 fullcount가8
 
 	FILE *fp;
 	if ((fp = fopen("Stat.txt", "r")) == NULL)
@@ -1227,9 +1227,9 @@ void AddSubject(void) //과목 추가
 	}
 	while (!feof(fp))//텍스트 파일을 읽어서 순서대로 구조체 배열에 넣어줌
 	{
-		fscanf(fp,"%d",&b[i].day_study);//해당 과목의 일일 공부량 수치와
-		for(j=0;j<7;j++)//해당 과목의 월화수목금토일 각각의 공부량 수치
-		fscanf(fp,"%d",&b[i].week_study[j]);
+		fscanf(fp, "%d", &b[i].day_study);//해당 과목의 일일 공부량 수치와
+		for (j = 0; j<7; j++)//해당 과목의 월화수목금토일 각각의 공부량 수치
+			fscanf(fp, "%d", &b[i].week_study[j]);
 		fgets(b[i].name, 100, fp);//과목 이름을 불러옴
 		b[i].name[strlen(b[i].name) - 1] = '\0';
 		i++;
@@ -1237,9 +1237,9 @@ void AddSubject(void) //과목 추가
 	fclose(fp);
 
 	printf("과목을 추가가 가능한지 확인하겠습니다.\n\n");
-	for(i=0;i<SUBJECT;i++)
+	for (i = 0; i<SUBJECT; i++)
 	{
-		esc=0;//루프 탈출용 1이 되면 탈출하게 할거라 0으로 초기화
+		esc = 0;//루프 탈출용 1이 되면 탈출하게 할거라 0으로 초기화
 
 		if ((strcmp(b[i].name, "\0")) == 0) //과목 이름이 들어가는 변수에 널값이라면 아무것도 없다면
 		{
@@ -1247,18 +1247,18 @@ void AddSubject(void) //과목 추가
 			printf("추가하실 과목의 이름을 입력해 주세요\n\n");
 			gets(b[i].name);//과목이름을 넣어줌
 
-			while(1)//계속할건지를 묻는 루프
+			while (1)//계속할건지를 묻는 루프
 			{
 				printf("계속 과목을 추가하시겠습니까?\n\n예[Enter],아니오[ESC]\n");
 				key = getch();
-				if(key==13)//enter를 누르면
+				if (key == 13)//enter를 누르면
 				{
 					system("cls");//이 루프를 탈출해서 다시 과목추가 진행
 					break;
 				}
-				else if(key==27)//esc를 누르면 이루프를 탈출하고 esc값도 1로 변해서 다음루프도 탈출함
+				else if (key == 27)//esc를 누르면 이루프를 탈출하고 esc값도 1로 변해서 다음루프도 탈출함
 				{
-					esc=1;
+					esc = 1;
 					break;
 				}
 				else
@@ -1266,7 +1266,7 @@ void AddSubject(void) //과목 추가
 					system("cls");//enter나 esc만 받음
 				}
 			}
-			if(esc==1)
+			if (esc == 1)
 			{
 				break;//마지막 루프 탈출
 			}
@@ -1274,7 +1274,7 @@ void AddSubject(void) //과목 추가
 		else//읽어온 구조체 배열내의 과목이름을 저장하는 변수 찾아봤는데 널값이 아닐경우
 		{
 			fullcount++;//fullcount값을 1증가
-			if(fullcount==8)//과목이 8개로 꽉 차있을경우
+			if (fullcount == 8)//과목이 8개로 꽉 차있을경우
 			{
 				printf("학습하고 있는 과목이 8개를 초과합니다\n\n");
 				Sleep(1500);
@@ -1294,9 +1294,9 @@ void AddSubject(void) //과목 추가
 		exit(1);
 	}
 	for (i = 0; i<SUBJECT; i++) {//추가한 과목을 텍스트 파일에 넣어줌
-		fprintf(fp,"%d ",b[i].day_study);
-		for(j=0;j<7;j++)
-		fprintf(fp,"%d ",b[i].week_study[j]);
+		fprintf(fp, "%d ", b[i].day_study);
+		for (j = 0; j<7; j++)
+			fprintf(fp, "%d ", b[i].week_study[j]);
 
 		fputs(b[i].name, fp);
 		fputc('\n', fp);//fputs 는 텍스트로 저장할때 엔터값을 안받기에 개행을 위해 붙여줌
@@ -1321,9 +1321,9 @@ void DelSubject(void) // 과목 삭제
 	}
 	while (!feof(fp))//읽어온걸 순서대로 저장
 	{
-		fscanf(fp,"%d",&b[i].day_study);
-		for(j=0;j<7;j++)
-		fscanf(fp,"%d",&b[i].week_study[j]);
+		fscanf(fp, "%d", &b[i].day_study);
+		for (j = 0; j<7; j++)
+			fscanf(fp, "%d", &b[i].week_study[j]);
 		fgets(b[i].name, 100, fp);
 		b[i].name[strlen(b[i].name) - 1] = '\0';//개행 문자 제거를 위해 맨끝 하나는 널값으로 제거
 		i++;
@@ -1349,20 +1349,20 @@ void DelSubject(void) // 과목 삭제
 	{
 		if ((strcmp(b[i].name, "\0")) != 0)
 		{
-			fprintf(fp,"%d ",b[i].day_study);
-			for(j=0;j<7;j++)
-			fprintf(fp,"%d ",b[i].week_study[j]);
+			fprintf(fp, "%d ", b[i].day_study);
+			for (j = 0; j<7; j++)
+				fprintf(fp, "%d ", b[i].week_study[j]);
 			fputs(b[i].name, fp);
 			fputc('\n', fp);//fputs 는 텍스트로 저장할때 엔터값을 안받기에 개행을 위해 붙여줌
 
 		}
 	}
 	fclose(fp);
-	for(i=0;i<SUBJECT;i++){
-		strcpy(b[i].name,"\0");  //삭제할때 변수에 찌거기값이 남아서 초기화 안하면 과목 추가에서 추가가능 여부를 확인할때 남은 찌꺼기를 읽어서  문제 발생
-		b[i].day_study=0;
-		for(j=0;j<7;j++)
-			b[i].week_study[j]=0;
+	for (i = 0; i<SUBJECT; i++) {
+		strcpy(b[i].name, "\0");  //삭제할때 변수에 찌거기값이 남아서 초기화 안하면 과목 추가에서 추가가능 여부를 확인할때 남은 찌꺼기를 읽어서  문제 발생
+		b[i].day_study = 0;
+		for (j = 0; j<7; j++)
+			b[i].week_study[j] = 0;
 	}
 	printf("메뉴로 돌아갑니다\n");
 	Sleep(1000);
@@ -1374,10 +1374,10 @@ void DelSubject(void) // 과목 삭제
 void Measure(void) //학습량 측정
 {
 	int hour = 0, min = 0, sec = 0, frame = 0;
-	int i=0,j;
+	int i = 0, j;
 	char ch;
 	char target[20];
-	int measutime=0;//측정시간 분으로 환산
+	int measutime = 0;//측정시간 분으로 환산
 	FILE *fp;
 	if ((fp = fopen("Stat.txt", "r")) == NULL)
 	{
@@ -1385,9 +1385,9 @@ void Measure(void) //학습량 측정
 	}
 	while (!feof(fp))
 	{
-		fscanf(fp,"%d",&b[i].day_study);
-		for(j=0;j<7;j++)
-		fscanf(fp,"%d",&b[i].week_study[j]);
+		fscanf(fp, "%d", &b[i].day_study);
+		for (j = 0; j<7; j++)
+			fscanf(fp, "%d", &b[i].week_study[j]);
 		fgets(b[i].name, 100, fp);
 		b[i].name[strlen(b[i].name) - 1] = '\0';
 		i++;
@@ -1435,15 +1435,15 @@ void Measure(void) //학습량 측정
 				printf("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
 				printf("%2d : %2d : %2d : %2d\n", hour, min, sec, frame);
 				printf("학습량을 저장할 과목을 입력하세요\n");
-				measutime=(hour*60)+min;//측정 시간을 분으로 환산해서 측정시간변수에 저장
+				measutime = (hour * 60) + min;//측정 시간을 분으로 환산해서 측정시간변수에 저장
 				gets(target);
-				for(i=0;i<SUBJECT;i++)
+				for (i = 0; i<SUBJECT; i++)
 				{
-					if(!strcmp(b[i].name,target))
+					if (!strcmp(b[i].name, target))
 					{
 						printf("학습량을 저장했습니다.\n");
-						b[i].day_study+=measutime;//분으로 환산된 측정시간을 일일 공부량daystudy에 저장
-						b[i].week_study[WhatDay()]+=measutime;//해당과목에서 오늘에 해당하는 요일에 측정값 저장 whatday는 오늘의 요일값을 반환
+						b[i].day_study += measutime;//분으로 환산된 측정시간을 일일 공부량daystudy에 저장
+						b[i].week_study[WhatDay()] += measutime;//해당과목에서 오늘에 해당하는 요일에 측정값 저장 whatday는 오늘의 요일값을 반환
 					}
 				}
 				break;
@@ -1460,9 +1460,9 @@ label:
 	}
 	for (i = 0; i<SUBJECT; i++) //저장된 값 파일에 다시 써줌
 	{
-		fprintf(fp,"%d ",b[i].day_study);
-		for(j=0;j<7;j++)
-		fprintf(fp,"%d ",b[i].week_study[j]);
+		fprintf(fp, "%d ", b[i].day_study);
+		for (j = 0; j<7; j++)
+			fprintf(fp, "%d ", b[i].week_study[j]);
 		fgets(b[i].name, 100, fp);
 		b[i].name[strlen(b[i].name) - 1] = '\0';
 	}
@@ -1472,12 +1472,12 @@ label:
 
 void StudyCheck(void)//학습량을 확인
 {
-	int i=0,j,key;
-	int weeksum=0,weekhour=0,weekminute=0;//weeksum주간공부량 합 weekhour주간 총 공부시간[시] weekminute 주간 총 공부 시간[분]
-	int dayhour=0;//일일 학습시간 [시]
-	int dayminute=0;//일일 학습시간 [분]
-	double weekaverhour=0;//주간 평균 학습량 [시]
-	double weekaverminute=0;//주간 평균 학습량 [분]
+	int i = 0, j, key;
+	int weeksum = 0, weekhour = 0, weekminute = 0;//weeksum주간공부량 합 weekhour주간 총 공부시간[시] weekminute 주간 총 공부 시간[분]
+	int dayhour = 0;//일일 학습시간 [시]
+	int dayminute = 0;//일일 학습시간 [분]
+	double weekaverhour = 0;//주간 평균 학습량 [시]
+	double weekaverminute = 0;//주간 평균 학습량 [분]
 	FILE *fp;
 	if ((fp = fopen("Stat.txt", "r")) == NULL)
 	{
@@ -1485,39 +1485,39 @@ void StudyCheck(void)//학습량을 확인
 	}
 	while (!feof(fp))//텍스트 파일을 읽어옴
 	{
-		fscanf(fp,"%d",&b[i].day_study);
-		for(j=0;j<7;j++)
-		fscanf(fp,"%d",&b[i].week_study[j]);
+		fscanf(fp, "%d", &b[i].day_study);
+		for (j = 0; j<7; j++)
+			fscanf(fp, "%d", &b[i].week_study[j]);
 		fgets(b[i].name, 100, fp);
 		b[i].name[strlen(b[i].name) - 1] = '\0';
 		i++;
 	}
 	fclose(fp);
 
-	dayhour+=b[i].day_study/60;//일일 공부량 시간 텍스트에 저장되어 있는 분으로 환산된 일일 공부량을 60으로 나눠줘서 구함
-	dayminute=(b[i].day_study)%60;//일일 공부량 분 텍스트에 저장되어 있는 분으로 환산된 일일 공부량을 60으로 나머지 계산해서 구함
+	dayhour += b[i].day_study / 60;//일일 공부량 시간 텍스트에 저장되어 있는 분으로 환산된 일일 공부량을 60으로 나눠줘서 구함
+	dayminute = (b[i].day_study) % 60;//일일 공부량 분 텍스트에 저장되어 있는 분으로 환산된 일일 공부량을 60으로 나머지 계산해서 구함
 	printf("======학습량 확인========\n");
-	for(i=0;i<SUBJECT;i++)
+	for (i = 0; i<SUBJECT; i++)
 	{
-		printf("%s의 일일 학습량: %d시간 %d분\n",b[i].name,dayhour,dayminute);
+		printf("%s의 일일 학습량: %d시간 %d분\n", b[i].name, dayhour, dayminute);
 	}
-	for(i=0;i<SUBJECT;i++)
+	for (i = 0; i<SUBJECT; i++)
 	{
-		weeksum=0;//주간 해당 과목의 공부량의 합
-		for(j=0;j<7;j++)//월화수목금토일의 분으로 환산된 공부량을 전부 더해서 weeksum에 저장
-			weeksum+=b[i].week_study[j];
-		weekhour=weeksum/60;//weeksum을 60으로 나눠서 주간 총 공부량 [시]계산
-		weekminute=weeksum%60;//weeksum을 60으로 나머지계산해서 주간 총 공부량 [분]계산
-		printf("%s의 주간 학습량: %d시간 %d분\n",b[i].name,weekhour,weekminute);
-		weekaverhour=(weeksum/7)/60;//weeksum을 7로 나누어서 분으로 환산된 주간 평균 학습량을 구하고 주간 평균  공부시간 [시]를 구함
-		weekaverminute=(weeksum/7)%60;//weeksum을 7로 나누어서 분으로 환산된 주간 평균 학습량을 구하고 주간 평균 공부시간 [분]을 구함
-		printf("%s의 주간 평균 학습량: 약%f시간 %f분\n",b[i].name,weekaverhour,weekaverminute);
+		weeksum = 0;//주간 해당 과목의 공부량의 합
+		for (j = 0; j<7; j++)//월화수목금토일의 분으로 환산된 공부량을 전부 더해서 weeksum에 저장
+			weeksum += b[i].week_study[j];
+		weekhour = weeksum / 60;//weeksum을 60으로 나눠서 주간 총 공부량 [시]계산
+		weekminute = weeksum % 60;//weeksum을 60으로 나머지계산해서 주간 총 공부량 [분]계산
+		printf("%s의 주간 학습량: %d시간 %d분\n", b[i].name, weekhour, weekminute);
+		weekaverhour = (weeksum / 7) / 60;//weeksum을 7로 나누어서 분으로 환산된 주간 평균 학습량을 구하고 주간 평균  공부시간 [시]를 구함
+		weekaverminute = (weeksum / 7) % 60;//weeksum을 7로 나누어서 분으로 환산된 주간 평균 학습량을 구하고 주간 평균 공부시간 [분]을 구함
+		printf("%s의 주간 평균 학습량: 약%f시간 %f분\n", b[i].name, weekaverhour, weekaverminute);
 	}
-	while(1)
+	while (1)
 	{
 		printf("종료는 ESC\n");
-		key=getch();
-		if(key==27)
+		key = getch();
+		if (key == 27)
 		{
 			system("cls");
 			break;
@@ -1529,13 +1529,13 @@ void StudyCheck(void)//학습량을 확인
 }
 int WhatDay(void)//요일 계산
 {
-  time_t timer;
-  struct tm *t;
+	time_t timer;
+	struct tm *t;
 
-  timer = time(NULL); // 현재 시각을 초 단위로 얻기
+	timer = time(NULL); // 현재 시각을 초 단위로 얻기
 
-  t = localtime(&timer);// 초 단위의 시간을 분리하여 구조체에 넣기
-  return t->tm_wday; // 일요일=0, 월요일=1, 화요일=2, 수요일=3, 목요일=4, 금요일=5, 토요일=6 타임 함수에 선언되어 있음
+	t = localtime(&timer);// 초 단위의 시간을 분리하여 구조체에 넣기
+	return t->tm_wday; // 일요일=0, 월요일=1, 화요일=2, 수요일=3, 목요일=4, 금요일=5, 토요일=6 타임 함수에 선언되어 있음
 }
 //================================================-SungHo
 
@@ -1634,7 +1634,6 @@ void calender() {
 //====================================================-sungjae
 int alarm()      //시간을 알려주는 함수/메인에서 주소를 받아와 저장해주기 위해 포인터로 쓰임.
 {
-	int i = 0;
 	USER utime;//사용자 입력 시간저장구조체
 	time_t now;//현재시간을 받기위한 구조체
 	struct tm *time_;//현재시간을 받기위한 구조체
@@ -1668,7 +1667,6 @@ int alarm()      //시간을 알려주는 함수/메인에서 주소를 받아�
 		Sleep(500);//0.5초 지연
 		system("cls");
 	}
-
 	return 0;
 }//====================================================-sungjae
 int timer() {
@@ -1781,18 +1779,11 @@ void learningplanner()
 }
 int planinsert()//계획입력함수
 {
-	FILE *fpin1;//1학기 계획을 파일에 저장하기 위해서 만든 파일포인터
-	if ((fpin1 = fopen("plan1.txt", "w")) == NULL)
-	{
-		printf("plan1.txt에 쓰기를 실패하였습니다.\n");
-	}
-	FILE *fpin2;//2학기 계획을 파일에 저장하기 위해서 만든 파일포인터
-	if ((fpin2 = fopen("plan2.txt", "w")) == NULL)
-	{
-		printf("plan2.txt에 쓰기를 실패하였습니다.\n");
-	}
 	int a = 0;
 	PLAN insert;
+	FILE *fpin1 = fopen("plan1.txt", "w");//1학기 계획을 파일에 저장하기 위해서 만든 파일포인터
+	FILE *fpin2= fopen("plan2.txt", "w");//2학기 계획을 파일에 저장하기 위해서 만든 파일포인터
+
 	printf("1. 1학기 계획입력\n");
 	printf("2. 2학기 계획입력\n");
 	printf("3. 종료\n");
@@ -1886,23 +1877,13 @@ int planinsert()//계획입력함수
 	return 0;
 }//===================================================-sungjae
 int achievementcheck() {
-	FILE *fpout1 = fopen("plan1.txt", "r");//1학기 읽어오는 파일포인터
-	if ((fpout1 = fopen("plan1.txt", "r")) == NULL)
-	{
-		printf("오류!!\n");
-		return 0;
-	}
-	FILE *fpout2 = fopen("plan2.txt", "r");//2학기 읽어오는 파일포인터
-	if ((fpout2 = fopen("plan2.txt", "r")) == NULL)
-	{
-		printf("오류!!\n");
-		return 0;
-	}
-	FILE *chrate1 = fopen("rate1.txt", "w");//1학기 달성체크
-	FILE *chrate2 = fopen("rate2.txt", "w");//2학기 달성체크
 	int f = 0;
 	char c1[10], c2[10], c3[10], c4[10], c5[10], c6[10], c7[10], c8[10], c9[10], c10[10], c11[10], c12[10], c13[10], c14[10], c15[10], c16[10];
 	PLAN out;
+	FILE *fpout1= fopen("plan1.txt", "r"); //1학기 읽어오는 파일포인터
+	FILE *fpout2= fopen("plan2.txt", "r");//2학기 읽어오는 파일포인터
+	FILE *chrate1= fopen("rate1.txt", "w");//1학기 달성체크
+	FILE *chrate2= fopen("rate2.txt", "w");//2학기 달성체크
 	printf("1. 1학기 달성체크\n");
 	printf("2. 2학기 달성체크\n");
 	printf("3. 종료\n");
@@ -1988,24 +1969,18 @@ int achievementcheck() {
 	default:
 		break;
 	}
+	fclose(fpout1);
+	fclose(fpout2);
+	fclose(chrate1);
+	fclose(chrate2);
 	return 0;
 }//====================================================-sungjae
 int achievementrate() {
-	FILE *rate1 = fopen("rate1.txt", "r");
-	if ((fopen("rate1.txt", "r")) == NULL)
-	{
-		printf("File open fail!!\n");
-		return 0;
-	}
-	FILE *rate2 = fopen("rate2.txt", "r");
-	if ((fopen("rate2.txt", "r")) == NULL)
-	{
-		printf("File open fail!!\n");
-		return 0;
-	}
-	PLAN ch;//달성체크파일에서 받아오기위해 사용한 구조체
 	int ratesum = 0;//달성 여부 확인용 정수형 변수
 	int ac;//사용자 메뉴선택변수
+	PLAN ch;//달성체크파일에서 받아오기위해 사용한 구조체
+	FILE *rate1=fopen("rate1.txt", "r");
+	FILE *rate2=fopen("rate2.txt", "r");
 	printf("1. 1학기 달성률\n");
 	printf("2. 2학기 달성률\n");
 	printf("3. 종료\n");
@@ -2050,6 +2025,7 @@ int achievementrate() {
 			ratesum++;
 		printf("1학기 달성률 %.2lf%%\n", ((float)ratesum / 16) * 100);
 		fclose(rate1);
+		fclose(rate2);
 		break;
 	case 2:
 		fscanf(rate2, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", ch.c1, ch.c2, ch.c3, ch.c4, ch.c5, ch.c6, ch.c7, ch.c8, ch.c9, ch.c10, ch.c11, ch.c12, ch.c13, ch.c14, ch.c15, ch.c16);
@@ -2086,6 +2062,7 @@ int achievementrate() {
 		if (strcmp(ch.c16, "y") == 0)//대답이 y라면
 			ratesum++;
 		printf("2학기 달성률 %.2lf%% \n", ((float)ratesum / 16) * 100);
+		fclose(rate1);
 		fclose(rate2);
 		break;
 	default:
@@ -2116,9 +2093,9 @@ int timetable() {
 }//====================================-sungjae
 int timetablein() {//시간표 입력함수
 	TT mon, thu, wes, thr, fri;
-	FILE *timetable=fopen("timetable.txt","w");//시간표를 파일에 저장하기 위한 파일포인터
+	FILE *timetable = fopen("timetable.txt", "w");//시간표를 파일에 저장하기 위한 파일포인터
 	printf("월요일부터 금요일까지의 시간표를 입력하셔야 합니다.\n");
-	printf("월요일1교시 : "); scanf("%s",mon.st1);
+	printf("월요일1교시 : "); scanf("%s", mon.st1);
 	printf("월요일2교시 : "); scanf("%s", mon.st2);
 	printf("월요일3교시 : "); scanf("%s", mon.st3);
 	printf("월요일4교시 : "); scanf("%s", mon.st4);
@@ -2163,10 +2140,10 @@ int timetablein() {//시간표 입력함수
 	printf("금요일7교시 : "); scanf("%s", fri.st7);
 	printf("금요일8교시 : "); scanf("%s", fri.st8);
 	system("cls");
-	fprintf(timetable,"%s %s %s %s %s %s %s %s\n%s %s %s %s %s %s %s %s\n%s %s %s %s %s %s %s %s\n%s %s %s %s %s %s %s %s\n%s %s %s %s %s %s %s %s\n"
+	fprintf(timetable, "%s %s %s %s %s %s %s %s\n%s %s %s %s %s %s %s %s\n%s %s %s %s %s %s %s %s\n%s %s %s %s %s %s %s %s\n%s %s %s %s %s %s %s %s\n"
 		, mon.st1, mon.st2, mon.st3, mon.st4, mon.st5, mon.st6, mon.st7, mon.st8, thu.st1, thu.st2, thu.st3, thu.st4, thu.st5, thu.st6, thu.st7, thu.st8
-		,wes.st1, wes.st2, wes.st3, wes.st4, wes.st5, wes.st6, wes.st7, wes.st8,thr.st1, thr.st2, thr.st3, thr.st4, thr.st5, thr.st6, thr.st7, thr.st8
-		,fri.st1, fri.st2, fri.st3, fri.st4, fri.st5, fri.st6, fri.st7, fri.st8);
+		, wes.st1, wes.st2, wes.st3, wes.st4, wes.st5, wes.st6, wes.st7, wes.st8, thr.st1, thr.st2, thr.st3, thr.st4, thr.st5, thr.st6, thr.st7, thr.st8
+		, fri.st1, fri.st2, fri.st3, fri.st4, fri.st5, fri.st6, fri.st7, fri.st8);
 	printf("시간표 입력 완료!!\n");
 	return 0;
 }//================================-sungjae
@@ -2177,7 +2154,8 @@ int timetablelook() {
 		, mon.st1, mon.st2, mon.st3, mon.st4, mon.st5, mon.st6, mon.st7, mon.st8, thu.st1, thu.st2, thu.st3, thu.st4, thu.st5, thu.st6, thu.st7, thu.st8
 		, wes.st1, wes.st2, wes.st3, wes.st4, wes.st5, wes.st6, wes.st7, wes.st8, thr.st1, thr.st2, thr.st3, thr.st4, thr.st5, thr.st6, thr.st7, thr.st8
 		, fri.st1, fri.st2, fri.st3, fri.st4, fri.st5, fri.st6, fri.st7, fri.st8);
-	printf("%s",mon.st1);
+	printf("%s", mon.st1);
 
 	return 0;
-}//====================================-sungjae
+}
+//====================================-sungjae
