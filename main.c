@@ -100,10 +100,10 @@ void DelSubject(void);//학습량 통계 과목 삭제기능
 int WhatDay(void);//오늘 요일 계산 함수
 void Measure(void);//학습량 측정 기능
 void StudyCheck(void);//학습량 확인 기능
-void WeekStudyReset(int day);
-int DayReset(void);
-void Decision(void);
-void YesorNo(int x);
+void WeekStudyReset(int day);//주간 학습량 초기화
+int DayReset(void);//일일 학습량 초기화
+void Decision(void);//일일 학습량 초기화 인터페이스 메뉴
+void YesorNo(int x);//일일 학습량 초기화 인터페이스
 //================================================-SungHo
 //================================================-seokhoon
 void calender();
@@ -1818,7 +1818,7 @@ void StudyCheck(void)//학습량을 확인
 	Statistics_Menuscr();
 
 }
-int WhatDay(void)//요일 계산
+int WhatDay(void)//요일 계산을 해주는 함수
 {
 	time_t timer;
 	struct tm *t;
@@ -1829,50 +1829,50 @@ int WhatDay(void)//요일 계산
 	return t->tm_wday; // 일요일=0, 월요일=1, 화요일=2, 수요일=3, 목요일=4, 금요일=5, 토요일=6 타임 함수에 선언되어 있음
 }
 
-void WeekStudyReset(int day)//주간 학습량 초기화
+void WeekStudyReset(int day)//주간 학습량 초기화 (월요일마다 주간 학습량이 자동으로 초기화됨) (int day)는 WhatDay()함수의 결과값을 매개변수로 받음 즉 요일값임
 {
 	int i = 0;
 	int j;
-	int log;
-	int first;
+	int log;//월요일에 학습량을 초기화 했는지 확인해주는 변수 매번 월요일에 프로그램을 킬때마다 초기화 하지 않기 위함
+	int first; //파일을 최초로 만들었을때 빈파일에 데이터 0을 넣어주기 위해 만듦
 	FILE *fp, *fp2;
-	if ((fp = fopen("Reset.txt", "a")) == NULL)
+	if ((fp = fopen("Reset.txt", "a")) == NULL)//초기화 여부를 알려줄 파일을 만드는 부분 파일을 이어쓰기 모드로 열어서 파일이 없으면 만들어줌
 	{
 		fprintf(stderr, "파일 Reset.txt를 열 수 없습니다\n", "Reset.txt");
 		exit(1);
 	}
-	fclose(fp);//파일 최초 생성부
+	fclose(fp);
 
 
-	if ((fp2 = fopen("Reset.txt", "r")) == NULL)
+	if ((fp2 = fopen("Reset.txt", "r")) == NULL)//Reset 파일의 데이터(0또는 1만 저장될거임)를 first변수로 불러옴
 	{
 		fprintf(stderr, "파일 Reset.txt를 열 수 없습니다\n", "Reset.txt");
 	}
 	fscanf(fp2, "%d", &first);
-	fclose(fp2);
+	fclose(fp2);//파일을 닫아주고
 
-	if ((fp2 = fopen("Reset.txt", "w")) == NULL)
+	if ((fp2 = fopen("Reset.txt", "w")) == NULL)//다시 쓰기모드로 열어준다
 	{
 		fprintf(stderr, "파일 Reset.txt를 열 수 없습니다\n", "Reset.txt");
 	}
-	if (!first == 0 || 1)
+	if (!first == 0 || 1)//최초에 파일이 비어있을때 데이터(0)를 넣어주기 위한 if문
 	{
-		first = 0;
-		fprintf(fp2, "%d", first);
+		first = 0;                 //아까 first에 불러왔던 데이터가 0또는 1이 아니라면 파일에 0을 넣어주기 위해 first에 0을 넣어줌
+		fprintf(fp2, "%d", first);//0을 넣어준 first의 값을 파일에 저장
 	}
-	fclose(fp2);
+	fclose(fp2);//파일 닫음
 
-	if ((fp = fopen("Reset.txt", "r")) == NULL)
+	if ((fp = fopen("Reset.txt", "r")) == NULL)//여기부터 월요일 마다 실행될 부분
 	{
-		fprintf(stderr, "파일 Reset.txt를 열 수 없습니다\n", "Reset.txt");
+		fprintf(stderr, "파일 Reset.txt를 열 수 없습니다\n", "Reset.txt");//주간학습량의 초기화 여부가 있는 Reset파일을 열어서
 	}
-	fscanf(fp, "%d", &log);
+	fscanf(fp, "%d", &log); //log라는 변수에 가져옴
 	fclose(fp);
-	if (day == 1)
+	if (day == 1)//매개변수로 받은값이 1이라면 즉 오늘이 월요일이라면 (1은 월요일 2는 화요일 '''')
 	{
-		if (log == 0)//
+		if (log == 0)//초기화 여부 확인 오늘이 월요일인데 (0=학습량을 초기화 하지 않았다면) 초기화하면 log가 1이될거임
 		{
-			if ((fp = fopen("Stat.txt", "r")) == NULL)
+			if ((fp = fopen("Stat.txt", "r")) == NULL) //학습량이 저장된 파일을 열어서
 			{
 				fprintf(stderr, "파일 Stat.txt를 열 수 없습니다\n", "Stat.txt");
 			}
@@ -1887,7 +1887,7 @@ void WeekStudyReset(int day)//주간 학습량 초기화
 			}
 			fclose(fp);
 
-			for (i = 0; i<SUBJECT; i++)
+			for (i = 0; i<SUBJECT; i++)//주간 학습량을 전부 0으로 초기화 해줌
 			{
 				for (j = 0; j<7; j++)
 					b[i].week_study[j] = 0;
@@ -1898,7 +1898,7 @@ void WeekStudyReset(int day)//주간 학습량 초기화
 				fprintf(stderr, "파일 Stat.txt를 열 수 없습니다\n", "Stat.txt");
 				exit(1);
 			}
-			for (i = 0; i<SUBJECT; i++)
+			for (i = 0; i<SUBJECT; i++)//초기화된 정보를 다시 파일로 저장함
 			{
 				fprintf(fp, "%d ", b[i].day_study);
 				for (j = 0; j<7; j++)
@@ -1908,18 +1908,18 @@ void WeekStudyReset(int day)//주간 학습량 초기화
 			}
 			fclose(fp);
 
-			log = 1;//한번 행해짐을 의미
+			log = 1;//log변수를 1로 바꾸고 (오늘 초기화가 행해졌다는걸 의미)
 			if ((fp = fopen("Reset.txt", "w")) == NULL)
 			{
 				fprintf(stderr, "파일 Reset.txt를 열 수 없습니다\n", "Reset.txt");
 			}
-			fprintf(fp, "%d", log);
-			fclose(fp);
+			fprintf(fp, "%d", log);//0이었던 파일내 정보를 1로 덮어씌움
+			fclose(fp);//종료 이제 다시 불러와도 log가 1이기 때문에 초기화가 진행되지 않음
 		}
 	}
 	if (day == 2)//오늘이 화요일 이라면
 	{
-		log = 0;
+		log = 0;//월요일이 지나간 화요일이기 때문에 다시 log값을 0으로 바꿔서 저장해주는 부분 다음 월요일에 한 번의 초기화가 다시 진행될 수 있게하기 위함
 		if ((fp = fopen("Reset.txt", "w")) == NULL)
 		{
 			fprintf(stderr, "파일 Reset.txt를 열 수 없습니다\n", "Reset.txt");
@@ -1933,7 +1933,7 @@ void WeekStudyReset(int day)//주간 학습량 초기화
 int DayReset(void)//일일 학습량 초기화
 {
 	int i = 0, key;
-	int x = 28, y = 11;
+	int x = 28, y = 11;//화살표의 시작 좌표
 	printf("안녕하세요 학습량을 측정하고 확인할 수 있는 학습 통계 프로그램입니다.\n\n");
 	Sleep(1300);
 	printf("오늘 처음 사용하십니까?\n\n");
@@ -1949,11 +1949,11 @@ int DayReset(void)//일일 학습량 초기화
 			key = getch();
 		switch (key)
 		{
-		case LEFT: //위쪽 방향키를 입력받으면
+		case LEFT: //왼쪽 방향키를 입력받으면
 			system("cls");
 			Decision();//메뉴창을 띄우고
-			x -= 40;	   //화살표("=>")의 y좌표를 2칸 아래로 내림
-			if (x <= 28)  //화살표("=>")의 y좌표가 메뉴 위쪽으로는 올라가지 않도록 단어검색과 같은 높이인 11까지만 올라가도록 고정
+			x -= 40;	   //화살표("▶")의 x좌표를 40칸 왼쪽으로 이동
+			if (x <= 28)  //화살표("▶")의 x좌표가 계속 왼쪽 방향키를 받아도 왼쪽 메뉴에서 고정되도록 28까지만 이동 되도록 고정
 				x = 28;
 			gotoxy(x, y);
 			printf("▶");//바뀐 좌표에 화살표 출력
@@ -1962,15 +1962,15 @@ int DayReset(void)//일일 학습량 초기화
 		case RIGHT://아래쪽 방향키를 입력받으면
 			system("cls");
 			Decision();//메뉴창을 띄우고
-			x += 40;	   //화살표("=>")의 y좌표를 2칸 위로 올림
-			if (x >= 68)  //화살표("=>")의 y좌표가 메뉴 아래쪽으로는 내려가지 않도록 단어퀴즈와 같은 높이인 17까지만 내려가도록 고정
+			x += 40;	   //화살표("▶")의 x좌표를 40칸 오른쪽으로 이동
+			if (x >= 68)  //화살표("▶")의 x좌표가 계속 오른쪽 방향키를 받아도 오른쪽 메뉴에서 고정되도록 68까지만 이동 되도록 고정
 				x = 68;
 			gotoxy(x, y);
 			printf("▶");//바뀐 좌표에 화살표 출력
 			break;
 
 		case ENTER://엔터키를 입력받으면
-			YesorNo(x);
+			YesorNo(x);//해당하는 기능을 실행해주는 함수를 띄우고 종료
 			return 0;
 		}
 
@@ -1978,7 +1978,7 @@ int DayReset(void)//일일 학습량 초기화
 
 }
 
-void Decision(void)
+void Decision(void)//초기화 여부 메뉴
 {
 	system("mode con: cols=115 lines=25");
 	gotoxy(30, 11);
@@ -1989,7 +1989,7 @@ void YesorNo(int x)
 {
 	int i = 0, j;
 	FILE *fp;
-	if (x == 28)//yes
+	if (x == 28)//예 초기화를 선택했을때
 	{
 		system("cls");
 		printf("학습량을 초기화 합니다.\n");
@@ -1998,7 +1998,7 @@ void YesorNo(int x)
 		{
 			fprintf(stderr, "파일 Stat.txt를 열 수 없습니다\n", "Stat.txt");
 		}
-		while (!feof(fp))//텍스트 파일을 읽어옴
+		while (!feof(fp))//학습량이 저장되어 있는 텍스트 파일을 읽어옴
 		{
 			fscanf(fp, "%d", &b[i].day_study);
 			for (j = 0; j<7; j++)
@@ -2007,15 +2007,15 @@ void YesorNo(int x)
 			b[i].name[strlen(b[i].name) - 1] = '\0';
 			i++;
 		}
-		fclose(fp);
-		for (i = 0; i<SUBJECT; i++)
+		fclose(fp);//파일을 닫고
+		for (i = 0; i<SUBJECT; i++)//과목별 일일 학습량을 초기화해줌
 			b[i].day_study = 0;
 
-		if ((fp = fopen("Stat.txt", "w")) == NULL)
+		if ((fp = fopen("Stat.txt", "w")) == NULL)//읽기모드로 다시 학습량이 저장된 파일을 열어서
 		{
 			fprintf(stderr, "파일 Stat.txt를 열 수 없습니다\n", "Stat.txt");
 		}
-		for (i = 0; i<SUBJECT; i++)
+		for (i = 0; i<SUBJECT; i++)//학습량이 초기화된 정보를 저장해줌
 		{
 			fprintf(fp, "%d ", b[i].day_study);
 			for (j = 0; j<7; j++)
@@ -2026,7 +2026,7 @@ void YesorNo(int x)
 		fclose(fp);
 	}
 
-	if (x == 43)//no
+	if (x == 43)//아니오 선택
 	{
 		system("cls");
 		printf("프로그램을 실행 합니다.\n");
