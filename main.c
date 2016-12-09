@@ -1857,9 +1857,8 @@ void WeekStudyReset(int day)//주간 학습량 초기화
 
 int DayReset(void)//일일 학습량 초기화
 {
-  int i=0,j,key;
+  int i=0,key;
   int x=28,y=11;
-  FILE *fp;
   printf("안녕하세요 학습량을 측정하고 확인할 수 있는 학습 통계 프로그램입니다.\n\n");
   Sleep(1300);
   printf("오늘 처음 사용하십니까?\n\n");
