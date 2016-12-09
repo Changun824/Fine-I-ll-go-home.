@@ -117,6 +117,7 @@ int alarm();//알람함수
 int timer();//타이머함수
 int learn_menu();//학습계획표 메뉴함수
 void learningplanner();//학습계획표 기능선택함수
+int planinsertmenu();//계획 입력메뉴
 int planinsert();//계획 입력 함수
 int achievementcheckmenu();//달성체크메뉴
 int achievementcheck();//달성체크함수
