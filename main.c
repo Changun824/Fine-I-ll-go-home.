@@ -2966,6 +2966,7 @@ int timetablein() {//시간표 입력함수
 		, wes.st1, wes.st2, wes.st3, wes.st4, wes.st5, wes.st6, wes.st7, wes.st8, thr.st1, thr.st2, thr.st3, thr.st4, thr.st5, thr.st6, thr.st7, thr.st8
 		, fri.st1, fri.st2, fri.st3, fri.st4, fri.st5, fri.st6, fri.st7, fri.st8);
 	printf("시간표 입력 완료!!\n");
+	fclose(timetable);
 	return 0;
 }
 int timetablelook() {
@@ -3025,5 +3026,6 @@ int timetablelook() {
 		}
 
 	}
+	fclose(timetablelook);
 	return 0;
 }//====================================================-sungjae
