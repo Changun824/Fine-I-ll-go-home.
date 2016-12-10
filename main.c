@@ -1,7 +1,16 @@
-/* 푸시 풀 확인 요망
+/*
+프로그램명: Learning support Program 용도: 학습에 있어 도움을 줌
+활용 계획: Life support program등 헬스케어로 나아가고자 함.
+프로그램 기간: 2016-11월 14일~ 2016-12월 9일
+팀명: 됐어, 나집에갈래     7조
+팀원: 2013244007 안창언
+	   2013244010 홍성호
+		 2013244068 형성재
+		 2013244111 이석훈
+과목명: 오픈 소스 소프트웨어  분반: 12분반  담당교수: 김봉재 교수님
 */
 
-#include<stdio.h>
+#include<stdio.h> //표준 입출력 라이브러리
 #include<windows.h>
 #include<stdlib.h>
 #include<time.h>
@@ -147,48 +156,43 @@ int main()
 		num = menu_switch(); //메뉴에서 나오는 좌표를 입력 받아 키보드로 움직이는 것 처럼 나타냄
 		switch (num)
 		{
-		case 5:
+		case 5:                 //===========-sungjae
 			system("cls");
 			learningplanner();
-			//학습 계획표
-			break;
-		case 6:
-			//학습 통계표
+			break;    //학습 계획표 =================-sungjae
+		case 6:          //학습 통계표 =================-sungho
 			system("cls");
 			DayReset();
 			Stat_ProgramRead();
 			WeekStudyReset(WhatDay());
 			Statistics_Menuscr();
 			Stat_Menuchoice();
-			break;
-		case 7: // y좌표 7 -------------계산기 -changun
+			break;//학습 통계표 =================-sungho
+		case 7: // 계산기 =======================================changun
 			system("cls");
 			main_Calculator();
-			break;//main_switch_num 3: break===============================-changun
-		case 8:
-			//단어장
+			break;// 계산기 =======================================changun
+		case 8:  //단어장 =================-sungho
 			system("cls");
 			ProgramRead();
 			menu_scr();
 			MenuChoice();
-			break;
-		case 9:
+			break;          //단어장 =================-sungho
+		case 9: //타이머 =================-sungjae
 			system("cls");
 			timer();
-			//타이머
-			break;
-		case 10:
+			break;//타이머 =================-sungjae
+		case 10:  //알람 =================-sungjae
 			system("cls");
 			alarm();
-			//알람
-			break;
-		case 11:
+			break;  //알람 =================-sungjae
+		case 11:  // 스탑워치 =======================================changun
 			system("cls");
 			stop_watch();
-			break;
-		case 12:
+			break;// 스탑워치 =======================================changun
+		case 12:  //달력 ================-seokhoon
 			system("cls");
-			calender();//달력
+			calender();//달력   ================-seokhoon
 		case 13:
 			main_end = 100;
 			break;
@@ -279,36 +283,37 @@ int menu_switch()
 }
 //=============================================================-main
 //===============================-changun
-void main_Calculator()
+void main_Calculator()   //계산기 메인 메뉴
 {
 	int C_M = 0, CM_M = 0, End_C = 0; //End_C:메인문에서 계산기메뉴를 종료하기 위한 변수 C_M : 계산기 메뉴 CM_M : 행렬계산 메뉴 AC_M : 일반 계산기 메뉴
 	while (1)
 	{
 		Calculator_Menu();  //계산기 메뉴를 호출하고 사용자 입력값을 돌려받음
-		C_M = calculator_key();
+		C_M = calculator_key();    //좌표값을 돌려주는 함수
 		switch (C_M)
 		{
 		case 4:
-			Matrix_Menu();
-			CM_M = Matrix_key(); //행렬 계산기 메뉴
-			switch (CM_M)
+			Matrix_Menu();       //행렬 계산기 메뉴 몸통
+			CM_M = Matrix_key(); //행렬 계산기에서 나온 좌표값
+			switch (CM_M)   //======행렬 계산기 스위치
 			{
 			case 4:
-				Matrix_add();
+				Matrix_add();    //행렬 계산기 더하기
 				break;
 			case 6:
 				system("cls");
-				Matrix_mul();
+				Matrix_mul();    //행렬 곱셈 함수
 				break;
 			case 8:
-				inverse_matrix_Menu();
+				inverse_matrix_Menu();      //역행렬 메뉴
 				break;
 			case 10:
-				main();
+				main(); //메인으로 돌아가게함
 				break;
 			default:
+					printf("잘못 누르셨습니다."\n);
 				break;
-			}// 행렬계산기에 대한 switch
+			} //==============행렬 계산기 스위치
 			break;
 		case 6:
 			system("cls");
