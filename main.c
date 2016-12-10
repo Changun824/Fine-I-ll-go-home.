@@ -311,7 +311,7 @@ void main_Calculator()   //계산기 메인 메뉴
 				main(); //메인으로 돌아가게함
 				break;
 			default:
-					printf("잘못 누르셨습니다."\n);
+					printf("잘못 누르셨습니다.\n");
 				break;
 			} //==============행렬 계산기 스위치
 			break;
