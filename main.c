@@ -4,9 +4,9 @@
 프로그램 기간: 2016-11월 14일~ 2016-12월 9일
 팀명: 됐어, 나집에갈래     7조
 팀원: 2013244007 안창언
-	   2013244010 홍성호
-		 2013244068 형성재
-		 2013244111 이석훈
+2013244010 홍성호
+2013244068 형성재
+2013244111 이석훈
 과목명: 오픈 소스 소프트웨어  분반: 12분반  담당교수: 김봉재 교수님
 */
 
@@ -88,8 +88,8 @@ int stack_push(); //덧셈을 위한 스택 함수
 void stack_calculator_Menu(); // 일반 계산기 메뉴
 int stack_fix[MAX], top = 0; //stack을 활용하기 위한 전역변수
 void inverse_matrix_Menu();// 역행렬 계산
-//==================================================-changun
-//================================================-SungHo
+						   //==================================================-changun
+						   //================================================-SungHo
 void gotoxy(int x, int y);//좌표 함수
 void menu_scr(void);//단어장 메뉴화면을 출력하는 함수
 void Function(int y);//단어장 해당 메뉴에 접속하는 함수
@@ -113,8 +113,8 @@ void WeekStudyReset(int day);//주간 학습량 초기화
 int DayReset(void);//일일 학습량 초기화
 void Decision(void);//일일 학습량 초기화 인터페이스 메뉴
 void YesorNo(int x);//일일 학습량 초기화 인터페이스
-//================================================-SungHo
-//================================================-seokhoon
+					//================================================-SungHo
+					//================================================-seokhoon
 void calender();
 //================================================-seokhoon
 //===============================================-sungjae
@@ -311,7 +311,7 @@ void main_Calculator()   //계산기 메인 메뉴
 				main(); //메인으로 돌아가게함
 				break;
 			default:
-					printf("잘못 누르셨습니다.\n");
+				printf("잘못 누르셨습니다.\n");
 				break;
 			} //==============행렬 계산기 스위치
 			break;
@@ -934,9 +934,15 @@ void stop_watch()  //스탑 워치 함수
 {
 	int hour = 0, min = 0, sec = 0, frame = 0;
 	char ch;
+	FILE *fp;
+	fp = fopen("stopwatch.txt", "w");
 	system("cls");
 	system("title Stop Watch");  //제목 변화
 	system("color 5F");
+	printf("=====================================================================\n");
+	printf("                       S t o p  W a t c h \n");
+	printf("=====================================================================\n");
+	system("pause");
 	stopwatch_menu();
 	while (1)
 	{
@@ -973,7 +979,9 @@ void stop_watch()  //스탑 워치 함수
 				hour = min = sec = frame = 0;
 				break;
 			case 'Q': case 'q':
+				fprintf(fp, "%2d : %2d : %2d : %2d", hour, min, sec, frame);
 				printf("\n");
+				fclose(fp);
 				return;
 			case 'W': case 'w':
 				printf("\n");
@@ -989,12 +997,13 @@ void stop_watch()  //스탑 워치 함수
 void stopwatch_menu()  //스탑 워치 메뉴
 {
 	system("cls");
-	printf("======================================================\n");
-	printf("                   Stop Watch\n");
-	printf("======================================================\n");
+	printf("=====================================================================\n");
+	printf("                       S t o p  W a t c h \n");
+	printf("=====================================================================\n");
 	printf("S:시작/멈춤 \nW: 기록\nR:리셋\nQ:나가기\n");
 	printf("시 : 분 : 초 :0.01초\n");
 }
+
 
 
 //================================================-changun
@@ -2043,73 +2052,73 @@ void YesorNo(int x)
 //================================================-seokhoon
 void calender() {
 	int year = 0;//년을 입력받음
-int month = 0;//월을 입력받음
-int day = 1;//달력의 시작일을 찾기 위한 변수이다(시작일 전 공백을 찍는 횟수)
-int everyday = 0;//입력 달 까지의 그 년의 총 날짜 수
-int monthday[] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };//1~12월까지 일자수
-																	   //배열의 첫번째는 배열의 0번 이므로 0을 넣고 1번 부터 날짜를 넣어 달과 배열의 번지를 맞추려했다.
-int yoonyear = 0;//윤년 스위치
-int preyear = 0;//입력 년 전 까지의 총 날짜 수
-int i;
-int j;
-int z;//1년 부터 입력한 년 까지 반복
-int w;
-int key; // esc
-char swch = 'h';//날짜를 w a s d로 이동시킬 스위치이다
-int start = 0;
-system("cls");
-printf("몇 년도를 입력하시겠나요?\n");
-scanf("%d", &year);
-printf("몇 월을 원하시나요?\n");
-scanf("%d", &month);
+	int month = 0;//월을 입력받음
+	int day = 1;//달력의 시작일을 찾기 위한 변수이다(시작일 전 공백을 찍는 횟수)
+	int everyday = 0;//입력 달 까지의 그 년의 총 날짜 수
+	int monthday[] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };//1~12월까지 일자수
+																		   //배열의 첫번째는 배열의 0번 이므로 0을 넣고 1번 부터 날짜를 넣어 달과 배열의 번지를 맞추려했다.
+	int yoonyear = 0;//윤년 스위치
+	int preyear = 0;//입력 년 전 까지의 총 날짜 수
+	int i;
+	int j;
+	int z;//1년 부터 입력한 년 까지 반복
+	int w;
+	int key; // esc
+	char swch = 'h';//날짜를 w a s d로 이동시킬 스위치이다
+	int start = 0;
+	system("cls");
+	printf("몇 년도를 입력하시겠나요?\n");
+	scanf("%d", &year);
+	printf("몇 월을 원하시나요?\n");
+	scanf("%d", &month);
 
-if (month > 12) {
-	printf("12월까지입니다!\n");
-	return;
-}
-
-while (1) {
-
-	monthday[2] = 28;
-	yoonyear = 0;
-	preyear = 0;
-	everyday = 0;
-	day = 1;
-
-
-
-
-	if (((year) % 4 == 0 && (year % 100 != 0 || year % 400 == 0))) {//윤년인 경우
-																	//윤년 4년에 한번, 100의 배수인 해는 평년, 400의 배수해는 윤년
-		yoonyear = 1;//윤년이면 yoonyear를 1로 바꿔준다
+	if (month > 12) {
+		printf("12월까지입니다!\n");
+		return;
 	}
 
-	for (z = 1; z < year; z++) {//입력한 년 전 까지의 총 일 수를 구하는것이다
-		if (((z) % 4 == 0 && (z % 100 != 0 || z % 400 == 0))) {
-			preyear = (preyear + 366) % 7;
-			/*1년 부터 전부 계산하되 윤년인 날짜가 나오면 366일 임으로 366을 더한다, 나누기 7을 하는 이유는
-			위 과정이 달력에서 시작일을 결정하는 것 이므로 한 줄에 출력 되는 7일을 미리 나누어 주는것이다
-			미리 나누어주는 이유는 입력 년이 너무 크면 int 자료형의 크기를 초과 할 수도 있기 때문이다
-			*/
+	while (1) {
+
+		monthday[2] = 28;
+		yoonyear = 0;
+		preyear = 0;
+		everyday = 0;
+		day = 1;
+
+
+
+
+		if (((year) % 4 == 0 && (year % 100 != 0 || year % 400 == 0))) {//윤년인 경우
+																		//윤년 4년에 한번, 100의 배수인 해는 평년, 400의 배수해는 윤년
+			yoonyear = 1;//윤년이면 yoonyear를 1로 바꿔준다
 		}
-		else {
-			preyear = (preyear + 365) % 7;
-			/*평년일때는 365일 임으로 365을 더한다*/
+
+		for (z = 1; z < year; z++) {//입력한 년 전 까지의 총 일 수를 구하는것이다
+			if (((z) % 4 == 0 && (z % 100 != 0 || z % 400 == 0))) {
+				preyear = (preyear + 366) % 7;
+				/*1년 부터 전부 계산하되 윤년인 날짜가 나오면 366일 임으로 366을 더한다, 나누기 7을 하는 이유는
+				위 과정이 달력에서 시작일을 결정하는 것 이므로 한 줄에 출력 되는 7일을 미리 나누어 주는것이다
+				미리 나누어주는 이유는 입력 년이 너무 크면 int 자료형의 크기를 초과 할 수도 있기 때문이다
+				*/
+			}
+			else {
+				preyear = (preyear + 365) % 7;
+				/*평년일때는 365일 임으로 365을 더한다*/
+			}
 		}
-	}
 
-	if (yoonyear == 1) {//yoonyear=1이면 윤년
-		monthday[2] = 29;//2월 달에 해당하는 monnthday의 배열값을 28에서 29로 수정한다
-	}
+		if (yoonyear == 1) {//yoonyear=1이면 윤년
+			monthday[2] = 29;//2월 달에 해당하는 monnthday의 배열값을 28에서 29로 수정한다
+		}
 
-	preyear = preyear + 1;
+		preyear = preyear + 1;
 
-	for (j = 1; j < month; j++) {//입력한 년의 입력한 월 까지의 날짜를 계산한다
+		for (j = 1; j < month; j++) {//입력한 년의 입력한 월 까지의 날짜를 계산한다
 			everyday += (monthday[j]) % 7;
 			/*monthday에 0번째를 제외한 1번째 부터 입력한 월 까지의 번지의 값들을 전부 더하면
 			입력한 년의 입력한 월 까지의 날짜를 구할 수 있다. 윤년인 경우에도 위에서 2번째를 28에서
 			29로 수정하였으므로 정상적으로 계산이 가능하다 7일을 미리 나누어 주는 이유는 위의 주석과 같다*/
-	}
+		}
 
 		day = (preyear + everyday) % 7;
 		/*day는 입력한 년 월의 전의 날짜를 모두 더한것에 7을 나눈것이다. 1월 1일 월요일을 시작으로
@@ -2117,60 +2126,60 @@ while (1) {
 		한줄은 7칸 이므로 모든 날짜를 7로 나눈 나머지가 달력 첫줄 7칸에서 밀리는 갯수가 된다*/
 		printf("%14d년 %d월\n", year, month);
 		printf("  일  월  화  수  목  금  토\n"); //월화수목금토 출력
-	for (w = 0; w < day; w++) {
-		printf("    ");
-	}
+		for (w = 0; w < day; w++) {
+			printf("    ");
+		}
 
-	for (i = 1; i <= monthday[month]; i++) {
-	printf("%4d", i);//1는 1부터 입력한 월의 monthday번째의 크기만큼 1씩 증가하며 출력한다
+		for (i = 1; i <= monthday[month]; i++) {
+			printf("%4d", i);//1는 1부터 입력한 월의 monthday번째의 크기만큼 1씩 증가하며 출력한다
 			if ((i + day) % 7 == 0) {//7번째 칸 내림
 
 				printf("\n"); //각 주의 간격
 
 			}
 		}
-			printf("\n");
-			printf("저번달 = a   다음달 = d   작년 = s   내년 = w\n");
-			printf("메뉴로 돌아가기 = ESC(엔터한번치고)\n");
-			printf("\n");
-			 getchar()   ;//getchar를 getchar앞에 사용한 이유는 계속 enter키가 자동으로 입력되었기 때문이다
-			 swch = getchar();  //swch값을 getchar로 받음
-  if (swch == 'w'){
-					 year++;   //w를 입력시 년 증가
-  }
+		printf("\n");
+		printf("저번달 = a   다음달 = d   작년 = s   내년 = w\n");
+		printf("메뉴로 돌아가기 = ESC(엔터한번치고)\n");
+		printf("\n");
+		getchar();//getchar를 getchar앞에 사용한 이유는 계속 enter키가 자동으로 입력되었기 때문이다
+		swch = getchar();  //swch값을 getchar로 받음
+		if (swch == 'w') {
+			year++;   //w를 입력시 년 증가
+		}
 
 
-			  else if (swch == 's'){
-								 year--;//s를 입력시 년 증가 -1년은 기원전 이므로 따로 처리할 필요가 없다
-			  }
+		else if (swch == 's') {
+			year--;//s를 입력시 년 증가 -1년은 기원전 이므로 따로 처리할 필요가 없다
+		}
 
 
-			  else if (swch == 'd'){
-											 month++;//d를 입력시 월 증가
-							  if (month > 12){
-														//상식적으로 13월은 없다 month가 13이상 되면 년을 한번 증가시키고 1로 초기화 시킨다
-													year++;
-												  month = 1;
-										 }
-							  }
-			  else if (swch == 'a')
-								{//a를 입력시 월 감소
-										month--;
-									if (month < 1){
-											 //0월은 없다 month가 0이하 되면 년을 한번 줄이고 12로 초기화 시킨다
-											year--;
-											month = 12;
-								 }
+		else if (swch == 'd') {
+			month++;//d를 입력시 월 증가
+			if (month > 12) {
+				//상식적으로 13월은 없다 month가 13이상 되면 년을 한번 증가시키고 1로 초기화 시킨다
+				year++;
+				month = 1;
+			}
+		}
+		else if (swch == 'a')
+		{//a를 입력시 월 감소
+			month--;
+			if (month < 1) {
+				//0월은 없다 month가 0이하 되면 년을 한번 줄이고 12로 초기화 시킨다
+				year--;
+				month = 12;
+			}
 
-			  }
-  key = getch();
-			 if (key == 27) {
-				  main();
-				  break;
-			  }
+		}
+		key = getch();
+		if (key == 27) {
+			main();
+			break;
+		}
 
 
-}
+	}
 
 
 }
