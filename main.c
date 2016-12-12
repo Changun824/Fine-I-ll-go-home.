@@ -3029,7 +3029,19 @@ int timetablein() {//시간표 입력함수
 int timetablelook() {
 	int inkey = 0;//키보드값을 받아서 정수형의 저장하는 변수
 	TT mon, thu, wes, thr, fri;//요일별로 쓸 구조체
-	FILE *timetablelook = fopen("timetable.txt", "r");//시간표 파일 읽어오는데 사용하는 파일포인터
+	FILE *timetablelook;//시간표 파일 읽어오는데 사용하는 파일포인터
+	if ((timetablelook = fopen("timetable.txt", "r")) == NULL)
+	{
+		system("cls");
+		gotoxy(8, 5);
+		printf("시간표 파일이 없습니다.\n");
+		gotoxy(8, 6);
+		printf("생성해주세요.\n");
+		gotoxy(8,7);
+		printf("3초후에 종료됩니다....\n");
+		Sleep(3000);
+		return 0;
+	}
 	fscanf(timetablelook, "%s %s %s %s %s %s %s %s\n%s %s %s %s %s %s %s %s\n%s %s %s %s %s %s %s %s\n%s %s %s %s %s %s %s %s\n%s %s %s %s %s %s %s %s\n"
 		, mon.st1, mon.st2, mon.st3, mon.st4, mon.st5, mon.st6, mon.st7, mon.st8, thu.st1, thu.st2, thu.st3, thu.st4, thu.st5, thu.st6, thu.st7, thu.st8
 		, wes.st1, wes.st2, wes.st3, wes.st4, wes.st5, wes.st6, wes.st7, wes.st8, thr.st1, thr.st2, thr.st3, thr.st4, thr.st5, thr.st6, thr.st7, thr.st8
