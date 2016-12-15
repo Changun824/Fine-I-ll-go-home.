@@ -1165,8 +1165,9 @@ void AddWord(void)//단어 추가 기능
 		}
 
 	}
+label:
 	count = i;
-label://goto 문으로 빠져나오는 곳
+//goto 문으로 빠져나오는 곳
 	for (i = 0; i<count; i++) {
 		fputs(a[i].name, fp);
 		fputc('\n', fp);//fputs 는 텍스트로 저장할때 엔터값을 안받기에 개행을 위해 붙여줌
