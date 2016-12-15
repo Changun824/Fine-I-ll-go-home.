@@ -162,8 +162,8 @@ int main()
 			break;    //학습 계획표 =================-sungjae
 		case 6:          //학습 통계표 =================-sungho
 			system("cls");
-			DayReset();
 			Stat_ProgramRead();
+			DayReset();
 			WeekStudyReset(WhatDay());
 			Statistics_Menuscr();
 			Stat_Menuchoice();
@@ -1511,9 +1511,16 @@ void Stat_ProgramRead(void) // 처음에 이어쓰기 모드로 열어서 파일
 {
 	int i = 0;
 	FILE *fp;
-	if ((fp = fopen("Stat.txt", "a")) == NULL)
+	if ((fp = fopen("SubJect.txt", "a")) == NULL)//학습 과목을 저장할 파일
 	{
-		fprintf(stderr, "Stat.txt 파일을 열 수 없습니다.\n", "Stat.txt");
+		fprintf(stderr, "SubJect.txt 파일을 열 수 없습니다.\n", "SubJect.txt");
+		exit(1);
+	}
+	fclose(fp);
+
+	if ((fp = fopen("StudyNum.txt", "a")) == NULL) //학습량 수치를 저장할 파일
+	{
+		fprintf(stderr, "StudyNum.txt 파일을 열 수 없습니다.\n", "StudyNum.txt");
 		exit(1);
 	}
 	fclose(fp);
@@ -1522,21 +1529,18 @@ void Stat_ProgramRead(void) // 처음에 이어쓰기 모드로 열어서 파일
 void AddSubject(void) //과목 추가
 {
 
-	int i = 0, j, key; //i for문 실행에 쓰일 변수 ,key: ENTER키나 ESC키로 받은 값을 저장받음
+	int i = 0, j, key,count; //i for문 실행에 쓰일 변수 ,key: ENTER키나 ESC키로 받은 값을 저장받음
 	int esc;//이중 반복문 탈출용
 	int fullcount = 0;//과목은 8개 까지만 저장 가능하도록 만듬 꽉차면 fullcount가8
 
 	FILE *fp;
-	if ((fp = fopen("Stat.txt", "r")) == NULL)
+	if ((fp = fopen("SubJect.txt", "r")) == NULL)
 	{
-		fprintf(stderr, "파일 Voca.txt를 열 수 없습니다\n", "Stat.txt");
+		fprintf(stderr, "파일 SubJect.txt를 열 수 없습니다\n", "SubJect.txt");
 		exit(1);
 	}
 	while (!feof(fp))//텍스트 파일을 읽어서 순서대로 구조체 배열에 넣어줌
 	{
-		fscanf(fp, "%d", &b[i].day_study);//해당 과목의 일일 공부량 수치와
-		for (j = 0; j<7; j++)//해당 과목의 월화수목금토일 각각의 공부량 수치
-			fscanf(fp, "%d", &b[i].week_study[j]);
 		fgets(b[i].name, 100, fp);//과목 이름을 불러옴
 		b[i].name[strlen(b[i].name) - 1] = '\0';
 		i++;
@@ -1595,17 +1599,17 @@ void AddSubject(void) //과목 추가
 		}
 	}
 
-	if ((fp = fopen("Stat.txt", "w")) == NULL)//쓰기모드로 열어서
+	if ((fp = fopen("SubJect.txt","w")) == NULL)
 	{
-		fprintf(stderr, "파일 Stat.txt를 열 수 없습니다\n", "Stat.txt");
-		exit(1);
+		fprintf(stderr, "파일 SubJect.txt를 열 수 없습니다\n", "SubJect.txt");
 	}
-	for (i = 0; i<SUBJECT; i++) {//추가한 과목을 텍스트 파일에 넣어줌
-		fprintf(fp, "%d ", b[i].day_study);
-		for (j = 0; j<7; j++)
-			fprintf(fp, "%d ", b[i].week_study[j]);
-		fputs(b[i].name, fp);
-		fputc('\n', fp);//fputs 는 텍스트로 저장할때 엔터값을 안받기에 개행을 위해 붙여줌
+	for (i = 0; i<SUBJECT; i++)
+	{
+		if ((strcmp(b[i].name, "\0")) != 0)
+		{
+			fputs(b[i].name, fp);
+			fputc('\n', fp);//fputs 는 텍스트로 저장할때 엔터값을 안받기에 개행을 위해 붙여줌
+		}
 	}
 	fclose(fp);
 	printf("과목을 전부 추가했습니다.\n");
@@ -1620,51 +1624,73 @@ void DelSubject(void) // 과목 삭제
 	int i = 0, count;
 	int j;
 	char target[100];
-	FILE *fp;
-	if ((fp = fopen("Stat.txt", "r")) == NULL) //텍스트 파일내 과목을 전부 읽어와서
+	FILE *fp,*fp2;
+	if ((fp = fopen("SubJect.txt", "r")) == NULL) //텍스트 파일내 과목을 전부 읽어와서
 	{
-		fprintf(stderr, "파일 Stat.txt를 열 수 없습니다\n", "Stat.txt");
+		fprintf(stderr, "파일 SubJect.txt를 열 수 없습니다\n", "SubJect.txt");
 	}
 	while (!feof(fp))//읽어온걸 순서대로 저장
 	{
-		fscanf(fp, "%d", &b[i].day_study);
-		for (j = 0; j<7; j++)
-			fscanf(fp, "%d", &b[i].week_study[j]);
 		fgets(b[i].name, 100, fp);
 		b[i].name[strlen(b[i].name) - 1] = '\0';//개행 문자 제거를 위해 맨끝 하나는 널값으로 제거
 		i++;
 	}
 	fclose(fp);
 	count = i - 1;
+	if ((fp2 = fopen("StudyNum.txt", "r")) == NULL) //텍스트 파일내 과목을 전부 읽어와서
+	{
+		fprintf(stderr, "파일 StudyNum.txt를 열 수 없습니다\n", "StudyNum.txt");
+	}
+	for(i=0;i<count;i++)//읽어온걸 순서대로 저장
+	{
+		fscanf(fp2,"%d",&b[i].day_study);//해당 과목의 일일 공부량 수치와
+		for (j = 0; j<7; j++)//해당 과목의 월화수목금토일 각각의 공부량 수치
+			fscanf(fp2,"%d",&b[i].week_study[j]);
+	}
+	fclose(fp2);
 	printf("삭제하실 과목을 입력하세요\n");
 	gets(target);//삭제할 과목을 타겟에 받음
 	for (i = 0; i<count; i++)
 	{
-		if (!strcmp(b[i].name, target))//읽어와서 저장되어 있는 값이 삭제할 단어와 일치하면
+		if (!strcmp(b[i].name,target))//읽어와서 저장되어 있는 값이 삭제할 단어와 일치하면
 		{
-			printf("[%s]를 단어장에서 제거합니다.\n", b[i].name);
+			printf("[%s]를 통계표에서 제거합니다.\n",b[i].name);
 			strcpy(b[i].name, "\0");//과목이름을 null값으로 덮어 씌워줌
+			b[i].day_study=0;
+			for(j=0;j<7;j++)
+				b[i].week_study[j]=0;
 		}
 
 	}
-	if ((fp = fopen("Stat.txt", "w")) == NULL)
+	if ((fp = fopen("SubJect.txt","w")) == NULL)
 	{
-		fprintf(stderr, "파일 Stat.txt를 열 수 없습니다\n", "Stat.txt");
+		fprintf(stderr, "파일 SubJect.txt를 열 수 없습니다\n", "SubJect.txt");
 	}
 	for (i = 0; i<count; i++)
 	{
 		if ((strcmp(b[i].name, "\0")) != 0)
 		{
-			fprintf(fp, "%d ", b[i].day_study);
-			for (j = 0; j<7; j++)
-				fprintf(fp, "%d ", b[i].week_study[j]);
 			fputs(b[i].name, fp);
 			fputc('\n', fp);//fputs 는 텍스트로 저장할때 엔터값을 안받기에 개행을 위해 붙여줌
-
 		}
 	}
 	fclose(fp);
-	for (i = 0; i<SUBJECT; i++) {
+	if ((fp2 = fopen("StudyNum.txt","w")) == NULL)
+	{
+		fprintf(stderr, "파일 StudyNum.txt를 열 수 없습니다\n", "StudyNum.txt");
+	}
+	for (i = 0; i<count; i++) //저장된 값 파일에 다시 써줌
+	{
+		if ((strcmp(b[i].name, "\0")) != 0)
+		{
+			fprintf(fp2, "%d ", b[i].day_study);
+			for (j = 0; j<7; j++)
+				fprintf(fp2, "%d ", b[i].week_study[j]);
+		}
+	}
+	fclose(fp2);
+	for (i = 0; i<SUBJECT; i++)
+	{
 		strcpy(b[i].name, "\0");  //삭제할때 변수에 찌거기값이 남아서 초기화 안하면 과목 추가에서 추가가능 여부를 확인할때 남은 찌꺼기를 읽어서  문제 발생
 		b[i].day_study = 0;
 		for (j = 0; j<7; j++)
@@ -1680,25 +1706,34 @@ void DelSubject(void) // 과목 삭제
 void Measure(void) //학습량 측정
 {
 	int hour = 0, min = 0, sec = 0, frame = 0;
-	int i = 0, j;
+	int i = 0, j,count;
 	char ch;
 	char target[20];
 	int measutime = 0;//측정시간 분으로 환산
-	FILE *fp;
-	if ((fp = fopen("Stat.txt", "r")) == NULL)
+	FILE *fp,*fp2;
+	if ((fp = fopen("SubJect.txt", "r")) == NULL) //텍스트 파일내 과목을 전부 읽어와서
 	{
-		fprintf(stderr, "파일 Voca.txt를 열 수 없습니다\n", "Stat.txt");
+		fprintf(stderr, "파일 SubJect.txt를 열 수 없습니다\n", "SubJect.txt");
 	}
-	while (!feof(fp))
+	while (!feof(fp))//읽어온걸 순서대로 저장
 	{
-		fscanf(fp, "%d", &b[i].day_study);
-		for (j = 0; j<7; j++)
-			fscanf(fp, "%d", &b[i].week_study[j]);
 		fgets(b[i].name, 100, fp);
-		b[i].name[strlen(b[i].name) - 1] = '\0';
+		b[i].name[strlen(b[i].name) - 1] = '\0';//개행 문자 제거를 위해 맨끝 하나는 널값으로 제거
 		i++;
 	}
 	fclose(fp);
+	count=i-1;
+	if ((fp2 = fopen("StudyNum.txt", "r")) == NULL) //텍스트 파일내 과목을 전부 읽어와서
+	{
+		fprintf(stderr, "파일 StudyNum.txt를 열 수 없습니다\n", "StudyNum.txt");
+	}
+	for(i=0;i<count;i++)//읽어온걸 순서대로 저장
+	{
+		fscanf(fp2,"%d",&b[i].day_study);//해당 과목의 일일 공부량 수치와
+		for (j = 0; j<7; j++)//해당 과목의 월화수목금토일 각각의 공부량 수치
+			fscanf(fp2,"%d",&b[i].week_study[j]);
+	}
+	fclose(fp2);
 	stopwatch_menu();
 	while (1)
 	{
@@ -1745,7 +1780,7 @@ void Measure(void) //학습량 측정
 				gets(target);
 				for (i = 0; i<SUBJECT; i++)
 				{
-					if (!strcmp(b[i].name, target))
+					if (!strcmp(b[i].name,target))
 					{
 						printf("학습량을 저장했습니다.\n");
 						b[i].day_study += measutime;//분으로 환산된 측정시간을 일일 공부량daystudy에 저장
@@ -1760,54 +1795,77 @@ void Measure(void) //학습량 측정
 		printf("\n\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
 	}// 시간에 대한 반복문 중괄호
 label:
-	if ((fp = fopen("Stat.txt", "w")) == NULL)//파일을 쓰기모드로 열음
+	if ((fp = fopen("SubJect.txt","w")) == NULL)
 	{
-		fprintf(stderr, "파일 Stat.txt를 열 수 없습니다\n", "Stat.txt");
+		fprintf(stderr, "파일 SubJect.txt를 열 수 없습니다\n", "SubJect.txt");
 	}
-	for (i = 0; i<SUBJECT; i++) //저장된 값 파일에 다시 써줌
+	for (i = 0; i<count; i++)
 	{
-		fprintf(fp, "%d ", b[i].day_study);
-		for (j = 0; j<7; j++)
-			fprintf(fp, "%d ", b[i].week_study[j]);
-		fgets(b[i].name, 100, fp);
-		b[i].name[strlen(b[i].name) - 1] = '\0';
+		if ((strcmp(b[i].name, "\0")) != 0)
+		{
+			fputs(b[i].name, fp);
+			fputc('\n', fp);//fputs 는 텍스트로 저장할때 엔터값을 안받기에 개행을 위해 붙여줌
+		}
 	}
 	fclose(fp);
+	if ((fp2 = fopen("StudyNum.txt","w")) == NULL)
+	{
+		fprintf(stderr, "파일 StudyNum.txt를 열 수 없습니다\n", "StudyNum.txt");
+	}
+	for (i = 0; i<count; i++) //저장된 값 파일에 다시 써줌
+	{
+		if ((strcmp(b[i].name, "\0")) != 0)
+		{
+			fprintf(fp2, "%d ", b[i].day_study);
+			for (j = 0; j<7; j++)
+				fprintf(fp2, "%d ", b[i].week_study[j]);
+		}
+	}
+	fclose(fp2);
 	Statistics_Menuscr();
 }
 
 void StudyCheck(void)//학습량을 확인
 {
-	int i = 0, j, key;
+	int i = 0, j, key,count;
 	int weeksum = 0, weekhour = 0, weekminute = 0;//weeksum주간공부량 합 weekhour주간 총 공부시간[시] weekminute 주간 총 공부 시간[분]
 	int dayhour = 0;//일일 학습시간 [시]
 	int dayminute = 0;//일일 학습시간 [분]
 	double weekaverhour = 0;//주간 평균 학습량 [시]
 	double weekaverminute = 0;//주간 평균 학습량 [분]
-	FILE *fp;
-	if ((fp = fopen("Stat.txt", "r")) == NULL)
+	FILE *fp,*fp2;
+	if ((fp = fopen("SubJect.txt", "r")) == NULL) //텍스트 파일내 과목을 전부 읽어와서
 	{
-		fprintf(stderr, "파일 Voca.txt를 열 수 없습니다\n", "Stat.txt");
+		fprintf(stderr, "파일 SubJect.txt를 열 수 없습니다\n", "SubJect.txt");
 	}
-	while (!feof(fp))//텍스트 파일을 읽어옴
+	while (!feof(fp))//읽어온걸 순서대로 저장
 	{
-		fscanf(fp, "%d", &b[i].day_study);
-		for (j = 0; j<7; j++)
-			fscanf(fp, "%d", &b[i].week_study[j]);
 		fgets(b[i].name, 100, fp);
-		b[i].name[strlen(b[i].name) - 1] = '\0';
+		b[i].name[strlen(b[i].name) - 1] = '\0';//개행 문자 제거를 위해 맨끝 하나는 널값으로 제거
 		i++;
 	}
 	fclose(fp);
-
-	dayhour += b[i].day_study / 60;//일일 공부량 시간 텍스트에 저장되어 있는 분으로 환산된 일일 공부량을 60으로 나눠줘서 구함
-	dayminute = (b[i].day_study) % 60;//일일 공부량 분 텍스트에 저장되어 있는 분으로 환산된 일일 공부량을 60으로 나머지 계산해서 구함
-	printf("======학습량 확인========\n");
-	for (i = 0; i<SUBJECT; i++)
+	count=i-1;
+	if ((fp2 = fopen("StudyNum.txt", "r")) == NULL) //텍스트 파일내 과목을 전부 읽어와서
 	{
+		fprintf(stderr, "파일 StudyNum.txt를 열 수 없습니다\n", "StudyNum.txt");
+	}
+	for(i=0;i<SUBJECT;i++)//읽어온걸 순서대로 저장
+	{
+		fscanf(fp2,"%d",&b[i].day_study);//해당 과목의 일일 공부량 수치와
+		for (j = 0; j<7; j++)//해당 과목의 월화수목금토일 각각의 공부량 수치
+			fscanf(fp2,"%d",&b[i].week_study[j]);
+	}
+	fclose(fp2);
+
+	printf("======학습량 확인========\n");
+	for (i = 0; i<count; i++)
+	{
+		dayhour += b[i].day_study / 60;//일일 공부량 시간 텍스트에 저장되어 있는 분으로 환산된 일일 공부량을 60으로 나눠줘서 구함
+		dayminute = b[i].day_study % 60;//일일 공부량 분 텍스트에 저장되어 있는 분으로 환산된 일일 공부량을 60으로 나머지 계산해서 구함
 		printf("%s의 일일 학습량: %d시간 %d분\n", b[i].name, dayhour, dayminute);
 	}
-	for (i = 0; i<SUBJECT; i++)
+	for (i = 0; i<count; i++)
 	{
 		weeksum = 0;//주간 해당 과목의 공부량의 합
 		for (j = 0; j<7; j++)//월화수목금토일의 분으로 환산된 공부량을 전부 더해서 weeksum에 저장
@@ -1847,7 +1905,7 @@ int WhatDay(void)//요일 계산을 해주는 함수
 void WeekStudyReset(int day)//주간 학습량 초기화 (월요일마다 주간 학습량이 자동으로 초기화됨) (int day)는 WhatDay()함수의 결과값을 매개변수로 받음 즉 요일값임
 {
 	int i = 0;
-	int j;
+	int j,count;
 	int log;//월요일에 학습량을 초기화 했는지 확인해주는 변수 매번 월요일에 프로그램을 킬때마다 초기화 하지 않기 위함
 	int first; //파일을 최초로 만들었을때 빈파일에 데이터 0을 넣어주기 위해 만듦
 	FILE *fp, *fp2;
@@ -1887,41 +1945,63 @@ void WeekStudyReset(int day)//주간 학습량 초기화 (월요일마다 주간
 	{
 		if (log == 0)//초기화 여부 확인 오늘이 월요일인데 (0=학습량을 초기화 하지 않았다면) 초기화하면 log가 1이될거임
 		{
-			if ((fp = fopen("Stat.txt", "r")) == NULL) //학습량이 저장된 파일을 열어서
+			if ((fp = fopen("SubJect.txt", "r")) == NULL) //텍스트 파일내 과목을 전부 읽어와서
 			{
-				fprintf(stderr, "파일 Stat.txt를 열 수 없습니다\n", "Stat.txt");
+				fprintf(stderr, "파일 SubJect.txt를 열 수 없습니다\n", "SubJect.txt");
 			}
-			while (!feof(fp))//텍스트 파일을 읽어옴
+			while (!feof(fp))//읽어온걸 순서대로 저장
 			{
-				fscanf(fp, "%d", &b[i].day_study);
-				for (j = 0; j<7; j++)
-					fscanf(fp, "%d", &b[i].week_study[j]);
 				fgets(b[i].name, 100, fp);
-				b[i].name[strlen(b[i].name) - 1] = '\0';
+				b[i].name[strlen(b[i].name) - 1] = '\0';//개행 문자 제거를 위해 맨끝 하나는 널값으로 제거
 				i++;
 			}
 			fclose(fp);
+			count=i-1;
+			if ((fp2 = fopen("StudyNum.txt", "r")) == NULL) //텍스트 파일내 과목을 전부 읽어와서
+			{
+				fprintf(stderr, "파일 StudyNum.txt를 열 수 없습니다\n", "StudyNum.txt");
+			}
+			for(i=0;i<count;i++)//읽어온걸 순서대로 저장
+			{
+				fscanf(fp2,"%d",&b[i].day_study);//해당 과목의 일일 공부량 수치와
+				for (j = 0; j<7; j++)//해당 과목의 월화수목금토일 각각의 공부량 수치
+					fscanf(fp2,"%d",&b[i].week_study[j]);
+			}
+			fclose(fp2);
 
-			for (i = 0; i<SUBJECT; i++)//주간 학습량을 전부 0으로 초기화 해줌
+			for (i = 0; i<count; i++)//주간 학습량을 전부 0으로 초기화 해줌
 			{
 				for (j = 0; j<7; j++)
 					b[i].week_study[j] = 0;
 			}
 
-			if ((fp = fopen("Stat.txt", "w")) == NULL)//쓰기모드로 열어서
+			if ((fp = fopen("SubJect.txt","w")) == NULL)
 			{
-				fprintf(stderr, "파일 Stat.txt를 열 수 없습니다\n", "Stat.txt");
-				exit(1);
+				fprintf(stderr, "파일 SubJect.txt를 열 수 없습니다\n", "SubJect.txt");
 			}
-			for (i = 0; i<SUBJECT; i++)//초기화된 정보를 다시 파일로 저장함
+			for (i = 0; i<count; i++)
 			{
-				fprintf(fp, "%d ", b[i].day_study);
-				for (j = 0; j<7; j++)
-					fprintf(fp, "%d ", b[i].week_study[j]);
-				fputs(b[i].name, fp);
-				fputc('\n', fp);//fputs 는 텍스트로 저장할때 엔터값을 안받기에 개행을 위해 붙여줌
+				if ((strcmp(b[i].name, "\0")) != 0)
+				{
+					fputs(b[i].name, fp);
+					fputc('\n', fp);//fputs 는 텍스트로 저장할때 엔터값을 안받기에 개행을 위해 붙여줌
+				}
 			}
 			fclose(fp);
+			if ((fp2 = fopen("StudyNum.txt","w")) == NULL)
+			{
+				fprintf(stderr, "파일 StudyNum.txt를 열 수 없습니다\n", "StudyNum.txt");
+			}
+			for (i = 0; i<count; i++) //저장된 값 파일에 다시 써줌
+			{
+				if ((strcmp(b[i].name, "\0")) != 0)
+				{
+					fprintf(fp2, "%d ", b[i].day_study);
+					for (j = 0; j<7; j++)
+						fprintf(fp2, "%d ", b[i].week_study[j]);
+				}
+			}
+			fclose(fp2);
 
 			log = 1;//log변수를 1로 바꾸고 (오늘 초기화가 행해졌다는걸 의미)
 			if ((fp = fopen("Reset.txt", "w")) == NULL)
@@ -2002,43 +2082,66 @@ void Decision(void)//초기화 여부 메뉴
 
 void YesorNo(int x)
 {
-	int i = 0, j;
-	FILE *fp;
+	int i = 0, j,count;
+	FILE *fp,*fp2;
 	if (x == 28)//예 초기화를 선택했을때
 	{
 		system("cls");
 		printf("학습량을 초기화 합니다.\n");
 		Sleep(1000);
-		if ((fp = fopen("Stat.txt", "r")) == NULL)
-		{
-			fprintf(stderr, "파일 Stat.txt를 열 수 없습니다\n", "Stat.txt");
-		}
-		while (!feof(fp))//학습량이 저장되어 있는 텍스트 파일을 읽어옴
-		{
-			fscanf(fp, "%d", &b[i].day_study);
-			for (j = 0; j<7; j++)
-				fscanf(fp, "%d", &b[i].week_study[j]);
-			fgets(b[i].name, 100, fp);
-			b[i].name[strlen(b[i].name) - 1] = '\0';
-			i++;
-		}
-		fclose(fp);//파일을 닫고
-		for (i = 0; i<SUBJECT; i++)//과목별 일일 학습량을 초기화해줌
-			b[i].day_study = 0;
+		if ((fp = fopen("SubJect.txt", "r")) == NULL) //텍스트 파일내 과목을 전부 읽어와서
+			{
+				fprintf(stderr, "파일 SubJect.txt를 열 수 없습니다\n", "SubJect.txt");
+			}
+			while (!feof(fp))//읽어온걸 순서대로 저장
+			{
+				fgets(b[i].name, 100, fp);
+				b[i].name[strlen(b[i].name) - 1] = '\0';//개행 문자 제거를 위해 맨끝 하나는 널값으로 제거
+				i++;
+			}
+			fclose(fp);
+			count=i-1;
+			if ((fp2 = fopen("StudyNum.txt", "r")) == NULL) //텍스트 파일내 과목을 전부 읽어와서
+			{
+				fprintf(stderr, "파일 StudyNum.txt를 열 수 없습니다\n", "StudyNum.txt");
+			}
+			for(i=0;i<count;i++)//읽어온걸 순서대로 저장
+			{
+				fscanf(fp2,"%d",&b[i].day_study);//해당 과목의 일일 공부량 수치와
+				for (j = 0; j<7; j++)//해당 과목의 월화수목금토일 각각의 공부량 수치
+					fscanf(fp2,"%d",&b[i].week_study[j]);
+			}
+			fclose(fp2);
+			for (i = 0; i<count; i++)//과목별 일일 학습량을 초기화해줌
+				b[i].day_study = 0;
 
-		if ((fp = fopen("Stat.txt", "w")) == NULL)//읽기모드로 다시 학습량이 저장된 파일을 열어서
-		{
-			fprintf(stderr, "파일 Stat.txt를 열 수 없습니다\n", "Stat.txt");
-		}
-		for (i = 0; i<SUBJECT; i++)//학습량이 초기화된 정보를 저장해줌
-		{
-			fprintf(fp, "%d ", b[i].day_study);
-			for (j = 0; j<7; j++)
-				fprintf(fp, "%d ", b[i].week_study[j]);
-			fputs(b[i].name, fp);
-			fputc('\n', fp);//fputs 는 텍스트로 저장할때 엔터값을 안받기에 개행을 위해 붙여줌
-		}
-		fclose(fp);
+			if ((fp = fopen("SubJect.txt","w")) == NULL)
+				{
+					fprintf(stderr, "파일 SubJect.txt를 열 수 없습니다\n", "SubJect.txt");
+				}
+				for (i = 0; i<count; i++)
+				{
+					if ((strcmp(b[i].name, "\0")) != 0)
+					{
+						fputs(b[i].name, fp);
+						fputc('\n', fp);//fputs 는 텍스트로 저장할때 엔터값을 안받기에 개행을 위해 붙여줌
+					}
+				}
+				fclose(fp);
+				if ((fp2 = fopen("StudyNum.txt","w")) == NULL)
+				{
+					fprintf(stderr, "파일 StudyNum.txt를 열 수 없습니다\n", "StudyNum.txt");
+				}
+				for (i = 0; i<count; i++) //저장된 값 파일에 다시 써줌
+				{
+					if ((strcmp(b[i].name, "\0")) != 0)
+					{
+						fprintf(fp2, "%d ", b[i].day_study);
+						for (j = 0; j<7; j++)
+							fprintf(fp2, "%d ", b[i].week_study[j]);
+					}
+				}
+				fclose(fp2);
 	}
 
 	if (x == 43)//아니오 선택
