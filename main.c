@@ -2691,7 +2691,7 @@ int achievementcheck() {
 	int f = 0;
 	char c1[10], c2[10], c3[10], c4[10], c5[10], c6[10], c7[10], c8[10], c9[10], c10[10], c11[10], c12[10], c13[10], c14[10], c15[10], c16[10];
 	PLAN out;
-	FILE *fpout1;
+	FILE *fpout1,*fpout2,*chrate1,*chrate2;
 	if((fpout1 = fopen("plan1.txt", "r"))==NULL) //1학기 읽어오는 파일포인터
 	{
 		system("cls");
@@ -2704,7 +2704,6 @@ int achievementcheck() {
 		Sleep(3000);
 		return 0;
 	}
-	FILE *fpout2;
 	if((fpout2 = fopen("plan2.txt", "r"))==NULL)//2학기 읽어오는 파일포인터
 	{
 		system("cls");
@@ -2717,8 +2716,8 @@ int achievementcheck() {
 		Sleep(3000);
 		return 0;
 	}
-	FILE *chrate1 = fopen("rate1.txt", "w");//1학기 달성체크
-	FILE *chrate2 = fopen("rate2.txt", "w");//2학기 달성체크
+	chrate1 = fopen("rate1.txt", "w");//1학기 달성체크
+	chrate2 = fopen("rate2.txt", "w");//2학기 달성체크
 	achievementcheckmenu();//달성체크메뉴 출력
 	f = threemenu2();//키값을 받아서 메뉴선택한 y좌표를 f에 저장
 	if (f == 12)
