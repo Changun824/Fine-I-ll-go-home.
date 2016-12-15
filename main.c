@@ -1168,7 +1168,7 @@ void AddWord(void)//단어 추가 기능
 label:
 	count = i;
 //goto 문으로 빠져나오는 곳
-	for (i = 0; i<count; i++) {
+	for (i = 0; i<count; i++) {//추가된 단어와 뜻을 단어와 뜻이 저장되어 있는 텍스트 파일 안에 전부 이어써준다.
 		fputs(a[i].name, fp);
 		fputc('\n', fp);//fputs 는 텍스트로 저장할때 엔터값을 안받기에 개행을 위해 붙여줌
 		fputs(a[i].mean, fp);
@@ -1178,56 +1178,56 @@ label:
 	menu_scr();
 }
 
-void SearchWord(void)
+void SearchWord(void)//단어검색
 {
-	int i = 0, count;
-	int key;
+	int i = 0, count;//count는 불러온 단어의 개수를 저장할 변수
+	int key;//입력받은 키 값을 저장하기 위한 변수
 	FILE *fp;
-	if ((fp = fopen("Voca.txt", "r")) == NULL)
+	if ((fp = fopen("Voca.txt", "r")) == NULL)//읽기모드로 단어와 뜻이 저장된 파일을 연다.
 	{
 		fprintf(stderr, "파일 Voca.txt를 열 수 없습니다\n", "Voca.txt");
 	}
-	while (!feof(fp))
+	while (!feof(fp))//단어와 뜻을 불러온다.
 	{
 		fgets(a[i].name, 100, fp);
-		a[i].name[strlen(a[i].name) - 1] = '\0';
+		a[i].name[strlen(a[i].name) - 1] = '\0';//fgets의 특성상  붙게되는 개행문자의 제거를 위해 널 문자로 덮어씌움
 		fgets(a[i].mean, 100, fp);
-		a[i].mean[strlen(a[i].mean) - 1] = '\0';
+		a[i].mean[strlen(a[i].mean) - 1] = '\0';//fgets의 특성상  붙게되는 개행문자의 제거를 위해 널 문자로 덮어씌움
 		i++;
 	}
 	fclose(fp);
-	count = i - 1;
+	count = i - 1;//불러온 단어의 개수 저장
 	while (1) {
-		int found = 0;//찾은 수
+		int found = 0;//찾는 단어가 있었는지 없었는지 체크하기 위한 변수 단어를 찾을때마다 1씩 증가하고 찾는 단어가 있었을때 값이 1감소되기 때문에 찾는 단어가 없었다면 count의 값과 같아짐
 		char target[100];
 		char esc[8] = "종료.";
-		printf("찾을 단어를 입력해주세요.종료하려면 [종료.]입력\n");
+		printf("찾을 단어 또는 단어의 의미를 입력해주세요.종료하려면 [종료.]입력\n");
 		gets(target);
-		if (!strcmp(esc, target)) {
+		if (!strcmp(esc, target)) {//esc에 종료.를 저장해 두었는데 만약 "종료."를 입력한다면 기능을 종료
 			system("cls");
 			break;
 		}
-		for (i = 0; i<count; i++)
+		for (i = 0; i<count; i++)//불러온 단어의 수만큼 순차 검색을 해서
 		{
 			found++;
-			if (!strcmp(a[i].name, target) || !strcmp(a[i].mean, target))
+			if (!strcmp(a[i].name, target) || !strcmp(a[i].mean, target))//찾으려고 입력한 값[단어나 뜻]과 같은것이 불러온 단어중에 있다면
 			{
-				system("cls");
-				printf("%s: %s\n", a[i].name, a[i].mean);
-				found--;
+				system("cls");//콘솔창을 한 번 지우고
+				printf("%s: %s\n", a[i].name, a[i].mean);//찾은 단어와 뜻을 출력해줌
+				found--;//찾는 단어가 있었다는걸 체크하기 위해 found값을 1감소
 			}
-			if (found == count)
+			if (found == count)//다 찾았봤지만 찾는 단어가 없어서 found값이 count값과 같아졌다면
 				printf("찾는 단어가 없습니다\n");
 		}
 		while (1) {
 			printf("더 찾으시겠습니까? [ENTER]찾기,[ESC]종료\n");
 			key = getch();
-			if (key == 27)
+			if (key == 27)//ESC를 입력받았을때
 			{
 				system("cls");
-				goto label;
+				goto label;//이중루프 탈출
 			}
-			else if (key == 13)
+			else if (key == 13)//ENTER를 입력받았을때
 			{
 				system("cls");
 				break;
@@ -1238,21 +1238,21 @@ void SearchWord(void)
 			}
 		}
 	}
-label:
+label://goto 문이 빠져나오는 라벨
 	menu_scr();
 }
 
-void WordListCheck(void)
+void WordListCheck(void)//저장된 단어를 전부 확인하는 기능
 {
 	int i = 0;
-	int key;
-	int count;
+	int key;//키 값을 저장하기 위한 변수
+	int count;//불러온 단어의 수를 저장
 	FILE *fp;
-	if ((fp = fopen("Voca.txt", "r")) == NULL)
+	if ((fp = fopen("Voca.txt", "r")) == NULL)//단어와 뜻이 저장 되어있는 파일을 읽기모드로 연다
 	{
 		fprintf(stderr, "파일 Voca.txt를 열 수 없습니다\n", "Voca.txt");
 	}
-	while (!feof(fp))
+	while (!feof(fp))//파일내의 단어와 뜻을 전부 읽어옴
 	{
 		fgets(a[i].name, 100, fp);
 		a[i].name[strlen(a[i].name) - 1] = '\0';
@@ -1260,101 +1260,102 @@ void WordListCheck(void)
 		a[i].mean[strlen(a[i].mean) - 1] = '\0';
 		i++;
 	}
-	fclose(fp);
-	count = i - 1;
-	for (i = 0; i<count; i++)
-		printf("[ %s : %s ]\n", a[i].name, a[i].mean);//"wt"옆으로
+	fclose(fp);//파일을 닫음
+	count = i - 1;//count에 불러온 단어의 개수를 저장
+	for (i = 0; i<count; i++)//불러온 단어의 수만큼 단어와 뜻을 전부 출력해줌
+		printf("[ %s : %s ]\n", a[i].name, a[i].mean);
 	printf("\n종료하시겠습니까?ESC입력\n");
 	while (1) {
-		key = getch();
-		if (key == 27)
+		key = getch();//키 값을 int형으로 입력받음
+		if (key == 27)//ESC키를 입력 받았을때
 		{
 			system("cls");
-			break;
+			break;//루프를 빠져나와 기능종료
 		}
 	}
-	menu_scr();
+	menu_scr();//메뉴로 돌아감
 }
 
-void ProgramRead(void)
+void ProgramRead(void)//프로그램 최초 실행시 파일을 생성해준다.
 {
 	int i = 0;
 	FILE *fp;
-	if ((fp = fopen("Voca.txt", "a")) == NULL)
+	if ((fp = fopen("Voca.txt", "a")) == NULL)//이어쓰기 모드로 파일을 열어준다 만약 파일이 없다면 파일을 생성한다.
 	{
 		fprintf(stderr, "Voca.txt 파일을 열 수 없습니다.\n", "Voca.txt");
 		exit(1);
 	}
-	fclose(fp);
+	fclose(fp);//파일 닫음
 }
-void Quiz(void) {
-	int i = 0, count, j = 0, k, good = 0;
-	int key;
-	char input[100];
+void Quiz(void) {//퀴즈 기능
+	int i = 0, count, j = 0, k, good = 0;//count는 불러온 단어의 수가 저장됨,good은 정답의 개수가 저장됨
+	int key;//키 값을 저장할 변수
+	char input[100];//사용자에게 입력받은 문자가 저장됨
 	FILE *fp;
-	if ((fp = fopen("Voca.txt", "r")) == NULL)
+	if ((fp = fopen("Voca.txt", "r")) == NULL)//단어와 뜻이 저장되어 있는 파일을 읽기모드로 연다
 	{
 		fprintf(stderr, "파일 Voca.txt를 열 수 없습니다\n", "Voca.txt");
 	}
-	while (!feof(fp))
+	while (!feof(fp))//파일에서 단어와 뜻을 전부 읽어와서 구조체 변수에 저장
 	{
 		fgets(a[i].name, 100, fp);
-		a[i].name[strlen(a[i].name) - 1] = '\0';
+		a[i].name[strlen(a[i].name) - 1] = '\0'; //fgets의 개행문자를 제거하기 위해 널문자로 덮어써준것
 		fgets(a[i].mean, 100, fp);
 		a[i].mean[strlen(a[i].mean) - 1] = '\0';
 		i++;
 	}
-	fclose(fp);
-	count = i - 1;
+	fclose(fp);//파일을 닫아줌
+	count = i - 1;//count에 불러온 단어의 개수를 저장
 	printf("단어 퀴즈는 단어장 안에 있는 단어중 5개의 단어의 설명이 랜덤으로 나옵니다\n\n");
-	Sleep(2500);
+	Sleep(2500);//실행 지연 함수 2.5초
 	printf("단어의 설명을 보고 어떤 단어를 설명하고 있는지 해당하는 단어를 키보드로 입력해주세요\n\n");
 	Sleep(2500);
 	printf("그럼 시작합니다.\n");
-	Sleep(1500);
-	for (j = 0; j<5; j++) {
-		srand((unsigned)time(NULL));
-		i = rand() % count;
+	Sleep(1500);//1.5초
+	for (j = 0; j<5; j++) {//퀴즈는 5문제로 구성했기에 5번 루프
+		srand((unsigned)time(NULL));//시드값을 넣은 난수를 생성해줌
+		i = rand() % count;//0부터 count[불러온 단어의 개수]까지의 수중 랜덤으로 생성된 난수를 i에 저장
 		system("cls");
-		printf("[%s]는 무엇일까요?:\n", a[i].mean);
-		gets(input);
-		if (!strcmp(a[i].name, input))
+		printf("[%s]는 무엇일까요?:\n", a[i].mean);//i를 인덱스값으로 하는 단어의 뜻을 퀴즈의 문제로 출력해 사용자에게 보여줌
+		gets(input);//답을 입력받음
+		if (!strcmp(a[i].name, input))//입력받은 답과 해당 인덱스의 단어가 같다면
 		{
 			printf("정답입니다\n");
 			Sleep(1000);
 			good++;
 		}
-		else
+		else//틀렸다면
 		{
-			for (k = 2; k>0; k--)
+			for (k = 2; k>0; k--)//두 번의 기회를 더 주기 위해 2번루프
 			{
 
 				printf("틀리셨습니다. 잘 생각해 보세요\n");
 				printf("남은 기회 [%d]번", k - 1);
 				gets(input);
-				if (!strcmp(a[i].name, input))
+				if (!strcmp(a[i].name, input))//맞으면 빠져나감
 				{
 					system("cls");
 					printf("정답입니다\n");
+					good++;
 					break;
 				}
 			}
 		}
 	}
-	printf("5문제중 맞은 개수는 %d개 입니다\n", good);
+	printf("5문제중 맞은 개수는 %d개 입니다\n", good);//정답의 개수를 출력해줌
 	while (1)
 	{
-		printf("다시 하시겠습니까? 예ENTER 아니오ESC\n");// esc눌렀을때 무한루프
-		key = getch();
-		if (key == 13)
+		printf("다시 하시겠습니까? 예ENTER 아니오ESC\n");
+		key = getch();//키 값을 입력받음
+		if (key == 13)//ENTER
 		{
 			system("cls");
-			Quiz();
+			Quiz();//다시 QUIZ함수 실행
 		}
-		if (key == 27)
+		if (key == 27)//ESC키 입력
 		{
 			system("cls");
-			break;
+			break;//콘솔창을 한번 지워주고 종료
 		}
 		else
 		{
@@ -1362,18 +1363,18 @@ void Quiz(void) {
 			printf("잘못 누르셨습니다 다시하기 ENTER 아니오ESC");
 		}
 	}
-	menu_scr();
+	menu_scr();//메뉴로 복귀
 }
-void del(void)
+void del(void)//단어 삭제 함수
 {
-	int i = 0, count;
-	char target[100];
+	int i = 0, count;//count는 불러온 단어의 개수가 저장됨
+	char target[100];//사용자가 입력한 문자가 저장됨
 	FILE *fp;
-	if ((fp = fopen("Voca.txt", "r")) == NULL)
+	if ((fp = fopen("Voca.txt", "r")) == NULL)//읽기모드 단어와 뜻이 저장되어 있는 텍스트 파일을 연다
 	{
 		fprintf(stderr, "파일 Voca.txt를 열 수 없습니다\n", "Voca.txt");
 	}
-	while (!feof(fp))
+	while (!feof(fp))//저장된 단어와 뜻을 읽어옴
 	{
 		fgets(a[i].name, 100, fp);
 		a[i].name[strlen(a[i].name) - 1] = '\0';
@@ -1381,27 +1382,27 @@ void del(void)
 		a[i].mean[strlen(a[i].mean) - 1] = '\0';
 		i++;
 	}
-	fclose(fp);
-	count = i - 1;
+	fclose(fp);//파일 닫음
+	count = i - 1;//count에 불러온 단어의 수가 저장됨
 	printf("삭제하실 단어를 입력하세요\n");
-	gets(target);
-	for (i = 0; i<count; i++)
+	gets(target);//삭제할 단어를 입력받음
+	for (i = 0; i<count; i++)//불러온 단어의 개수 만큼 순차검색해서
 	{
-		if (!strcmp(a[i].name, target))
+		if (!strcmp(a[i].name, target))//입력한 값과 일치하는것이 있다면
 		{
 			printf("[%s]를 단어장에서 제거합니다.\n", a[i].name);
-			strcpy(a[i].name, "\0");
-			strcpy(a[i].mean, "\0");
+			strcpy(a[i].name, "\0");//해당 단어가 저장된 변수를 널값으로 바꿔줌
+			strcpy(a[i].mean, "\0");//해당 뜻이 저장된 변수를 널값으로 바꿔줌
 		}
 
 	}
-	if ((fp = fopen("Voca.txt", "w")) == NULL)
+	if ((fp = fopen("Voca.txt", "w")) == NULL)//단어장의 /텍스트 파일을 다시 쓰기 모드로 연다
 	{
 		fprintf(stderr, "파일 Voca.txt를 열 수 없습니다\n", "Voca.txt");
 	}
 	for (i = 0; i<count; i++)
 	{
-		if ((strcmp(a[i].name, "\0")) != 0)
+		if ((strcmp(a[i].name, "\0")) != 0)//만약 단어가 저장된 변수의 값이 널값이 아닐경우만 갱신된 정보를 덮어씀
 		{
 			fputs(a[i].name, fp);
 			fputc('\n', fp);//fputs 는 텍스트로 저장할때 엔터값을 안받기에 개행을 위해 붙여줌
@@ -1409,11 +1410,11 @@ void del(void)
 			fputc('\n', fp);
 		}
 	}
-	fclose(fp);
+	fclose(fp);//파일을 닫음
 	printf("메뉴로 돌아갑니다\n");
 	Sleep(1000);
 	system("cls");
-	menu_scr();
+	menu_scr();//메뉴로 돌아감
 }
 
 
@@ -1442,7 +1443,7 @@ int Stat_Menuchoice(void) // 메뉴 선택
 
 	while (1)
 	{
-		key = getch();
+		key = getch();//키 값을 int형으로 입력받음
 		if (key == 0xE0 || key == 0)
 			key = getch();
 		switch (key)
@@ -1467,12 +1468,12 @@ int Stat_Menuchoice(void) // 메뉴 선택
 			printf("=>");//바뀐 좌표에 화살표 출력
 			break;
 
-		case ESC:
+		case ESC://ESC키를 입력받으면
 			system("cls");
 			system("mode con: cols=70 lines=30"); //크기
 			system("title Learing Support Program");  //제목 변화
 			system("color 3F");
-			return 0;
+			return 0;//종료
 
 		case ENTER://엔터키를 입력받으면
 			Stat_Function(y);//Function함수를 실행
@@ -1516,14 +1517,14 @@ void Stat_ProgramRead(void) // 처음에 이어쓰기 모드로 열어서 파일
 		fprintf(stderr, "SubJect.txt 파일을 열 수 없습니다.\n", "SubJect.txt");
 		exit(1);
 	}
-	fclose(fp);
+	fclose(fp);//파일을 닫아줌
 
 	if ((fp = fopen("StudyNum.txt", "a")) == NULL) //학습량 수치를 저장할 파일
 	{
 		fprintf(stderr, "StudyNum.txt 파일을 열 수 없습니다.\n", "StudyNum.txt");
 		exit(1);
 	}
-	fclose(fp);
+	fclose(fp);//파일을 닫아줌
 }
 
 void AddSubject(void) //과목 추가
@@ -1534,18 +1535,18 @@ void AddSubject(void) //과목 추가
 	int fullcount = 0;//과목은 8개 까지만 저장 가능하도록 만듬 꽉차면 fullcount가8
 
 	FILE *fp;
-	if ((fp = fopen("SubJect.txt", "r")) == NULL)
+	if ((fp = fopen("SubJect.txt", "r")) == NULL)//과목이 저장되어 있는 텍스트 파일을 읽기모드로 열어줌
 	{
 		fprintf(stderr, "파일 SubJect.txt를 열 수 없습니다\n", "SubJect.txt");
 		exit(1);
 	}
-	while (!feof(fp))//텍스트 파일을 읽어서 순서대로 구조체 배열에 넣어줌
+	while (!feof(fp))//과목이 저장된 파일을 읽어서 순서대로 구조체 배열에 넣어줌
 	{
-		fgets(b[i].name, 100, fp);//과목 이름을 불러옴
+		fgets(b[i].name, 100, fp);
 		b[i].name[strlen(b[i].name) - 1] = '\0';
 		i++;
 	}
-	fclose(fp);
+	fclose(fp);//파일을 닫아줌
 
 	printf("과목을 추가가 가능한지 확인하겠습니다.\n\n");
 	for (i = 0; i<SUBJECT; i++)
@@ -1599,22 +1600,22 @@ void AddSubject(void) //과목 추가
 		}
 	}
 
-	if ((fp = fopen("SubJect.txt","w")) == NULL)
+	if ((fp = fopen("SubJect.txt","w")) == NULL)//과목이 저장되는 텍스트 파일을 쓰기 모드로 열어줌
 	{
 		fprintf(stderr, "파일 SubJect.txt를 열 수 없습니다\n", "SubJect.txt");
 	}
-	for (i = 0; i<SUBJECT; i++)
+	for (i = 0; i<SUBJECT; i++)//과목추가의 최고한도인 8개 만큼 순차검색을 한다
 	{
-		if ((strcmp(b[i].name, "\0")) != 0)
+		if ((strcmp(b[i].name, "\0")) != 0)//만약 과목이름이 저장된 변수가 널값이 아니라면 텍스트 파일에 저장해줌
 		{
 			fputs(b[i].name, fp);
 			fputc('\n', fp);//fputs 는 텍스트로 저장할때 엔터값을 안받기에 개행을 위해 붙여줌
 		}
 	}
-	fclose(fp);
+	fclose(fp);//파일을 닫음
 	printf("과목을 전부 추가했습니다.\n");
 	Sleep(500);
-	Statistics_Menuscr();
+	Statistics_Menuscr();//메뉴로 돌아감
 
 }
 
@@ -1635,9 +1636,9 @@ void DelSubject(void) // 과목 삭제
 		b[i].name[strlen(b[i].name) - 1] = '\0';//개행 문자 제거를 위해 맨끝 하나는 널값으로 제거
 		i++;
 	}
-	fclose(fp);
+	fclose(fp);//파일을 닫음
 	count = i - 1;
-	if ((fp2 = fopen("StudyNum.txt", "r")) == NULL) //텍스트 파일내 과목을 전부 읽어와서
+	if ((fp2 = fopen("StudyNum.txt", "r")) == NULL) //학습량이 저장되어 있는 텍스트 파일을 읽기 모드로 연다
 	{
 		fprintf(stderr, "파일 StudyNum.txt를 열 수 없습니다\n", "StudyNum.txt");
 	}
@@ -1647,10 +1648,10 @@ void DelSubject(void) // 과목 삭제
 		for (j = 0; j<7; j++)//해당 과목의 월화수목금토일 각각의 공부량 수치
 			fscanf(fp2,"%d",&b[i].week_study[j]);
 	}
-	fclose(fp2);
+	fclose(fp2);//파일을 닫음
 	printf("삭제하실 과목을 입력하세요\n");
 	gets(target);//삭제할 과목을 타겟에 받음
-	for (i = 0; i<count; i++)
+	for (i = 0; i<count; i++)//불러온 단어 수 만큼 순차 검색을 함
 	{
 		if (!strcmp(b[i].name,target))//읽어와서 저장되어 있는 값이 삭제할 단어와 일치하면
 		{
@@ -1662,33 +1663,33 @@ void DelSubject(void) // 과목 삭제
 		}
 
 	}
-	if ((fp = fopen("SubJect.txt","w")) == NULL)
+	if ((fp = fopen("SubJect.txt","w")) == NULL)//쓰기모드로 과목이 저장되어 있는 파일을 연다
 	{
 		fprintf(stderr, "파일 SubJect.txt를 열 수 없습니다\n", "SubJect.txt");
 	}
-	for (i = 0; i<count; i++)
+	for (i = 0; i<count; i++)//불러온 단어의 수 만큼 순차 검색을 해서
 	{
-		if ((strcmp(b[i].name, "\0")) != 0)
+		if ((strcmp(b[i].name, "\0")) != 0)//삭제한 단어가 아닌 것만 텍스트 파일에 저장
 		{
 			fputs(b[i].name, fp);
 			fputc('\n', fp);//fputs 는 텍스트로 저장할때 엔터값을 안받기에 개행을 위해 붙여줌
 		}
 	}
-	fclose(fp);
-	if ((fp2 = fopen("StudyNum.txt","w")) == NULL)
+	fclose(fp);//파일을 닫음
+	if ((fp2 = fopen("StudyNum.txt","w")) == NULL)//쓰기 모드로 학습량이 저장되어 있는 파일을 연다
 	{
 		fprintf(stderr, "파일 StudyNum.txt를 열 수 없습니다\n", "StudyNum.txt");
 	}
-	for (i = 0; i<count; i++) //저장된 값 파일에 다시 써줌
+	for (i = 0; i<count; i++) //불러온 단어의 수만큼 검색을해서
 	{
 		if ((strcmp(b[i].name, "\0")) != 0)
 		{
-			fprintf(fp2, "%d ", b[i].day_study);
+			fprintf(fp2, "%d ", b[i].day_study);//삭제된 단어가 아닌 학습량만 학습량 파일에 저장
 			for (j = 0; j<7; j++)
 				fprintf(fp2, "%d ", b[i].week_study[j]);
 		}
 	}
-	fclose(fp2);
+	fclose(fp2);//파일을 닫아줌
 	for (i = 0; i<SUBJECT; i++)
 	{
 		strcpy(b[i].name, "\0");  //삭제할때 변수에 찌거기값이 남아서 초기화 안하면 과목 추가에서 추가가능 여부를 확인할때 남은 찌꺼기를 읽어서  문제 발생
@@ -1711,7 +1712,7 @@ void Measure(void) //학습량 측정
 	char target[20];
 	int measutime = 0;//측정시간 분으로 환산
 	FILE *fp,*fp2;
-	if ((fp = fopen("SubJect.txt", "r")) == NULL) //텍스트 파일내 과목을 전부 읽어와서
+	if ((fp = fopen("SubJect.txt", "r")) == NULL) //학습과목이 저장되어 있는 텍스트 파일을 읽기 모드로 연다
 	{
 		fprintf(stderr, "파일 SubJect.txt를 열 수 없습니다\n", "SubJect.txt");
 	}
@@ -1721,9 +1722,9 @@ void Measure(void) //학습량 측정
 		b[i].name[strlen(b[i].name) - 1] = '\0';//개행 문자 제거를 위해 맨끝 하나는 널값으로 제거
 		i++;
 	}
-	fclose(fp);
+	fclose(fp);//파일을 닫음
 	count=i-1;
-	if ((fp2 = fopen("StudyNum.txt", "r")) == NULL) //텍스트 파일내 과목을 전부 읽어와서
+	if ((fp2 = fopen("StudyNum.txt", "r")) == NULL) //학습량이 저장된 텍스트 파일을 읽기모드로 연다
 	{
 		fprintf(stderr, "파일 StudyNum.txt를 열 수 없습니다\n", "StudyNum.txt");
 	}
@@ -1733,8 +1734,8 @@ void Measure(void) //학습량 측정
 		for (j = 0; j<7; j++)//해당 과목의 월화수목금토일 각각의 공부량 수치
 			fscanf(fp2,"%d",&b[i].week_study[j]);
 	}
-	fclose(fp2);
-	stopwatch_menu();
+	fclose(fp2);//파일을 닫음
+	stopwatch_menu();//스탑워치 메뉴 함수를 불러옴
 	while (1)
 	{
 		printf("%2d : %2d : %2d : %2d", hour, min, sec, frame);
@@ -1795,11 +1796,11 @@ void Measure(void) //학습량 측정
 		printf("\n\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
 	}// 시간에 대한 반복문 중괄호
 label:
-	if ((fp = fopen("SubJect.txt","w")) == NULL)
+	if ((fp = fopen("SubJect.txt","w")) == NULL)//쓰기모드로 과목 파일을 연다
 	{
 		fprintf(stderr, "파일 SubJect.txt를 열 수 없습니다\n", "SubJect.txt");
 	}
-	for (i = 0; i<count; i++)
+	for (i = 0; i<count; i++)//갱신된 정보 덮어쓰기
 	{
 		if ((strcmp(b[i].name, "\0")) != 0)
 		{
@@ -1807,12 +1808,12 @@ label:
 			fputc('\n', fp);//fputs 는 텍스트로 저장할때 엔터값을 안받기에 개행을 위해 붙여줌
 		}
 	}
-	fclose(fp);
-	if ((fp2 = fopen("StudyNum.txt","w")) == NULL)
+	fclose(fp);//파일을 닫음
+	if ((fp2 = fopen("StudyNum.txt","w")) == NULL)//쓰기 모드로 학습량 파일을 연다
 	{
 		fprintf(stderr, "파일 StudyNum.txt를 열 수 없습니다\n", "StudyNum.txt");
 	}
-	for (i = 0; i<count; i++) //저장된 값 파일에 다시 써줌
+	for (i = 0; i<count; i++) //갱신된 학습량 파일에 다시 써줌
 	{
 		if ((strcmp(b[i].name, "\0")) != 0)
 		{
@@ -1821,8 +1822,8 @@ label:
 				fprintf(fp2, "%d ", b[i].week_study[j]);
 		}
 	}
-	fclose(fp2);
-	Statistics_Menuscr();
+	fclose(fp2);//파일 닫음
+	Statistics_Menuscr();//메뉴로 돌아감
 }
 
 void StudyCheck(void)//학습량을 확인
@@ -1834,29 +1835,29 @@ void StudyCheck(void)//학습량을 확인
 	double weekaverhour = 0;//주간 평균 학습량 [시]
 	double weekaverminute = 0;//주간 평균 학습량 [분]
 	FILE *fp,*fp2;
-	if ((fp = fopen("SubJect.txt", "r")) == NULL) //텍스트 파일내 과목을 전부 읽어와서
+	if ((fp = fopen("SubJect.txt", "r")) == NULL) //읽기모드로 과목이 저장된 파일을 연다
 	{
 		fprintf(stderr, "파일 SubJect.txt를 열 수 없습니다\n", "SubJect.txt");
 	}
-	while (!feof(fp))//읽어온걸 순서대로 저장
+	while (!feof(fp))//파일내 정보를 읽어옴
 	{
 		fgets(b[i].name, 100, fp);
 		b[i].name[strlen(b[i].name) - 1] = '\0';//개행 문자 제거를 위해 맨끝 하나는 널값으로 제거
 		i++;
 	}
-	fclose(fp);
-	count=i-1;
-	if ((fp2 = fopen("StudyNum.txt", "r")) == NULL) //텍스트 파일내 과목을 전부 읽어와서
+	fclose(fp);//파일 닫음
+	count=i-1;//불러온 과목의 개수를 저장
+	if ((fp2 = fopen("StudyNum.txt", "r")) == NULL) // 학습량이 저장된 텍스트 파일을 읽기모드로 연다
 	{
 		fprintf(stderr, "파일 StudyNum.txt를 열 수 없습니다\n", "StudyNum.txt");
 	}
-	for(i=0;i<SUBJECT;i++)//읽어온걸 순서대로 저장
+	for(i=0;i<SUBJECT;i++)//정보를 순서대로 읽어옴
 	{
 		fscanf(fp2,"%d",&b[i].day_study);//해당 과목의 일일 공부량 수치와
 		for (j = 0; j<7; j++)//해당 과목의 월화수목금토일 각각의 공부량 수치
 			fscanf(fp2,"%d",&b[i].week_study[j]);
 	}
-	fclose(fp2);
+	fclose(fp2);//파일을 닫음
 
 	printf("======학습량 확인========\n");
 	for (i = 0; i<count; i++)
@@ -1880,7 +1881,7 @@ void StudyCheck(void)//학습량을 확인
 	while (1)
 	{
 		printf("종료는 ESC\n");
-		key = getch();
+		key = getch();//키 값을 입력받음
 		if (key == 27)
 		{
 			system("cls");
@@ -1888,7 +1889,7 @@ void StudyCheck(void)//학습량을 확인
 		}
 
 	}
-	Statistics_Menuscr();
+	Statistics_Menuscr();//메뉴로 돌아감
 
 }
 int WhatDay(void)//요일 계산을 해주는 함수
@@ -1914,7 +1915,7 @@ void WeekStudyReset(int day)//주간 학습량 초기화 (월요일마다 주간
 		fprintf(stderr, "파일 Reset.txt를 열 수 없습니다\n", "Reset.txt");
 		exit(1);
 	}
-	fclose(fp);
+	fclose(fp);//파일을 닫음
 
 
 	if ((fp2 = fopen("Reset.txt", "r")) == NULL)//Reset 파일의 데이터(0또는 1만 저장될거임)를 first변수로 불러옴
@@ -1945,29 +1946,29 @@ void WeekStudyReset(int day)//주간 학습량 초기화 (월요일마다 주간
 	{
 		if (log == 0)//초기화 여부 확인 오늘이 월요일인데 (0=학습량을 초기화 하지 않았다면) 초기화하면 log가 1이될거임
 		{
-			if ((fp = fopen("SubJect.txt", "r")) == NULL) //텍스트 파일내 과목을 전부 읽어와서
+			if ((fp = fopen("SubJect.txt", "r")) == NULL) //읽기모드로 과목이 저장되어 있는 파일을 연다
 			{
 				fprintf(stderr, "파일 SubJect.txt를 열 수 없습니다\n", "SubJect.txt");
 			}
-			while (!feof(fp))//읽어온걸 순서대로 저장
+			while (!feof(fp))//순서대로 정보를 읽어옴
 			{
 				fgets(b[i].name, 100, fp);
 				b[i].name[strlen(b[i].name) - 1] = '\0';//개행 문자 제거를 위해 맨끝 하나는 널값으로 제거
 				i++;
 			}
 			fclose(fp);
-			count=i-1;
-			if ((fp2 = fopen("StudyNum.txt", "r")) == NULL) //텍스트 파일내 과목을 전부 읽어와서
+			count=i-1;//읽어온 과목 수를 저장
+			if ((fp2 = fopen("StudyNum.txt", "r")) == NULL) //읽기모드로 학습량이 저장된 파일을 연다
 			{
 				fprintf(stderr, "파일 StudyNum.txt를 열 수 없습니다\n", "StudyNum.txt");
 			}
-			for(i=0;i<count;i++)//읽어온걸 순서대로 저장
+			for(i=0;i<count;i++)//읽어온 과목의 개수만큼 순서대로 읽어옴
 			{
 				fscanf(fp2,"%d",&b[i].day_study);//해당 과목의 일일 공부량 수치와
 				for (j = 0; j<7; j++)//해당 과목의 월화수목금토일 각각의 공부량 수치
 					fscanf(fp2,"%d",&b[i].week_study[j]);
 			}
-			fclose(fp2);
+			fclose(fp2);//파일을 닫음
 
 			for (i = 0; i<count; i++)//주간 학습량을 전부 0으로 초기화 해줌
 			{
@@ -1975,11 +1976,11 @@ void WeekStudyReset(int day)//주간 학습량 초기화 (월요일마다 주간
 					b[i].week_study[j] = 0;
 			}
 
-			if ((fp = fopen("SubJect.txt","w")) == NULL)
+			if ((fp = fopen("SubJect.txt","w")) == NULL)//쓰기 모드로 과목파일을 연다
 			{
 				fprintf(stderr, "파일 SubJect.txt를 열 수 없습니다\n", "SubJect.txt");
 			}
-			for (i = 0; i<count; i++)
+			for (i = 0; i<count; i++)//읽어온 과목의 수만큼 쓰기동작을 시행
 			{
 				if ((strcmp(b[i].name, "\0")) != 0)
 				{
@@ -1987,12 +1988,12 @@ void WeekStudyReset(int day)//주간 학습량 초기화 (월요일마다 주간
 					fputc('\n', fp);//fputs 는 텍스트로 저장할때 엔터값을 안받기에 개행을 위해 붙여줌
 				}
 			}
-			fclose(fp);
-			if ((fp2 = fopen("StudyNum.txt","w")) == NULL)
+			fclose(fp);//파일을 닫음
+			if ((fp2 = fopen("StudyNum.txt","w")) == NULL)//학습량이 저장된 파일을 연다
 			{
 				fprintf(stderr, "파일 StudyNum.txt를 열 수 없습니다\n", "StudyNum.txt");
 			}
-			for (i = 0; i<count; i++) //저장된 값 파일에 다시 써줌
+			for (i = 0; i<count; i++) //갱신된 학습량을 파일에 저장
 			{
 				if ((strcmp(b[i].name, "\0")) != 0)
 				{
@@ -2001,7 +2002,7 @@ void WeekStudyReset(int day)//주간 학습량 초기화 (월요일마다 주간
 						fprintf(fp2, "%d ", b[i].week_study[j]);
 				}
 			}
-			fclose(fp2);
+			fclose(fp2);//파일을 닫음
 
 			log = 1;//log변수를 1로 바꾸고 (오늘 초기화가 행해졌다는걸 의미)
 			if ((fp = fopen("Reset.txt", "w")) == NULL)
@@ -2020,7 +2021,7 @@ void WeekStudyReset(int day)//주간 학습량 초기화 (월요일마다 주간
 			fprintf(stderr, "파일 Reset.txt를 열 수 없습니다\n", "Reset.txt");
 		}
 		fprintf(fp, "%d", log);
-		fclose(fp);
+		fclose(fp);//파일을 닫음
 	}
 
 }
@@ -2089,37 +2090,37 @@ void YesorNo(int x)
 		system("cls");
 		printf("학습량을 초기화 합니다.\n");
 		Sleep(1000);
-		if ((fp = fopen("SubJect.txt", "r")) == NULL) //텍스트 파일내 과목을 전부 읽어와서
+		if ((fp = fopen("SubJect.txt", "r")) == NULL) //읽기모드로 과목이 저장된 파일을 연다
 			{
 				fprintf(stderr, "파일 SubJect.txt를 열 수 없습니다\n", "SubJect.txt");
 			}
-			while (!feof(fp))//읽어온걸 순서대로 저장
+			while (!feof(fp))//순서대로 읽어옴
 			{
 				fgets(b[i].name, 100, fp);
 				b[i].name[strlen(b[i].name) - 1] = '\0';//개행 문자 제거를 위해 맨끝 하나는 널값으로 제거
 				i++;
 			}
-			fclose(fp);
+			fclose(fp);//파일을 닫음
 			count=i-1;
-			if ((fp2 = fopen("StudyNum.txt", "r")) == NULL) //텍스트 파일내 과목을 전부 읽어와서
+			if ((fp2 = fopen("StudyNum.txt", "r")) == NULL) //학습량이 저장된 파일을 읽기모드로 연다
 			{
 				fprintf(stderr, "파일 StudyNum.txt를 열 수 없습니다\n", "StudyNum.txt");
 			}
-			for(i=0;i<count;i++)//읽어온걸 순서대로 저장
+			for(i=0;i<count;i++)//과목을 불러온 수 만큼 순서대로 정보를 읽어옴
 			{
 				fscanf(fp2,"%d",&b[i].day_study);//해당 과목의 일일 공부량 수치와
 				for (j = 0; j<7; j++)//해당 과목의 월화수목금토일 각각의 공부량 수치
 					fscanf(fp2,"%d",&b[i].week_study[j]);
 			}
-			fclose(fp2);
+			fclose(fp2);//파일을 닫음
 			for (i = 0; i<count; i++)//과목별 일일 학습량을 초기화해줌
 				b[i].day_study = 0;
 
-			if ((fp = fopen("SubJect.txt","w")) == NULL)
+			if ((fp = fopen("SubJect.txt","w")) == NULL)//쓰기 모드로 과목이 저장된 파일을 연다
 				{
 					fprintf(stderr, "파일 SubJect.txt를 열 수 없습니다\n", "SubJect.txt");
 				}
-				for (i = 0; i<count; i++)
+				for (i = 0; i<count; i++)//갱신된 정보를 파일에 저장
 				{
 					if ((strcmp(b[i].name, "\0")) != 0)
 					{
@@ -2127,12 +2128,12 @@ void YesorNo(int x)
 						fputc('\n', fp);//fputs 는 텍스트로 저장할때 엔터값을 안받기에 개행을 위해 붙여줌
 					}
 				}
-				fclose(fp);
-				if ((fp2 = fopen("StudyNum.txt","w")) == NULL)
+				fclose(fp);//파일을 닫음
+				if ((fp2 = fopen("StudyNum.txt","w")) == NULL)//쓰기 모드로 학습량이 저장된 파일을 연다
 				{
 					fprintf(stderr, "파일 StudyNum.txt를 열 수 없습니다\n", "StudyNum.txt");
 				}
-				for (i = 0; i<count; i++) //저장된 값 파일에 다시 써줌
+				for (i = 0; i<count; i++) //갱신된 정보를 저장
 				{
 					if ((strcmp(b[i].name, "\0")) != 0)
 					{
@@ -2141,7 +2142,7 @@ void YesorNo(int x)
 							fprintf(fp2, "%d ", b[i].week_study[j]);
 					}
 				}
-				fclose(fp2);
+				fclose(fp2);//파일을 닫음
 	}
 
 	if (x == 43)//아니오 선택
