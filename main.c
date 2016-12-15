@@ -58,7 +58,7 @@ typedef struct plan {
 	//달성 체크시 사용
 }PLAN;//PLAN구조체는 계획 문자열 저장하기 위해서 사용
 typedef struct tt {
-	char st1[10], st2[10], st3[10], st4[10], st5[10], st6[10], st7[10], st8[10];
+	char st1[50], st2[50], st3[50], st4[50], st5[50], st6[50], st7[50], st8[50];
 	//1~10교시까지의 과목이름을 입력받기 위한 배열
 }TT;
 //================================================================-sungjae
@@ -2691,33 +2691,33 @@ int achievementcheck() {
 	int f = 0;
 	char c1[10], c2[10], c3[10], c4[10], c5[10], c6[10], c7[10], c8[10], c9[10], c10[10], c11[10], c12[10], c13[10], c14[10], c15[10], c16[10];
 	PLAN out;
-	FILE *fpout1,*fpout2,*chrate1,*chrate2;
-	if((fpout1 = fopen("plan1.txt", "r"))==NULL) //1학기 읽어오는 파일포인터
-	{
-		system("cls");
-		gotoxy(8, 5);
-		printf("1학기 파일이 없습니다.\n");
-		gotoxy(8, 6);
-		printf("생성해주세요.\n");
-		gotoxy(8,7);
-		printf("3초후에 종료됩니다....\n");
-		Sleep(3000);
-		return 0;
-	}
-	if((fpout2 = fopen("plan2.txt", "r"))==NULL)//2학기 읽어오는 파일포인터
-	{
-		system("cls");
-		gotoxy(8, 5);
-		printf("2학기 파일이 없습니다.\n");
-		gotoxy(8, 6);
-		printf("생성해주세요.\n");
-		gotoxy(8,7);
-		printf("3초후에 종료됩니다....\n");
-		Sleep(3000);
-		return 0;
-	}
-	chrate1 = fopen("rate1.txt", "w");//1학기 달성체크
-	chrate2 = fopen("rate2.txt", "w");//2학기 달성체크
+	FILE *fpout1, *fpout2, *chrate1, *chrate2;
+		if ((fpout1 = fopen("plan1.txt", "r")) == NULL) //1학기 읽어오는 파일포인터
+		{
+			system("cls");
+			gotoxy(8, 5);
+			printf("1학기 파일이 없습니다.\n");
+			gotoxy(8, 6);
+			printf("생성해주세요.\n");
+			gotoxy(8, 7);
+			printf("3초후에 종료됩니다....\n");
+			Sleep(3000);
+			return 0;
+		}
+		if ((fpout2 = fopen("plan2.txt", "r")) == NULL)//2학기 읽어오는 파일포인터
+		{
+			system("cls");
+			gotoxy(8, 5);
+			printf("2학기 파일이 없습니다.\n");
+			gotoxy(8, 6);
+			printf("생성해주세요.\n");
+			gotoxy(8, 7);
+			printf("3초후에 종료됩니다....\n");
+			Sleep(3000);
+			return 0;
+		}
+		chrate1 = fopen("rate1.txt", "w");//1학기 달성체크
+		chrate2 = fopen("rate2.txt", "w");//2학기 달성체크
 	achievementcheckmenu();//달성체크메뉴 출력
 	f = threemenu2();//키값을 받아서 메뉴선택한 y좌표를 f에 저장
 	if (f == 12)
@@ -2991,7 +2991,7 @@ int timetablein() {//시간표 입력함수
 	FILE *timetable = fopen("timetable.txt", "w");//시간표를 파일에 저장하기 위한 파일포인터
 	system("cls");
 	gotoxy(4, 4);
-	printf("월요일부터 금요일까지의 시간표를 입력하셔야 합니다.\n\n");
+	printf("월요일부터 금요일까지의 시간표를 입력하셔야 합니다.(5글자이하)\n\n");
 	printf("\t\t월요일1교시 : "); scanf("%s", mon.st1);
 	printf("\t\t월요일2교시 : "); scanf("%s", mon.st2);
 	printf("\t\t월요일3교시 : "); scanf("%s", mon.st3);
@@ -3019,7 +3019,7 @@ int timetablein() {//시간표 입력함수
 	printf("\t\t수요일5교시 : "); scanf("%s", wes.st5);
 	printf("\t\t수요일6교시 : "); scanf("%s", wes.st6);
 	printf("\t\t수요일7교시 : "); scanf("%s", wes.st7);
-	printf("수요일8교시 : "); scanf("%s", wes.st8);
+	printf("\t\t수요일8교시 : "); scanf("%s", wes.st8);
 	system("cls");
 	gotoxy(0, 6);
 	printf("\t\t목요일1교시 : "); scanf("%s", thr.st1);
@@ -3060,7 +3060,7 @@ int timetablelook() {
 		printf("시간표 파일이 없습니다.\n");
 		gotoxy(8, 6);
 		printf("생성해주세요.\n");
-		gotoxy(8,7);
+		gotoxy(8, 7);
 		printf("3초후에 종료됩니다....\n");
 		Sleep(3000);
 		return 0;
@@ -3070,45 +3070,45 @@ int timetablelook() {
 		, wes.st1, wes.st2, wes.st3, wes.st4, wes.st5, wes.st6, wes.st7, wes.st8, thr.st1, thr.st2, thr.st3, thr.st4, thr.st5, thr.st6, thr.st7, thr.st8
 		, fri.st1, fri.st2, fri.st3, fri.st4, fri.st5, fri.st6, fri.st7, fri.st8);
 	system("cls");
-	gotoxy(8, 5);
-	printf("┌───┬───┬───┬───┬───┬───┐");//┬┌┐┴￢ㄷ
-	gotoxy(8, 6);
-	printf("│───│  월  │  화  │  수  │  목  │  금  │");
-	gotoxy(8, 7);
-	printf("├───┼───┼───┼───┼───┼───┤");
-	gotoxy(8, 8);
-	printf("│ 1교시│%5s │%5s │%5s │%5s │%5s │", mon.st1, thu.st1, wes.st1, thr.st1, fri.st1);
-	gotoxy(8, 9);
-	printf("├───┼───┼───┼───┼───┼───┤");
-	gotoxy(8, 10);
-	printf("│ 2교시│%5s │%5s │%5s │%5s │%5s │", mon.st2, thu.st2, wes.st2, thr.st2, fri.st2);
-	gotoxy(8, 11);
-	printf("├───┼───┼───┼───┼───┼───┤");
-	gotoxy(8, 12);
-	printf("│ 3교시│%5s │%5s │%5s │%5s │%5s │", mon.st3, thu.st3, wes.st3, thr.st3, fri.st3);
-	gotoxy(8, 13);
-	printf("├───┼───┼───┼───┼───┼───┤");
-	gotoxy(8, 14);
-	printf("│ 4교시│%5s │%5s │%5s │%5s │%5s │", mon.st4, thu.st4, wes.st4, thr.st4, fri.st4);
-	gotoxy(8, 15);
-	printf("├───┼───┼───┼───┼───┼───┤");
-	gotoxy(8, 16);
-	printf("│ 5교시│%5s │%5s │%5s │%5s │%5s │", mon.st5, thu.st5, wes.st5, thr.st5, fri.st5);
-	gotoxy(8, 17);
-	printf("├───┼───┼───┼───┼───┼───┤");
-	gotoxy(8, 18);
-	printf("│ 6교시│%5s │%5s │%5s │%5s │%5s │", mon.st6, thu.st6, wes.st6, thr.st6, fri.st6);
-	gotoxy(8, 19);
-	printf("├───┼───┼───┼───┼───┼───┤");
-	gotoxy(8, 20);
-	printf("│ 7교시│%5s │%5s │%5s │%5s │%5s │", mon.st7, thu.st7, wes.st7, thr.st7, fri.st7);
-	gotoxy(8, 21);
-	printf("├───┼───┼───┼───┼───┼───┤");
-	gotoxy(8, 22);
-	printf("│ 8교시│%5s │%5s │%5s │%5s │%5s │", mon.st8, thu.st8, wes.st8, thr.st8, fri.st8);
-	gotoxy(8, 23);
-	printf("└───┴───┴───┴───┴───┴───┘");
-	gotoxy(8, 24);
+	gotoxy(0, 5);
+	printf("┌───┬─────┬─────┬─────┬─────┬─────┐");//┬┌┐┴￢ㄷ
+	gotoxy(0, 6);
+	printf("│───│    월    │    화    │    수    │    목    │    금    │");
+	gotoxy(0, 7);
+	printf("├───┼─────┼─────┼─────┼─────┼─────┤");
+	gotoxy(0, 8);
+	printf("│ 1교시│%10s│%10s│%10s│%10s│%10s│", mon.st1, thu.st1, wes.st1, thr.st1, fri.st1);
+	gotoxy(0, 9);
+	printf("├───┼─────┼─────┼─────┼─────┼─────┤");
+	gotoxy(0, 10);
+	printf("│ 2교시│%10s│%10s│%10s│%10s│%10s│", mon.st2, thu.st2, wes.st2, thr.st2, fri.st2);
+	gotoxy(0, 11);
+	printf("├───┼─────┼─────┼─────┼─────┼─────┤");
+	gotoxy(0, 12);
+	printf("│ 3교시│%10s│%10s│%10s│%10s│%10s│", mon.st3, thu.st3, wes.st3, thr.st3, fri.st3);
+	gotoxy(0, 13);
+	printf("├───┼─────┼─────┼─────┼─────┼─────┤");
+	gotoxy(0, 14);
+	printf("│ 4교시│%10s│%10s│%10s│%10s│%10s│", mon.st4, thu.st4, wes.st4, thr.st4, fri.st4);
+	gotoxy(0, 15);
+	printf("├───┼─────┼─────┼─────┼─────┼─────┤");
+	gotoxy(0, 16);
+	printf("│ 5교시│%10s│%10s│%10s│%10s│%10s│", mon.st5, thu.st5, wes.st5, thr.st5, fri.st5);
+	gotoxy(0, 17);
+	printf("├───┼─────┼─────┼─────┼─────┼─────┤");
+	gotoxy(0, 18);
+	printf("│ 6교시│%10s│%10s│%10s│%10s│%10s│", mon.st6, thu.st6, wes.st6, thr.st6, fri.st6);
+	gotoxy(0, 19);
+	printf("├───┼─────┼─────┼─────┼─────┼─────┤");
+	gotoxy(0, 20);
+	printf("│ 7교시│%10s│%10s│%10s│%10s│%10s│", mon.st7, thu.st7, wes.st7, thr.st7, fri.st7);
+	gotoxy(0, 21);
+	printf("├───┼─────┼─────┼─────┼─────┼─────┤");
+	gotoxy(0, 22);
+	printf("│ 8교시│%10s│%10s│%10s│%10s│%10s│", mon.st8, thu.st8, wes.st8, thr.st8, fri.st8);
+	gotoxy(0, 23);
+	printf("├───┼─────┼─────┼─────┼─────┼─────┤");
+	gotoxy(0, 24);
 	printf("ESC를 누르시면 종료됩니다.");
 	while (1) {
 		if (_kbhit()) {//키보드 값을 입력하면?
