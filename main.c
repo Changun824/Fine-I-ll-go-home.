@@ -2705,7 +2705,7 @@ int achievementcheck() {
 		return 0;
 	}
 	FILE *fpout2;
-	if((fpout2 = fopen("plan2.txt", "r"))=NULL)//2학기 읽어오는 파일포인터
+	if((fpout2 = fopen("plan2.txt", "r"))==NULL)//2학기 읽어오는 파일포인터
 	{
 		system("cls");
 		gotoxy(8, 5);
