@@ -2690,8 +2690,8 @@ int planinsert()//계획입력함수
 {
 	int a = 0;//메뉴선택 변수
 	PLAN insert;//계획 저장 구조체
-	FILE *fpin1 = fopen("plan1.txt", "w");//1학기 계획을 파일에 저장하기 위해서 만든 파일포인터
-	FILE *fpin2 = fopen("plan2.txt", "w");//2학기 계획을 파일에 저장하기 위해서 만든 파일포인터
+	FILE *fpin1 = fopen("plan1.txt", "w+");//1학기 계획을 파일에 저장하기 위해서 만든 파일포인터
+	FILE *fpin2 = fopen("plan2.txt", "w+");//2학기 계획을 파일에 저장하기 위해서 만든 파일포인터
 	planinsertmenu();//계획입력메뉴 출력
 	a = threemenu1();//키값을 받아서 메뉴선택한 y좌표를 a에 저장
 	system("cls");
@@ -2821,8 +2821,8 @@ int achievementcheck() {
 			Sleep(3000);
 			return 0;
 		}
-		chrate1 = fopen("rate1.txt", "w");//1학기 달성체크
-		chrate2 = fopen("rate2.txt", "w");//2학기 달성체크
+		chrate1 = fopen("rate1.txt", "w+");//1학기 달성체크
+		chrate2 = fopen("rate2.txt", "w+");//2학기 달성체크
 	achievementcheckmenu();//달성체크메뉴 출력
 	f = threemenu2();//키값을 받아서 메뉴선택한 y좌표를 f에 저장
 	if (f == 12)
@@ -3093,7 +3093,7 @@ int timetable() {
 int timetablein() {//시간표 입력함수
 
 	TT mon, thu, wes, thr, fri;//요일별로 쓸 구조체
-	FILE *timetable = fopen("timetable.txt", "w");//시간표를 파일에 저장하기 위한 파일포인터
+	FILE *timetable = fopen("timetable.txt", "w+");//시간표를 파일에 저장하기 위한 파일포인터
 	system("cls");
 	gotoxy(4, 4);
 	printf("월요일부터 금요일까지의 시간표를 입력하셔야 합니다.(5글자이하)\n\n");
